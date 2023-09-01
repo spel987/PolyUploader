@@ -78,6 +78,12 @@ npm run build
     }
   }
 ```
+
+Then run the following command : 
+
+```
+npm run build
+```
 ### - Or simply download and run the [realease](https://github.com/spel987/Automatic-File-Uploader/releases).
 
 
