@@ -176,7 +176,7 @@ document.addEventListener("DOMContentLoaded", function () {
     uploadButtonOshi.addEventListener("click", function () {
       reset_popup()
       host = "Oshi"
-      urlFinalUpload.textContent = "Oshi.at has no known bugs or problems."
+      urlFinalUpload.textContent = "Ohsi.at is inaccessible from certain IPs with the error \"Connection reset\"."
       urlFinalUpload.href = "#"
       conditionOfUse.href = "https://oshi.at/abuse"
     });
@@ -402,7 +402,7 @@ document.addEventListener("DOMContentLoaded", function () {
         formData.append("expire", "120");
 
         uploadToHost(
-          `${urlForBypassCors}/https://oshi.at`,
+          `${urlForBypassCors}/https://oshi.at/`,
           "POST",
           formData,
           "text",
