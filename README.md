@@ -163,6 +163,11 @@ Below is a table of the hosting providers currently supported by the application
 
 If you know of a host that has an API or just a CLI interface (without token or authentication key), please open an [issue](https://github.com/spel987/Automatic-File-Uploader/issues).
 
+Video demonstration :
+
+https://github.com/spel987/Automatic-File-Uploader/assets/89778476/fd87e525-dd84-461c-b6c1-0b05dea16973
+
+
 # Made by and with
 
 By :
