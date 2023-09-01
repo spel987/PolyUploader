@@ -5,7 +5,7 @@
 This project lets you easily upload your files to various platforms via their API.
 
 <h1 align="center">
-<a href="#"><img src="https://i.imgur.com/uGePxtB.png"></a>
+<a href="https://i.imgur.com/uGePxtB.png"><img src="https://i.imgur.com/uGePxtB.png"></a>
 </h1>
 
 # Installation and use
