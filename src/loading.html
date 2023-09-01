@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FileUploader</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+<style>
+  ::-webkit-scrollbar {
+    display: none;
+}
+</style>
+<body class="bg-slate-900 text-white overflow-x-hidden">
+
+  <div class="bg-indigo-950 absolute sm:w-[112vh] -z-10 blur-[16vh] h-[30rem] top-[30vh] right-[-32vh]"></div>
+  <div class="bg-blue-950 absolute sm:w-[150vh] md:left-[-60vh] left-[-30vh] -z-10 rounded-full blur-[16vh] top-[-1vh] h-[70vh]"></div>
+  <div class="min-h-screen mt-4 mr-3 flex items-center justify-center">
+    <div class="text-center">
+        <h1 class="sm:text-4xl font-bold"><i class="fas fa-spinner fa-spin"></i> Loading...</h1>
+        <p class="text-lg mt-5 mb-8 text-slate-400">This step shouldn't take long.</p>
+    </div>
+</div>
+</body>
+</html>
+<script src="script.js"></script>
