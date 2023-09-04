@@ -16,6 +16,26 @@ document.addEventListener("DOMContentLoaded", function () {
     const uploadButtonFilebin = document.getElementById("uploadButtonFilebin");
     const uploadButtonTransferSh = document.getElementById("uploadFormtransferSh");
     const uploadButtonFroCDN = document.getElementById("uploadButtonFroCDN");
+    const uploadButtonBashupload = document.getElementById("uploadButtonBashupload");
+    const uploadButtonCurlBy = document.getElementById("uploadButtonCurlBy");
+    const uploadButtonx0At = document.getElementById("uploadButtonx0At");
+    const uploadButtonTempFilesOrg = document.getElementById("uploadButtonTempFileOrg");
+    const uploadButtonUplooad = document.getElementById("uploadButtonUplooad");
+    const uploadButtonTempSendCom = document.getElementById("uploadButtonTempSendCom");
+    const uploadButtonTommoTeam = document.getElementById("uploadButtonTommoTeam");
+    const uploadButtonAnonymFile = document.getElementById("uploadButtonAnonymFile");
+    const uploadButtonAnyfile = document.getElementById("uploadButtonAnyfile");
+    const uploadButtonGofileCc = document.getElementById("uploadButtonGofileCc");
+    const uploadButtonTempFilesNinja = document.getElementById("uploadButtonTempFilesNinja");
+    const uploadButtonPixeldrain = document.getElementById("uploadButtonPixeldrain");
+    const uploadButtonUploadHub = document.getElementById("uploadButtonUploadHub");
+    const uploadButton1Cloudfile = document.getElementById("uploadButton1Cloudfile");
+    const uploadButtonBowfile = document.getElementById("uploadButtonBowfile");
+    const uploadButtonZeroUpload = document.getElementById("uploadButtonZeroUpload");
+    const uploadButtonUploadify = document.getElementById("uploadButtonUploadify");
+    const uploadButtonAnonFilesMe = document.getElementById("uploadButtonAnonFilesMe");
+    const uploadButtonAnonTransfer = document.getElementById("uploadButtonAnonTransfer");
+    const uploadButtonAnonSharing = document.getElementById("uploadButtonAnonSharing");
 
     const closeButton = document.getElementById("closeButton");
     const minimizeButton = document.getElementById("minimizeButton")
@@ -46,12 +66,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     function uploadToHost(url, method, data, format, successCallback, errorCallback) {
+
       fetch(url, {
           method: method,
           body: data,
           signal: signal,
           headers: {
-            'X-Requested-With': '*'
+            'X-Requested-With': '*',
           }
 
       })
@@ -116,96 +137,48 @@ document.addEventListener("DOMContentLoaded", function () {
       popupUploadButton.classList.remove("cursor-not-allowed");
     }
 
-    
-    uploadButtonGoFile.addEventListener("click", function () {
-      reset_popup()
-      host = "gofile"
-      urlFinalUpload.textContent = "Gofile has no known bugs or problems."
-      urlFinalUpload.href = "#"
-      conditionOfUse.href = "https://gofile.io/terms"
-    });
+    function uploadPreparation(uploadButton, hostName, indications, conditionOfUseUrl) {
+      uploadButton.addEventListener("click", function () {
+        reset_popup()
+        host = hostName
+        urlFinalUpload.textContent = indications
+        urlFinalUpload.href = "#"
+        conditionOfUse.href = conditionOfUseUrl
+      });
+    }
 
-    uploadButtonLitterbox.addEventListener("click", function () {
-      reset_popup()
-      host = "litterbox"
-      urlFinalUpload.textContent = "Litterbox is regularly down."
-      urlFinalUpload.href = "#"
-      conditionOfUse.href = "https://litterbox.catbox.moe/faq.php"
-    });
+    uploadPreparation(uploadButtonGoFile, "gofile", "Gofile has no known bugs or problems.", "https://gofile.io/terms")
+    uploadPreparation(uploadButtonLitterbox, "litterbox", "Litterbox is regularly down.", "https://litterbox.catbox.moe/faq.php")
+    uploadPreparation(uploadButtonFileIo, "fileio", "File.io has no known bugs or problems.", "https://www.file.io/tos/")
+    uploadPreparation(uploadFormTmpfilesOrg, "tmpfilesorg", "TmpFiles.org does not accept all file formats.", "https://tmpfiles.org/about")
+    uploadPreparation(uploadButton0x0, "0x0", "0x0.st has no known bugs or problems.", "https://0x0.st/")
+    uploadPreparation(uploadButtonCVSh, "CV", "C-V.sh has no known bugs or problems.", "https://c-v.sh/")
+    uploadPreparation(uploadButtonKITc, "KITc", "Ki.tc has no known bugs or problems.", "https://logic-gate-demo.readthedocs.io/en/latest/readme.html")
+    uploadPreparation(uploadButtonOshi, "Oshi", "Ohsi.at is inaccessible from certain IPs with the error \"Connection reset\".", "https://oshi.at/abuse")
+    uploadPreparation(uploadButtonFilebin, "Filebin", "Filebin often runs out of storage.", "https://filebin.net/terms")
+    uploadPreparation(uploadButtonTransferSh, "TransferSh", "Transfer.sh has no known bugs or problems.", "https://transfer.sh/")
+    uploadPreparation(uploadButtonFroCDN, "FroCDN", "FroCDN.com has no known bugs or problems.", "https://frocdn.com/tos.html")
+    uploadPreparation(uploadButtonBashupload, "Bashupload", "Bashupload.com allows only one download per link.", "https://bashupload.com/disclaimer")
+    uploadPreparation(uploadButtonCurlBy, "CurlBy", "Curl.by has no known bugs or problems.", "https://www.curl.by/disclaimer")
+    uploadPreparation(uploadButtonx0At, "x0At", "x0.at has no known bugs or problems.", "https://x0.at/")
+    uploadPreparation(uploadButtonTempFilesOrg, "TempFilesOrg", "temp-file.org has no known bugs or problems.", "https://temp-file.org/en/page/terms-of-service")
+    uploadPreparation(uploadButtonUplooad, "Uplooad", "Uplooad has no known bugs or problems.", "https://uplooad.net/tos.html")
+    uploadPreparation(uploadButtonTempSendCom, "TempSendCom", "Tempsend has no known bugs or problems.", "https://tempsend.com/")
+    uploadPreparation(uploadButtonTommoTeam, "TommoTeam", "Tommo.team has no known bugs or problems.", "https://tommo.team/faq.html")
+    uploadPreparation(uploadButtonAnonymFile, "AnonymFile", "AnonymFiles imposes a 12-second waiting time before the file can be downloaded.", "https://anonymfile.com/terms")
+    uploadPreparation(uploadButtonGofileCc, "Anyfile", "Anyfile has no known bugs or problems.", "https://anyfile.co/terms")
+    uploadPreparation(uploadButtonAnyfile, "GofileCc", "Gofile.cc imposes a 12-second waiting time before the file can be downloaded.", "https://gofile.cc/terms")
+    uploadPreparation(uploadButtonTempFilesNinja, "TempFilesNinja", "tempfiles.ninja has no known bugs or problems.", "https://tempfiles.ninja/")
+    uploadPreparation(uploadButtonPixeldrain, "Pixeldrain", "Pixeldrain has no known bugs or problems.", "https://pixeldrain.com/abuse")
+    uploadPreparation(uploadButtonUploadHub, "UploadHub", "UploadHub imposes a 10-second waiting time before the file can be downloaded.", "https://uploadhub.to/tos.html")
+    uploadPreparation(uploadButton1Cloudfile, "1Cloudfile", "1Cloudfile has no known bugs or problems.", "https://1cloudfile.com/terms")
+    uploadPreparation(uploadButtonBowfile, "Bowfile", "Bowfile has no known bugs or problems.", "https://bowfile.com/terms")
+    uploadPreparation(uploadButtonZeroUpload, "ZeroUpload", "Zero Upload imposes a 5-second waiting time before the file can be downloaded.", "https://zeroupload.com/terms")
+    uploadPreparation(uploadButtonUploadify, "Uploadify", "Uplodify imposes a 20-second waiting time before the file can be downloaded.", "https://uploadify.net/terms.html")
+    uploadPreparation(uploadButtonAnonFilesMe, "AnonFilesMe", "AnonFiles.me imposes a 3-second waiting time before the file can be downloaded.", "https://anonfiles.me/terms")
+    uploadPreparation(uploadButtonAnonTransfer, "AnonTransfer", "AnonTransfer does not accept all file formats.", "https://anontransfer.com/terms")
+    uploadPreparation(uploadButtonAnonSharing, "AnonSharing", "AnonSharing imposes a 20-second waiting time before the file can be downloaded.", "https://anonsharing.com/terms")
 
-    uploadButtonFileIo.addEventListener("click", function () {
-      reset_popup()
-      host = "fileio"
-      urlFinalUpload.textContent = "File.io has no known bugs or problems."
-      urlFinalUpload.href = "#"
-      conditionOfUse.href = "https://www.file.io/tos/"
-    });
-
-    uploadFormTmpfilesOrg.addEventListener("click", function () {
-      reset_popup()
-      host = "tmpfilesorg"
-      urlFinalUpload.textContent = "TmpFiles.org does not accept all file formats."
-      urlFinalUpload.href = "#"
-      conditionOfUse.href = "https://tmpfiles.org/about"
-    });
-
-    uploadButton0x0.addEventListener("click", function () {
-      reset_popup()
-      host = "0x0"
-      urlFinalUpload.textContent = "0x0.st has no known bugs or problems."
-      urlFinalUpload.href = "#"
-      conditionOfUse.href = "https://0x0.st/"
-    });
-
-    uploadButtonCVSh.addEventListener("click", function () {
-      reset_popup()
-      host = "CV"
-      urlFinalUpload.textContent = "C-V.sh has no known bugs or problems."
-      urlFinalUpload.href = "#"
-      conditionOfUse.href = "https://c-v.sh/"
-    });
-
-    uploadButtonKITc.addEventListener("click", function () {
-      reset_popup()
-      host = "KITc"
-      urlFinalUpload.textContent = "Ki.tc has no known bugs or problems."
-      urlFinalUpload.href = "#"
-      conditionOfUse.href = "https://logic-gate-demo.readthedocs.io/en/latest/readme.html"
-    });
-
-    uploadButtonOshi.addEventListener("click", function () {
-      reset_popup()
-      host = "Oshi"
-      urlFinalUpload.textContent = "Ohsi.at is inaccessible from certain IPs with the error \"Connection reset\"."
-      urlFinalUpload.href = "#"
-      conditionOfUse.href = "https://oshi.at/abuse"
-    });
-
-    uploadButtonFilebin.addEventListener("click", function () {
-      reset_popup()
-      host = "Filebin"
-      urlFinalUpload.textContent = "Filebin often runs out of storage."
-      urlFinalUpload.href = "#"
-      conditionOfUse.href = "https://filebin.net/terms"
-    });
-
-    uploadButtonTransferSh.addEventListener("click", function () {
-      reset_popup()
-      host = "TransferSh"
-      urlFinalUpload.textContent = "Transfer.sh has no known bugs or problems."
-      urlFinalUpload.href = "#"
-      conditionOfUse.href = "https://transfer.sh/"
-    });
-
-    uploadButtonFroCDN.addEventListener("click", function () {
-      reset_popup()
-      host = "FroCDN"
-      urlFinalUpload.textContent = "FroCDN.com has no known bugs or problems."
-      urlFinalUpload.href = "#"
-      conditionOfUse.href = "https://frocdn.com/tos.html"
-    });
-
-    
     popupBrowseButton.addEventListener("click", function () {
       popupFileInput.click();
     });
@@ -244,7 +217,7 @@ document.addEventListener("DOMContentLoaded", function () {
         formData.append("file", popupFileInput.files[0]);
 
         uploadToHost(
-          "https://store6.gofile.io/uploadFile",
+          `${urlForBypassCors}/https://store5.gofile.io/uploadFile`,
           "POST",
           formData,
           "json",
@@ -479,6 +452,436 @@ document.addEventListener("DOMContentLoaded", function () {
           },
             error => {activate_button_when_error(error)})
       }
+
+      else if (host === "Bashupload") {
+        desactivate_button_when_upload()
+
+        formData.append("file_1", popupFileInput.files[0]);
+
+        uploadToHost(
+            `${urlForBypassCors}/https://bashupload.com/`,
+            "POST",
+            formData,
+            "text",
+            data => {const url_bashupload = data.match(/https:\/\/bashupload\.com\/[^\s]+/)
+              if (url_bashupload) {
+              activate_button_and_show_final_url(url_bashupload)
+              copyButton.addEventListener("click", function() {
+                copy_to_clipboard(url_bashupload);
+              });
+            }
+          },
+            error => {activate_button_when_error(error)})
+      }
+
+      else if (host === "CurlBy") {
+        desactivate_button_when_upload()
+
+        formData.append("file_3", popupFileInput.files[0]);
+
+        uploadToHost(
+            `${urlForBypassCors}/https://curl.by/`,
+            "POST",
+            formData,
+            "text",
+            data => {const url_curlby = data.match(/http:\/\/curl\.by\/[^\s]+/)
+              if (url_curlby) {
+              activate_button_and_show_final_url(url_curlby)
+              copyButton.addEventListener("click", function() {
+                copy_to_clipboard(url_curlby);
+              });
+            }
+          },
+            error => {activate_button_when_error(error)})
+      }
+
+      else if (host === "x0At") {
+        desactivate_button_when_upload()
+
+        formData.append("file", popupFileInput.files[0]);
+
+        uploadToHost(
+            `${urlForBypassCors}/https://x0.at/`,
+            "POST",
+            formData,
+            "text",
+            data => {const url_0xat = data
+              if (url_0xat) {
+              activate_button_and_show_final_url(url_0xat)
+              copyButton.addEventListener("click", function() {
+                copy_to_clipboard(url_0xat);
+              });
+            }
+          },
+            error => {activate_button_when_error(error)})
+      }
+
+      else if (host === "TempFilesOrg") {
+        desactivate_button_when_upload()
+
+        formData.append("file", popupFileInput.files[0]);
+        formData.append("upload_auto_delete", "8");
+
+        uploadToHost(
+            `${urlForBypassCors}/https://temp-file.org/upload`,
+            "POST",
+            formData,
+            "json",
+            data => {const url_tempfileorg = data.download_link
+              if (url_tempfileorg) {
+              activate_button_and_show_final_url(url_tempfileorg)
+              copyButton.addEventListener("click", function() {
+                copy_to_clipboard(url_tempfileorg);
+              });
+            }
+          },
+            error => {activate_button_when_error(error)})
+      }
+
+      else if (host === "Uplooad") {
+        desactivate_button_when_upload()
+
+        formData.append("file_0", popupFileInput.files[0]);
+
+        uploadToHost(
+            `${urlForBypassCors}/https://serv1.uplooad.net/cgi-bin/upload.cgi?upload_type=file&utype=anon`,
+            "POST",
+            formData,
+            "json",
+            data => {const url_uplooadnet = "https://www.uplooad.net/"+data[0].file_code
+              if (url_uplooadnet) {
+              activate_button_and_show_final_url(url_uplooadnet)
+              copyButton.addEventListener("click", function() {
+                copy_to_clipboard(url_uplooadnet);
+              });
+            }
+          },
+            error => {activate_button_when_error(error)})
+      }
+
+      else if (host === "TempSendCom") {
+        desactivate_button_when_upload()
+
+        formData.append("file", popupFileInput.files[0]);
+
+        uploadToHost(
+            `${urlForBypassCors}/https://tempsend.com/send`,
+            "POST",
+            formData,
+            "text",
+            data => {
+              const parser = new DOMParser();
+              const doc = parser.parseFromString(data, 'text/html');
+
+              let url_tempsendcom = null;
+              for (const link of doc.querySelectorAll('a')) {
+                const href = link.getAttribute('href');
+                if (href && href.includes('https://tempsend.com/')) {
+                  url_tempsendcom = href;
+                  break;
+                }
+              }
+              if (url_tempsendcom) {
+              activate_button_and_show_final_url(url_tempsendcom)
+              copyButton.addEventListener("click", function() {
+                copy_to_clipboard(url_tempsendcom);
+              });
+            }
+          },
+            error => {activate_button_when_error(error)})
+      }
+
+      else if (host === "TommoTeam") {
+        desactivate_button_when_upload()
+
+        formData.append("files[]", popupFileInput.files[0]);
+
+        uploadToHost(
+            `${urlForBypassCors}/https://www.tommo.team/upload.php`,
+            "POST",
+            formData,
+            "json",
+            data => {const url_tommoteam = data.files[0].url
+              if (url_tommoteam) {
+              activate_button_and_show_final_url(url_tommoteam)
+              copyButton.addEventListener("click", function() {
+                copy_to_clipboard(url_tommoteam);
+              });
+            }
+          },
+            error => {activate_button_when_error(error)})
+      }
+
+      else if (host === "AnonymFile") {
+        desactivate_button_when_upload()
+
+        formData.append("file", popupFileInput.files[0]);
+
+        uploadToHost(
+            "https://anonymfile.com/api/v1/upload",
+            "POST",
+            formData,
+            "json",
+            data => {const url_anonymfile = data.data.file.url.full
+              if (url_anonymfile) {
+              activate_button_and_show_final_url(url_anonymfile)
+              copyButton.addEventListener("click", function() {
+                copy_to_clipboard(url_anonymfile);
+              });
+            }
+          },
+            error => {activate_button_when_error(error)})
+      }
+
+      else if (host === "Anyfile") {
+        desactivate_button_when_upload()
+
+        formData.append("file", popupFileInput.files[0]);
+
+        uploadToHost(
+            "https://anyfile.co/api/v1/upload",
+            "POST",
+            formData,
+            "json",
+            data => {const url_anyfile = data.data.file.url.full
+              if (url_anyfile) {
+              activate_button_and_show_final_url(url_anyfile)
+              copyButton.addEventListener("click", function() {
+                copy_to_clipboard(url_anyfile);
+              });
+            }
+          },
+            error => {activate_button_when_error(error)})
+      }
+
+      else if (host === "GofileCc") {
+        desactivate_button_when_upload()
+
+        formData.append("file", popupFileInput.files[0]);
+
+        uploadToHost(
+            "https://gofile.cc/api/v1/upload",
+            "POST",
+            formData,
+            "json",
+            data => {const url_gofilecc = data.data.file.url.full
+              if (url_gofilecc) {
+              activate_button_and_show_final_url(url_gofilecc)
+              copyButton.addEventListener("click", function() {
+                copy_to_clipboard(url_gofilecc);
+              });
+            }
+          },
+            error => {activate_button_when_error(error)})
+      }
+
+      else if (host === "TempFilesNinja") {
+        desactivate_button_when_upload()
+
+        uploadToHost(
+            `${urlForBypassCors}/https://tempfiles.ninja/api/upload?${popupFileInput.files[0].name}`,
+            "POST",
+            popupFileInput.files[0],
+            "json",
+            data => {const url_tempfilesninja = data.download_url
+              if (url_tempfilesninja) {
+              activate_button_and_show_final_url(url_tempfilesninja)
+              copyButton.addEventListener("click", function() {
+                copy_to_clipboard(url_tempfilesninja);
+              });
+            }
+          },
+            error => {activate_button_when_error(error)})
+      }
+
+      else if (host === "Pixeldrain") {
+        desactivate_button_when_upload()
+
+        uploadToHost(
+            `${urlForBypassCors}/https://pixeldrain.com/api/file/${popupFileInput.files[0].name}`,
+            "PUT",
+            popupFileInput.files[0],
+            "json",
+            data => {const url_pixeldrain = "https://pixeldrain.com/u/"+data.id
+              if (url_pixeldrain) {
+              activate_button_and_show_final_url(url_pixeldrain)
+              copyButton.addEventListener("click", function() {
+                copy_to_clipboard(url_pixeldrain);
+              });
+            }
+          },
+            error => {activate_button_when_error(error)})
+      }
+
+      else if (host === "UploadHub") {
+        desactivate_button_when_upload()
+
+        formData.append("file_0", popupFileInput.files[0])
+
+        uploadToHost(
+            `${urlForBypassCors}/https://upload100.uploadhub.to:83/cgi-bin/upload.cgi?upload_type=file&utype=anon`,
+            "POST",
+            formData,
+            "json",
+            data => {const url_uploadhub = "https://uploadhub.to/"+data[0].file_code
+              if (url_uploadhub) {
+              activate_button_and_show_final_url(url_uploadhub)
+              copyButton.addEventListener("click", function() {
+                copy_to_clipboard(url_uploadhub);
+              });
+            }
+          },
+            error => {activate_button_when_error(error)})
+      }
+
+      else if (host === "1Cloudfile") {
+        desactivate_button_when_upload()
+
+        formData.append("files[]", popupFileInput.files[0])
+
+        uploadToHost(
+            `${urlForBypassCors}/https://fs9.1cloudfile.com/ajax/file_upload_handler`,
+            "POST",
+            formData,
+            "json",
+            data => {const url_1cloudfile = data[0].url
+              if (url_1cloudfile) {
+              activate_button_and_show_final_url(url_1cloudfile)
+              copyButton.addEventListener("click", function() {
+                copy_to_clipboard(url_1cloudfile);
+              });
+            }
+          },
+            error => {activate_button_when_error(error)})
+      }
+
+      else if (host === "Bowfile") {
+        desactivate_button_when_upload()
+
+        formData.append("files[]", popupFileInput.files[0])
+
+        uploadToHost(
+            `${urlForBypassCors}/https://fs8.bowfile.com/ajax/file_upload_handler`,
+            "POST",
+            formData,
+            "json",
+            data => {const url_bowfile = data[0].url
+              if (url_bowfile) {
+              activate_button_and_show_final_url(url_bowfile)
+              copyButton.addEventListener("click", function() {
+                copy_to_clipboard(url_bowfile);
+              });
+            }
+          },
+            error => {activate_button_when_error(error)})
+      }
+
+      else if (host === "ZeroUpload") {
+        desactivate_button_when_upload()
+
+        formData.append("files[]", popupFileInput.files[0])
+
+        uploadToHost(
+            `${urlForBypassCors}/https://ww2.zeroupload.xyz/ajax/file_upload_handler`,
+            "POST",
+            formData,
+            "json",
+            data => {const url_zeroupload = data[0].url
+              if (url_zeroupload) {
+              activate_button_and_show_final_url(url_zeroupload)
+              copyButton.addEventListener("click", function() {
+                copy_to_clipboard(url_zeroupload);
+              });
+            }
+          },
+            error => {activate_button_when_error(error)})
+      }
+
+      else if (host === "Uploadify") {
+        desactivate_button_when_upload()
+
+        formData.append("files[]", popupFileInput.files[0])
+
+        uploadToHost(
+            `${urlForBypassCors}/https://uploadify.net/core/page/ajax/file_upload_handler.ajax.php`,
+            "POST",
+            formData,
+            "json",
+            data => {const url_uploadify = data[0].url
+              if (url_uploadify) {
+              activate_button_and_show_final_url(url_uploadify)
+              copyButton.addEventListener("click", function() {
+                copy_to_clipboard(url_uploadify);
+              });
+            }
+          },
+            error => {activate_button_when_error(error)})
+      }
+
+      else if (host === "AnonFilesMe") {
+        desactivate_button_when_upload()
+
+        formData.append("file", popupFileInput.files[0]);
+
+        uploadToHost(
+            "https://anonfiles.me/api/v1/upload",
+            "POST",
+            formData,
+            "json",
+            data => {const url_anonfilesme = data.data.file.url.full
+              if (url_anonfilesme) {
+              activate_button_and_show_final_url(url_anonfilesme)
+              copyButton.addEventListener("click", function() {
+                copy_to_clipboard(url_anonfilesme);
+              });
+            }
+          },
+            error => {activate_button_when_error(error)})
+      }
+
+      else if (host === "AnonTransfer") {
+        desactivate_button_when_upload()
+
+        formData.append("file", popupFileInput.files[0]);
+
+        uploadToHost(
+            `${urlForBypassCors}/https://www.anontransfer.com/upload.php`,
+            "POST",
+            formData,
+            "json",
+            data => {const url_anontransfer = data.uri
+              if (url_anontransfer) {
+              activate_button_and_show_final_url(url_anontransfer)
+              copyButton.addEventListener("click", function() {
+                copy_to_clipboard(url_anontransfer);
+              });
+            }
+          },
+            error => {activate_button_when_error(error)})
+      }
+
+      else if (host === "AnonSharing") {
+        desactivate_button_when_upload()
+
+        formData.append("files[]", popupFileInput.files[0])
+
+        uploadToHost(
+            `${urlForBypassCors}/https://anonsharing.com/ajax/file_upload_handler`,
+            "POST",
+            formData,
+            "json",
+            data => {const url_anonsharings = data[0].url
+              if (url_anonsharings) {
+              activate_button_and_show_final_url(url_anonsharings)
+              copyButton.addEventListener("click", function() {
+                copy_to_clipboard(url_anonsharings);
+              });
+            }
+          },
+            error => {activate_button_when_error(error)})
+      }
+
+
     });
 
     // I'll be honest, the part of the script that sorts the hosts according to their maximum file size and the time before the file is deleted was generated with ChatGPT, but I tried to understand and decompose it as much as possible to get a better view.
@@ -539,4 +942,5 @@ document.addEventListener("DOMContentLoaded", function () {
       document.getElementById('expireInHeader').addEventListener('click', () => {
         sortTable(2, getExpireInValue);
       });
+
   });
