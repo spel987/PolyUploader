@@ -5,7 +5,7 @@
 This project lets you easily upload your files to various platforms via their API.
 
 <h1 align="center">
-<a href="https://i.imgur.com/uGePxtB.png"><img src="https://i.imgur.com/uGePxtB.png"></a>
+<a href="#"><img src="https://i.imgur.com/uGePxtB.png"></a>
 </h1>
 
 # Installation and use
@@ -149,7 +149,7 @@ Below is a table of the hosting providers currently supported by the application
 
 | Name  | Url | Max files size | Time to file expiration | Uses the Cors-Anywhere repository |
 | ------------- | ------------- | ------------- | ------------- | ------------- |
-| Gofile  | https://gofile.io  | infinite  | infinite | No  |
+| Gofile  | https://gofile.io  | infinite  | infinite | Yes  |
 | Litterbox  | https://litterbox.catbox.moe  | 1GB  | 24h  | No  |
 | File.io  | https://file.io  | 2GB  | infinite  | No  |
 | TmpFiles.org  | https://tmpfiles.org  | 100MB  | 1h  | No  |
@@ -160,14 +160,33 @@ Below is a table of the hosting providers currently supported by the application
 | Filebin  | https://filebin.net/ | infinite  |infinite  | Yes  |
 | transfer.sh  | https://transfer.sh | 10GB  |14d  | Yes  |
 | FroCDN  | https://frocdn.com/ | 15GB  | infinite  | Yes  |
+| bashupload | https://bashupload.com | 50GB | 3d | Yes |
+| Curl.by | https://curl.by | 32MB | 30d | Yes |
+| x0.at | https://x0.at | 50MB | depends on the size of your file | Yes |
+| Temp-file.org | https://temp-file.org | 5GB | 2d | Yes |
+| Uplooad | https://uplooad.net | 1GB | 2d | Yes |
+| Tempsend | https://tempsend.com | 2GB | 7d | Yes |
+| Tommo.team | https://tommo.team | 4GB | 30d | Yes |
+| AnonymFile | https://anonymfile.com | infinite | infinite | No |
+| Anyfile | https://anyfile.co | infinite | infinite | No |
+| Gofile.cc | https://gofile.cc | infinite | infinite | No |
+| tempfiles.ninja | https://tempfiles.ninja | 100MB | 1d | Yes |
+| Pixeldrain | https://pixeldrain.com | infinite | 60d | Yes |
+| UploadHub | https://uplodhub.to | infinite | infinite | Yes |
+| 1Cloudfile | https://1cloudfile.com | 5GB | 30d | Yes |
+| Bowfile | https://bowfile.com | 5GB | 30d | Yes |
+| Zero Upload | https://zeroupload.com | 3.14GB | 190d | Yes |
+| Uploadify | https://uploadify.net | 2GB | infinite | Yes |
+| AnonFiles.me | https://anonfiles.me | infinite | infinite | No |
+| AnonTransfer | https://anontransfer.com | 1GB | 30d | Yes |
+| AnonSharing | https://anonsharing.com | 1GB | 180d | Yes |
+
 
 If you know of a host that has an API or just a CLI interface (without token or authentication key), please open an [issue](https://github.com/spel987/Automatic-File-Uploader/issues).
 
 Video demonstration :
 
 https://github.com/spel987/Automatic-File-Uploader/assets/89778476/fd87e525-dd84-461c-b6c1-0b05dea16973
-
-
 # Made by and with
 
 By :
