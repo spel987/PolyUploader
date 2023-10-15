@@ -190,7 +190,10 @@ If you know of a host that has an API or just a CLI interface (without token or 
 
 Video demonstration :
 
-https://github.com/spel987/Automatic-File-Uploader/assets/89778476/fd87e525-dd84-461c-b6c1-0b05dea16973
+
+https://github.com/spel987/Automatic-File-Uploader/assets/89778476/dcbf54bb-96c4-4f5b-99be-56e9d268b054
+
+
 # Made by and with
 
 By :
