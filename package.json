@@ -1,7 +1,7 @@
 {
   "name": "Automatic-File-Uploader",
-  "version": "1.0.0",
-  "description": "",
+  "version": "1.2.0",
+  "description": "Upload your files to various platforms via their API. ",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
@@ -28,7 +28,7 @@
       "icon": "./src/icon.ico"
     },
     "portable": {
-        "artifactName": "Automatic-File-Uploader Portable.exe"
+      "artifactName": "Automatic-File-Uploader Portable.exe"
     }
   }
 }

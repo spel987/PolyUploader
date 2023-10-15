@@ -35,8 +35,16 @@ app.on('ready', () => {
   ipc.on("minimizeApp", () => {
     mainWindow.minimize()
   })
+
+  const currentVersion = app.getVersion();
+
+  mainWindow.webContents.send('current-version', currentVersion);
 })
 
+ipcMain.on('request-current-version', (event) => {
+  const currentVersion = app.getVersion();
+  event.reply('current-version', currentVersion);
+});
 
 let cors_proxy = require('cors-anywhere');
 

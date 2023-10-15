@@ -5,7 +5,7 @@
 This project lets you easily upload your files to various platforms via their API.
 
 <h1 align="center">
-<a href="#"><img src="https://i.imgur.com/uGePxtB.png"></a>
+<a href="#"><img src="https://i.imgur.com/j4Z6op2.png"></a>
 </h1>
 
 # Installation and use
@@ -36,7 +36,7 @@ npm run build
 
 #### If you'd like an application installation setup : 
 
-- Modify `package.json` with a configuration similar to this one for the "build" part : 
+- Modify `package.json` with a configuration similar to this one for the `build` part : 
 
 ```json
   "build": {
@@ -60,6 +60,12 @@ npm run build
   }
 ```
 
+- Then run the following command : 
+
+```
+npm run build
+```
+
 (Here's the configuration used to build the portable version of the application in comparison)
 
 ```json
@@ -74,20 +80,14 @@ npm run build
       "icon": "./src/icon.ico"
     },
     "portable": {
-      "artifactName": "Automatic-File-Uploader Portable.exe",
+      "artifactName": "Automatic-File-Uploader Portable.exe"
     }
   }
 ```
 
-Then run the following command : 
-
-```
-npm run build
-```
 ### - Or simply download and run the [realease](https://github.com/spel987/Automatic-File-Uploader/releases).
 
-
-# Usage
+# Code and precision
 
 The application uses various file hosting APIs. Simply press the "Upload" button referring to the host you want, select your file and press "Upload" again.
 
@@ -119,30 +119,19 @@ And in the `script.js` file I pass requests through this server.
 ```js
 // script.js
 
-const urlForBypassCors = "http://127.0.0.1:61337"
+const url_for_bypass_cors = "http://127.0.0.1:61337"
 
-else if (host === "0x0") {
-     desactivate_button_when_upload()
-        
-     formData.append("file", popupFileInput.files[0]);
-
-     uploadToHost(
-        `${urlForBypassCors}/https://0x0.st/`,
-        "POST",
-        formData,
-        "text",
-        data => {const url_0x0 = data
-          if (url_0x0) {
-            activate_button_and_show_final_url(url_0x0)
-            copyButton.addEventListener("click", function() {
-              copy_to_clipboard(url_0x0);
-            });
-          }
-        },
-         error => {activate_button_when_error(error)})
- }
+if (host === "gofile") {
+  sent_data_form.append("file", popup_file_input.files[0]);
+  
+  upload_to_host(url_for_bypass_cors + '/https://store2.gofile.io/uploadFile', 'POST', sent_data_form, 'json', ['data', 'downloadPage'])
 ```
 
+I use a fairly comprehensive function to upload a file to the various hosts and retrieve the url in return. Here's an explanatory image : 
+
+<img src="https://i.imgur.com/Swtd60o.png">
+
+# Currently supported hosts
 
 Below is a table of the hosting providers currently supported by the application.
 <table></table>
@@ -150,7 +139,7 @@ Below is a table of the hosting providers currently supported by the application
 | Name  | Url | Max files size | Time to file expiration | Uses the Cors-Anywhere repository |
 | ------------- | ------------- | ------------- | ------------- | ------------- |
 | Gofile  | https://gofile.io  | infinite  | infinite | Yes  |
-| Litterbox  | https://litterbox.catbox.moe  | 1GB  | 24h  | No  |
+| Litterbox  | https://litterbox.catbox.moe  | 1GB  | 24h  | Yes  |
 | File.io  | https://file.io  | 2GB  | infinite  | No  |
 | TmpFiles.org  | https://tmpfiles.org  | 100MB  | 1h  | No  |
 | 0x0.st  | https://0x0.st/  | 512MB  | depends on the size of your file  | Yes  |
@@ -165,7 +154,6 @@ Below is a table of the hosting providers currently supported by the application
 | x0.at | https://x0.at | 50MB | depends on the size of your file | Yes |
 | Temp-file.org | https://temp-file.org | 5GB | 2d | Yes |
 | Uplooad | https://uplooad.net | 1GB | 2d | Yes |
-| Tempsend | https://tempsend.com | 2GB | 7d | Yes |
 | Tommo.team | https://tommo.team | 4GB | 30d | Yes |
 | AnonymFile | https://anonymfile.com | infinite | infinite | No |
 | Anyfile | https://anyfile.co | infinite | infinite | No |
@@ -180,7 +168,23 @@ Below is a table of the hosting providers currently supported by the application
 | AnonFiles.me | https://anonfiles.me | infinite | infinite | No |
 | AnonTransfer | https://anontransfer.com | 1GB | 30d | Yes |
 | AnonSharing | https://anonsharing.com | 1GB | 180d | Yes |
+| Temp.sh | https://temp.sh | 4GB | 3d | Yes |
+| Uguu.se | https://uguu.se | 32MB | 3h | Yes |
+| Nopaste | https://nopaste.net | 2GB | 21d | Yes |
+| udrop | https://udrop.com | 10GB | infinite | Yes |
+| Tempsend | https://tempsend.com | 2GB | 7d | Yes |
+| 1fichier | https://1fichier.com | infinite | infinite | Yes |
+| Turbobit | https://turbobit.net | infinite | infinite | Yes |
+| Hitfile | https://hitfile.net | 100GB | 30d | Yes |
+| file-upload.org | https://file-upload.org | 200MB | infinite | Yes |
+| HexUpload | https://hexupload.net | 2GB | 60d | Yes |
+| Mexa.sh | https://mexa.sh | 500MB | 60d | Yes |
+| RapidFileShare | http://rapidfileshare.net | 512MB | 5d | Yes |
+| Send.cm | https://send.cm | 100GB | 15d | Yes |
+| up-load.io | https://up-load.io | 100MB | infinite | Yes |
+| Usercloud | https://usercloud.com | 5GB | infinite | Yes |
 
+In all, Automatic-File-Uploader lets you upload your files to **45 different hosts** !
 
 If you know of a host that has an API or just a CLI interface (without token or authentication key), please open an [issue](https://github.com/spel987/Automatic-File-Uploader/issues).
 
@@ -207,7 +211,6 @@ With :
 # Suggestions
 
 If you have any questions or suggestions, please open an [issue](https://github.com/spel987/Automatic-File-Uploader/issues).
-
 
 If you like this project or want to support it, you can make donations.
 

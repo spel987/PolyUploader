@@ -13,13 +13,20 @@
 }
 </style>
 <body class="bg-slate-900 text-white overflow-x-hidden">
+  <div id="update_popup" class="fixed inset-0 flex justify-center items-center bg-gray-800 bg-opacity-50 z-50 hidden">
+    <div class="backdrop-blur-sm bg-white/10 p-10 rounded-2xl shadow-md text-center max-w-3xl max-h-96">
+      <p id="new_version_text" class="text-white-950 text-center mb-1"></p>
+      <p id="current_version_text" class="text-white-950 text-center mb-6"></p>
+      <a id="popup_new_version_download" class="bg-gradient-to-r from-violet-700 to-purple-600 text-white transition duration-200 px-5 py-2 rounded-lg hover:scale-105 hover:from-violet-600 hover:to-purple-500 active:scale-110" href="#">Download</a>
+    </div>
+  </div>
   <div class="fixed top-0 left-0 w-full backdrop-blur-sm bg-zinc-800/70 z-50 text-white py-2 px-4 flex justify-between items-center" style="-webkit-app-region: drag">
     <div class="text-slate-400 ml-5" style="-webkit-app-region: no-drag">
         <a href="https://github.com/spel987/Automatic-File-Uploader">Automatic File Uploader</a>
     </div>
     <div class="space-x-2 mr-2" style="-webkit-app-region: no-drag">
-        <button class="text-white mr-1 transition hover:text-slate-400" id="minimizeButton"><i class="fas fa-window-minimize"></i></button>
-        <button class="text-white transition hover:text-red-600" id="closeButton"><i class="fas fa-times"></i></button>
+        <button class="text-white mr-1 transition hover:text-slate-400" id="minimize_button"><i class="fas fa-window-minimize"></i></button>
+        <button class="text-white transition hover:text-red-600" id="close_button"><i class="fas fa-times"></i></button>
     </div>
   </div>
 
@@ -30,18 +37,27 @@
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 font-medium">
     <h1 class="mt-16 sm:text-4xl font-bold text-center">Automatic file upload to hosters with API</h1>
     <p class="text-lg mt-5 mb-8 text-slate-400 text-center">This project lets you easily upload your files to various platforms via their API.</p>
-    <table class="bg-gradient-to-r from-slate-600 to-slate-700 w-full table-auto">
+
+    <div class="flex justify-center items-center">
+      <div class="transition duration-200 hover:scale-105">
+        <i class="fa-solid fa-magnifying-glass text-gray-400 mb-5 mr-1"></i>
+        <input type="text" class="text-center mb-5 pt-0.5 pb-0.5 bg-gradient-to-r from-slate-900 to-slate-800 rounded-lg transition duration-200 border-2 border-white-950 hover:border-rose-500 focus:outline-none active:scale-[1.05]" id="search_input" placeholder="Search for a host in the list" autocomplete="off" style="width:400px" spellcheck="false">
+      </div>
+    </div>
+    
+
+    <table class="bg-gradient-to-r from-slate-600 to-slate-700 w-full table-auto rounded-lg">
       <thead>
         <tr>
-          <th class="px-4 py-2 text-left" id="nameHeader">Name</th>
-          <th class="px-4 py-2 text-left cursor-pointer transition hover:text-slate-300" id="maxFileSizeHeader">Max file size <i class="fa-solid fa-arrows-up-down fa-sm" style="color: #ffffff"></i></th>
-          <th class="px-4 py-2 text-left cursor-pointer transition hover:text-slate-300" id="expireInHeader">Expire in <i class="fa-solid fa-arrows-up-down fa-sm" style="color: #ffffff"></i></th>
+          <th class="px-4 py-2 text-left" id="name_header">Name</th>
+          <th class="px-4 py-2 text-left cursor-pointer transition duration-200 hover:text-slate-300" id="max_file_size_header">Max file size <i class="fa-solid fa-arrows-up-down fa-sm" style="color: #ffffff"></i></th>
+          <th class="px-4 py-2 text-left cursor-pointer transition duration-200 hover:text-slate-300" id="expire_header">Expire in <i class="fa-solid fa-arrows-up-down fa-sm" style="color: #ffffff"></i></th>
           <th class="px-4 py-2 text-left">Upload</th>
         </tr>
       </thead>
       <tbody>
 
-        <tr class="bg-slate-800 alternate-row">
+        <tr class="bg-slate-800 alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
             <img src="images\gofile.png" alt="Gofile Logo" class="h-6 mr-2">
             Gofile&nbsp(<a class="text-sky-400" href="https://gofile.io" id="linkExternal">https://gofile.io</a>)
@@ -49,11 +65,11 @@
           <td class="px-4 py-2">infinite</td>
           <td class="px-4 py-2">infinite</td>
           <td class="px-4 py-2">
-            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition hover:scale-105 hover:from-red-500 hover:to-rose-500" id="uploadButtonGoFile">Upload</button>
+            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 active:scale-110" id="button_gofile">Upload</button>
           </td>
         </tr>
 
-        <tr class="bg-slate-700 alternate-row">
+        <tr class="bg-slate-700 alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
             <img src="images\litterbox.png" alt="Litterbox Logo" class="h-6 mr-2">
             Litterbox&nbsp(<a class="text-sky-400" href="https://litterbox.catbox.moe">https://litterbox.catbox.moe</a>)
@@ -61,11 +77,11 @@
           <td class="px-4 py-2">1GB</td>
           <td class="px-4 py-2">24h</td>
           <td class="px-4 py-2">
-            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition hover:scale-105 hover:from-red-500 hover:to-rose-500" id="uploadButtonLitterbox">Upload</button>
+            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 active:scale-110" id="button_litterbox">Upload</button>
           </td>
         </tr>
 
-        <tr class="bg-slate-800 alternate-row">
+        <tr class="bg-slate-800 alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
             <img src="images\fileio.png" alt="File.io Logo" class="h-6 ml-0.5 mr-2">
             File.io&nbsp(<a class="text-sky-400" href="https://file.io">https://file.io</a>)
@@ -73,11 +89,11 @@
           <td class="px-4 py-2">2GB</td>
           <td class="px-4 py-2">infinite</td>
           <td class="px-4 py-2">
-            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition hover:scale-105 hover:from-red-500 hover:to-rose-500" id="uploadButtonFileIo">Upload</button>
+            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 active:scale-110" id="button_fileio">Upload</button>
           </td>
         </tr>
 
-        <tr class="bg-slate-700 alternate-row">
+        <tr class="bg-slate-700 alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
             <img src="images\tmpfiles.png" alt="TmpFiles.org Logo" class="h-6 ml-0.5 mr-2">
             TmpFiles.org&nbsp(<a class="text-sky-400" href="https://tmpfiles.org">https://tmpfiles.org</a>)
@@ -85,11 +101,11 @@
           <td class="px-4 py-2">100MB</td>
           <td class="px-4 py-2">1h</td>
           <td class="px-4 py-2">
-            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition hover:scale-105 hover:from-red-500 hover:to-rose-500" id="uploadFormTmpfilesOrg">Upload</button>
+            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 active:scale-110" id="button_tmpfilesorg">Upload</button>
           </td>
         </tr>
 
-        <tr class="bg-slate-800 alternate-row">
+        <tr class="bg-slate-800 alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
             <img src="images\no_logo.png" alt="0x0.st Logo (no logo)" class="h-5 ml-1 mr-2">
             0x0.st&nbsp(<a class="text-sky-400" href="https://0x0.st/">https://0x0.st/</a>)
@@ -97,11 +113,11 @@
           <td class="px-4 py-2">512MB</td>
           <td class="px-4 py-2">depends on the size of your file</td>
           <td class="px-4 py-2">
-            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition hover:scale-105 hover:from-red-500 hover:to-rose-500" id="uploadButton0x0">Upload</button>
+            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 active:scale-110" id="button_0x0">Upload</button>
           </td>
         </tr>
 
-        <tr class="bg-slate-700 alternate-row">
+        <tr class="bg-slate-700 alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
             <img src="images\c-v.png" alt="C-V.sh Logo" class="h-6 ml-0.5 mr-2">
             c-v.sh&nbsp(<a class="text-sky-400" href="https://c-v.sh/">https://c-v.sh/</a>)
@@ -109,11 +125,11 @@
           <td class="px-4 py-2">4GB</td>
           <td class="px-4 py-2">depends on the size of your file</td>
           <td class="px-4 py-2">
-            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition hover:scale-105 hover:from-red-500 hover:to-rose-500" id="uploadFormCVSh">Upload</button>
+            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 active:scale-110" id="button_cvsh">Upload</button>
           </td>
         </tr>
 
-        <tr class="bg-slate-800 alternate-row">
+        <tr class="bg-slate-800 alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
             <img src="images\no_logo.png" alt="Ki.tc Logo (no logo)" class="h-5 ml-1 mr-2">
             ki.tc&nbsp(<a class="text-sky-400" href="https://ki.tc/">https://ki.tc/</a>)
@@ -121,11 +137,11 @@
           <td class="px-4 py-2">400MB</td>
           <td class="px-4 py-2">depends on the size of your file</td>
           <td class="px-4 py-2">
-            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition hover:scale-105 hover:from-red-500 hover:to-rose-500" id="uploadButtonKITc">Upload</button>
+            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 active:scale-110" id="button_kitc">Upload</button>
           </td>
         </tr>
 
-        <tr class="bg-slate-700 alternate-row">
+        <tr class="bg-slate-700 alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
             <img src="images\oshi.png" alt="Oshi.at Logo" class="h-6 ml-0.5 mr-2">
             Oshi.at&nbsp(<a class="text-sky-400" href="https://oshi.at/">https://oshi.at/</a>)
@@ -133,11 +149,11 @@
           <td class="px-4 py-2">1GB</td>
           <td class="px-4 py-2">2h</td>
           <td class="px-4 py-2">
-            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition hover:scale-105 hover:from-red-500 hover:to-rose-500" id="uploadFormOshi">Upload</button>
+            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 active:scale-110" id="button_oshi">Upload</button>
           </td>
         </tr>
 
-        <tr class="bg-slate-800 alternate-row">
+        <tr class="bg-slate-800 alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
             <img src="images\filebin.png" alt="Filebin Logo (no logo)" class="h-5 ml-1 mr-2">
             Filebin&nbsp(<a class="text-sky-400" href="https://filebin.net/">https://filebin.net/</a>)
@@ -145,11 +161,11 @@
           <td class="px-4 py-2">infinite</td>
           <td class="px-4 py-2">infinite</td>
           <td class="px-4 py-2">
-            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition hover:scale-105 hover:from-red-500 hover:to-rose-500" id="uploadButtonFilebin">Upload</button>
+            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 active:scale-110" id="button_filebin">Upload</button>
           </td>
         </tr>
 
-        <tr class="bg-slate-700 alternate-row">
+        <tr class="bg-slate-700 alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
             <img src="images\transfersh.png" alt="Transfer.sh Logo" class="h-6 ml-0.5 mr-2">
             transfer.sh&nbsp(<a class="text-sky-400" href="https://transfer.sh/">https://transfer.sh/</a>)
@@ -157,11 +173,11 @@
           <td class="px-4 py-2">10GB</td>
           <td class="px-4 py-2">14d</td>
           <td class="px-4 py-2">
-            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition hover:scale-105 hover:from-red-500 hover:to-rose-500" id="uploadFormtransferSh">Upload</button>
+            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 active:scale-110" id="button_transfersh">Upload</button>
           </td>
         </tr>
 
-        <tr class="bg-slate-800 alternate-row">
+        <tr class="bg-slate-800 alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
             <img src="images\no_logo.png" alt="FroCDN Logo (no logo)" class="h-5 ml-1 mr-2">
             FroCDN&nbsp(<a class="text-sky-400" href="https://frocdn.com/">https://frocdn.com/</a>)
@@ -169,11 +185,11 @@
           <td class="px-4 py-2">15GB</td>
           <td class="px-4 py-2">infinite</td>
           <td class="px-4 py-2">
-            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition hover:scale-105 hover:from-red-500 hover:to-rose-500" id="uploadButtonFroCDN">Upload</button>
+            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 active:scale-110" id="button_frocdn">Upload</button>
           </td>
         </tr>
 
-        <tr class="bg-slate-700 alternate-row">
+        <tr class="bg-slate-700 alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
             <img src="images\no_logo.png" alt="bashupload Logo (no logo)" class="h-5 ml-1 mr-2">
             bashupload&nbsp(<a class="text-sky-400" href="https://bashupload.com/">https://bashupload.com/</a>)
@@ -181,11 +197,11 @@
           <td class="px-4 py-2">50GB</td>
           <td class="px-4 py-2">3d</td>
           <td class="px-4 py-2">
-            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition hover:scale-105 hover:from-red-500 hover:to-rose-500" id="uploadButtonBashupload">Upload</button>
+            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 active:scale-110" id="button_bashupload">Upload</button>
           </td>
         </tr>
 
-        <tr class="bg-slate-800 alternate-row">
+        <tr class="bg-slate-800 alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
             <img src="images\no_logo.png" alt="curl.by Logo (no logo)" class="h-5 ml-1 mr-2">
             Curl.by&nbsp(<a class="text-sky-400" href="https://www.curl.by/">https://www.curl.by/</a>)
@@ -193,11 +209,11 @@
           <td class="px-4 py-2">32MB</td>
           <td class="px-4 py-2">30d</td>
           <td class="px-4 py-2">
-            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition hover:scale-105 hover:from-red-500 hover:to-rose-500" id="uploadButtonCurlBy">Upload</button>
+            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 active:scale-110" id="button_curlby">Upload</button>
           </td>
         </tr>
 
-        <tr class="bg-slate-700 alternate-row">
+        <tr class="bg-slate-700 alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
             <img src="images\no_logo.png" alt="x0.at Logo (no logo)" class="h-5 ml-1 mr-2">
             x0.at&nbsp(<a class="text-sky-400" href="https://x0.at/">https://x0.at/</a>)
@@ -205,11 +221,11 @@
           <td class="px-4 py-2">50MB</td>
           <td class="px-4 py-2">depends on the size of your file</td>
           <td class="px-4 py-2">
-            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition hover:scale-105 hover:from-red-500 hover:to-rose-500" id="uploadButtonx0At">Upload</button>
+            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 active:scale-110" id="button_x0at">Upload</button>
           </td>
         </tr>
 
-        <tr class="bg-slate-800 alternate-row">
+        <tr class="bg-slate-800 alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
             <img src="images\tempfileorg.png" alt="temp-file.org Logo" class="h-5 ml-1 mr-2">
             Temp-file.org&nbsp(<a class="text-sky-400" href="https://temp-file.org/">https://temp-file.org/</a>)
@@ -217,11 +233,11 @@
           <td class="px-4 py-2">5GB</td>
           <td class="px-4 py-2">2d</td>
           <td class="px-4 py-2">
-            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition hover:scale-105 hover:from-red-500 hover:to-rose-500" id="uploadButtonTempFileOrg">Upload</button>
+            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 active:scale-110" id="button_tempfilesorg">Upload</button>
           </td>
         </tr>
 
-        <tr class="bg-slate-700 alternate-row">
+        <tr class="bg-slate-700 alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
             <img src="images\uplooad.png" alt="Uplooad Logo" class="h-6 ml-1 mr-2">
             Uplooad&nbsp(<a class="text-sky-400" href="https://uplooad.net/">https://uplooad.net/</a>)
@@ -229,23 +245,11 @@
           <td class="px-4 py-2">1GB</td>
           <td class="px-4 py-2">2d</td>
           <td class="px-4 py-2">
-            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition hover:scale-105 hover:from-red-500 hover:to-rose-500" id="uploadButtonUplooad">Upload</button>
-          </td>
-        </tr>
-       
-        <tr class="bg-slate-800 alternate-row">
-          <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\tempsend.png" alt="Tempsend Logo" class="h-6 ml-1 mr-2">
-            Tempsend&nbsp(<a class="text-sky-400" href="https://tempsend.com">https://tempsend.com</a>)
-          </td>
-          <td class="px-4 py-2">2GB</td>
-          <td class="px-4 py-2">7d</td>
-          <td class="px-4 py-2">
-            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition hover:scale-105 hover:from-red-500 hover:to-rose-500" id="uploadButtonTempSendCom">Upload</button>
+            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 active:scale-110" id="button_uplooad">Upload</button>
           </td>
         </tr>
 
-        <tr class="bg-slate-700 alternate-row">
+        <tr class="bg-slate-800 alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
             <img src="images\tommoteam.png" alt="Tommo.team Logo" class="h-6 ml-1 mr-2">
             Tommo.team&nbsp(<a class="text-sky-400" href="https://tommo.team/">https://tommo.team/</a>)
@@ -253,11 +257,11 @@
           <td class="px-4 py-2">4GB</td>
           <td class="px-4 py-2">30d</td>
           <td class="px-4 py-2">
-            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition hover:scale-105 hover:from-red-500 hover:to-rose-500" id="uploadButtonTommoTeam">Upload</button>
+            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 active:scale-110" id="button_tommoteam">Upload</button>
           </td>
         </tr>
 
-        <tr class="bg-slate-800 alternate-row">
+        <tr class="bg-slate-700 alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
             <img src="images\anonymfile.png" alt="AnonymFile Logo" class="h-6 ml-1 mr-2 rounded-full">
             AnonymFile&nbsp(<a class="text-sky-400" href="https://anonymfile.com/">https://anonymfile.com/</a>)
@@ -265,11 +269,11 @@
           <td class="px-4 py-2">infinite</td>
           <td class="px-4 py-2">infinite</td>
           <td class="px-4 py-2">
-            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition hover:scale-105 hover:from-red-500 hover:to-rose-500" id="uploadButtonAnonymFile">Upload</button>
+            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 active:scale-110" id="button_anonymfile">Upload</button>
           </td>
         </tr>
 
-        <tr class="bg-slate-700 alternate-row">
+        <tr class="bg-slate-800 alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
             <img src="images\anyfile.png" alt="Anyfile Logo" class="h-6 ml-1 mr-2 rounded-full">
             Anyfile&nbsp(<a class="text-sky-400" href="https://anyfile.co/">https://anyfile.co/</a>)
@@ -277,11 +281,11 @@
           <td class="px-4 py-2">infinite</td>
           <td class="px-4 py-2">infinite</td>
           <td class="px-4 py-2">
-            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition hover:scale-105 hover:from-red-500 hover:to-rose-500" id="uploadButtonAnyfile">Upload</button>
+            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 active:scale-110" id="button_anyfile">Upload</button>
           </td>
         </tr>
 
-        <tr class="bg-slate-800 alternate-row">
+        <tr class="bg-slate-700 alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
             <img src="images\gofilecc.png" alt="Gofile.cc Logo" class="h-6 ml-1 mr-2 rounded-full">
             Gofile.cc&nbsp(<a class="text-sky-400" href="https://gofile.cc/">https://gofile.cc/</a>)
@@ -289,11 +293,11 @@
           <td class="px-4 py-2">infinite</td>
           <td class="px-4 py-2">infinite</td>
           <td class="px-4 py-2">
-            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition hover:scale-105 hover:from-red-500 hover:to-rose-500" id="uploadButtonGofileCc">Upload</button>
+            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 active:scale-110" id="button_gofilecc">Upload</button>
           </td>
         </tr>
 
-        <tr class="bg-slate-700 alternate-row">
+        <tr class="bg-slate-800 alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
             <img src="images\tempfilesninja.png" alt="TempFile.ninja Logo" class="h-6 ml-1 mr-2">
             tempfiles.ninja&nbsp(<a class="text-sky-400" href="https://tempfiles.ninja/">https://tempfiles.ninja/</a>)
@@ -301,11 +305,11 @@
           <td class="px-4 py-2">100MB</td>
           <td class="px-4 py-2">1d</td>
           <td class="px-4 py-2">
-            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition hover:scale-105 hover:from-red-500 hover:to-rose-500" id="uploadButtonTempFilesNinja">Upload</button>
+            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 active:scale-110" id="button_tempfilesninja">Upload</button>
           </td>
         </tr>
 
-        <tr class="bg-slate-800 alternate-row">
+        <tr class="bg-slate-700 alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
             <img src="images\pixeldrain.png" alt="Pixeldrain Logo" class="h-6 ml-1 mr-2">
             Pixeldrain&nbsp(<a class="text-sky-400" href="https://pixeldrain.com/">https://pixeldrain.com/</a>)
@@ -313,11 +317,11 @@
           <td class="px-4 py-2">infinite</td>
           <td class="px-4 py-2">60d</td>
           <td class="px-4 py-2">
-            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition hover:scale-105 hover:from-red-500 hover:to-rose-500" id="uploadButtonPixeldrain">Upload</button>
+            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 active:scale-110" id="button_pixeldrain">Upload</button>
           </td>
         </tr>
 
-        <tr class="bg-slate-700 alternate-row">
+        <tr class="bg-slate-800 alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
             <img src="images\uploadhub.png" alt="UploadHub Logo" class="h-6 ml-1 mr-2">
             UploadHub&nbsp(<a class="text-sky-400" href="https://uploadhub.to/">https://uploadhub.to/</a>)
@@ -325,11 +329,11 @@
           <td class="px-4 py-2">infinite</td>
           <td class="px-4 py-2">infinite</td>
           <td class="px-4 py-2">
-            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition hover:scale-105 hover:from-red-500 hover:to-rose-500" id="uploadButtonUploadHub">Upload</button>
+            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 active:scale-110" id="button_uploadhub">Upload</button>
           </td>
         </tr>
 
-        <tr class="bg-slate-800 alternate-row">
+        <tr class="bg-slate-700 alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
             <img src="images\1cloudfile.png" alt="1Cloudfile Logo" class="h-6 ml-1 mr-2">
             1Cloudfile&nbsp(<a class="text-sky-400" href="https://1cloudfile.com/">https://1cloudfile.com/</a>)
@@ -337,11 +341,11 @@
           <td class="px-4 py-2">5GB</td>
           <td class="px-4 py-2">30d</td>
           <td class="px-4 py-2">
-            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition hover:scale-105 hover:from-red-500 hover:to-rose-500" id="uploadButton1Cloudfile">Upload</button>
+            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 active:scale-110" id="button_1cloudfile">Upload</button>
           </td>
         </tr>
 
-        <tr class="bg-slate-700 alternate-row">
+        <tr class="bg-slate-800 alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
             <img src="images\bowfile.png" alt="Bowfile Logo" class="h-6 ml-1 mr-2">
             Bowfile&nbsp(<a class="text-sky-400" href="https://bowfile.com/">https://bowfile.com/</a>)
@@ -349,11 +353,11 @@
           <td class="px-4 py-2">5GB</td>
           <td class="px-4 py-2">30d</td>
           <td class="px-4 py-2">
-            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition hover:scale-105 hover:from-red-500 hover:to-rose-500" id="uploadButtonBowfile">Upload</button>
+            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 active:scale-110" id="button_bowfile">Upload</button>
           </td>
         </tr>
 
-        <tr class="bg-slate-800 alternate-row">
+        <tr class="bg-slate-700 alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
             <img src="images\zeroupload.png" alt="Zero Upload Logo" class="h-6 ml-1 mr-2">
             Zero Upload&nbsp(<a class="text-sky-400" href="https://zeroupload.com/">https://zeroupload.com/</a>)
@@ -361,11 +365,11 @@
           <td class="px-4 py-2">3.14GB</td>
           <td class="px-4 py-2">190d</td>
           <td class="px-4 py-2">
-            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition hover:scale-105 hover:from-red-500 hover:to-rose-500" id="uploadButtonZeroUpload">Upload</button>
+            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 active:scale-110" id="button_zeroupload">Upload</button>
           </td>
         </tr>
 
-        <tr class="bg-slate-700 alternate-row">
+        <tr class="bg-slate-800 alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
             <img src="images\uploadify.png" alt="Uploadify Logo" class="h-6 ml-1 mr-2">
             Uploadify&nbsp(<a class="text-sky-400" href="https://uploadify.net/">https://uploadify.net/</a>)
@@ -373,11 +377,11 @@
           <td class="px-4 py-2">2GB</td>
           <td class="px-4 py-2">infinite</td>
           <td class="px-4 py-2">
-            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition hover:scale-105 hover:from-red-500 hover:to-rose-500" id="uploadButtonUploadify">Upload</button>
+            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 active:scale-110" id="button_uploadify">Upload</button>
           </td>
         </tr>
 
-        <tr class="bg-slate-800 alternate-row">
+        <tr class="bg-slate-700 alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
             <img src="images\anonfilesme.png" alt="Anonfiles.me Logo" class="h-6 ml-1 mr-2 rounded-full">
             Anonfiles.me&nbsp(<a class="text-sky-400" href="https://anonfiles.me/">https://anonfiles.me/</a>)
@@ -385,11 +389,11 @@
           <td class="px-4 py-2">infinite</td>
           <td class="px-4 py-2">infinite</td>
           <td class="px-4 py-2">
-            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition hover:scale-105 hover:from-red-500 hover:to-rose-500" id="uploadButtonAnonFilesMe">Upload</button>
+            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 active:scale-110" id="button_anonfilesme">Upload</button>
           </td>
         </tr>
 
-        <tr class="bg-slate-700 alternate-row">
+        <tr class="bg-slate-800 alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
             <img src="images\anontransfer.png" alt="AnonTransfer Logo" class="h-6 ml-1 mr-2">
             AnonTransfer&nbsp(<a class="text-sky-400" href="https://anontransfer.com/">https://anontransfer.com/</a>)
@@ -397,11 +401,11 @@
           <td class="px-4 py-2">1GB</td>
           <td class="px-4 py-2">30d</td>
           <td class="px-4 py-2">
-            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition hover:scale-105 hover:from-red-500 hover:to-rose-500" id="uploadButtonAnonTransfer">Upload</button>
+            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 active:scale-110" id="button_anontransfer">Upload</button>
           </td>
         </tr>
 
-        <tr class="bg-slate-800 alternate-row">
+        <tr class="bg-slate-700 alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
             <img src="images\anonsharingcom.png" alt="AnonSharing Logo" class="h-6 ml-1 mr-2">
             AnonSharing&nbsp(<a class="text-sky-400" href="https://anonsharing.com/">https://anonsharing.com/</a>)
@@ -409,29 +413,209 @@
           <td class="px-4 py-2">1GB</td>
           <td class="px-4 py-2">180d</td>
           <td class="px-4 py-2">
-            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition hover:scale-105 hover:from-red-500 hover:to-rose-500" id="uploadButtonAnonSharing">Upload</button>
+            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 active:scale-110" id="button_anonsharing">Upload</button>
+          </td>
+        </tr>
+
+        <tr class="bg-slate-800 alternate-row search-result">
+          <td class="px-4 py-2 flex items-center mt-1.5">
+            <img src="images\no_logo.png" alt="Temp.sh Logo" class="h-6 ml-1 mr-2">
+            Temp.sh&nbsp(<a class="text-sky-400" href="https://temp.sh/">https://temp.sh/</a>)
+          </td>
+          <td class="px-4 py-2">4GB</td>
+          <td class="px-4 py-2">3d</td>
+          <td class="px-4 py-2">
+            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 active:scale-110" id="button_tempsh">Upload</button>
+          </td>
+        </tr>
+
+        <tr class="bg-slate-700 alternate-row search-result">
+          <td class="px-4 py-2 flex items-center mt-1.5">
+            <img src="images\uguuse.png" alt="Uguu.se Logo" class="h-6 ml-1 mr-2">
+            Uguu.se&nbsp(<a class="text-sky-400" href="https://uguu.se/">https://uguu.se/</a>)
+          </td>
+          <td class="px-4 py-2">32MB</td>
+          <td class="px-4 py-2">3h</td>
+          <td class="px-4 py-2">
+            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 active:scale-110" id="button_uguuse">Upload</button>
+          </td>
+        </tr>
+
+        <tr class="bg-slate-800 alternate-row search-result">
+          <td class="px-4 py-2 flex items-center mt-1.5">
+            <img src="images\nopastenet.png" alt="nopaste.net Logo" class="h-6 ml-1 mr-2">
+            nopaste.net&nbsp(<a class="text-sky-400" href="https://nopaste.net/">https://nopaste.net/</a>)
+          </td>
+          <td class="px-4 py-2">2GB</td>
+          <td class="px-4 py-2">21d</td>
+          <td class="px-4 py-2">
+            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 active:scale-110" id="button_nopaste">Upload</button>
+          </td>
+        </tr>
+
+        <tr class="bg-slate-700 alternate-row search-result">
+          <td class="px-4 py-2 flex items-center mt-1.5">
+            <img src="images\udrop.png" alt="udrop Logo" class="h-6 ml-1 mr-2">
+            udrop&nbsp(<a class="text-sky-400" href="https://www.udrop.com/">https://www.udrop.com/</a>)
+          </td>
+          <td class="px-4 py-2">10GB</td>
+          <td class="px-4 py-2">infinite</td>
+          <td class="px-4 py-2">
+            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 active:scale-110" id="button_udrop">Upload</button>
+          </td>
+        </tr>
+
+        <tr class="bg-slate-800 alternate-row search-result">
+          <td class="px-4 py-2 flex items-center mt-1.5">
+            <img src="images\tempsend.png" alt="Tempsend Logo" class="h-6 ml-1 mr-2">
+            Tempsend&nbsp(<a class="text-sky-400" href="https://tempsend.com/">https://tempsend.com/</a>)
+          </td>
+          <td class="px-4 py-2">2GB</td>
+          <td class="px-4 py-2">7d</td>
+          <td class="px-4 py-2">
+            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 active:scale-110" id="button_tempsend">Upload</button>
+          </td>
+        </tr>
+
+        <tr class="bg-slate-700 alternate-row search-result">
+          <td class="px-4 py-2 flex items-center mt-1.5">
+            <img src="images\1fichier.png" alt="1fichier Logo" class="h-6 ml-1 mr-2">
+            1fichier&nbsp(<a class="text-sky-400" href="https://1fichier.com/">https://1fichier.com/</a>)
+          </td>
+          <td class="px-4 py-2">infinite</td>
+          <td class="px-4 py-2">infinite</td>
+          <td class="px-4 py-2">
+            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 active:scale-110" id="button_1fichier">Upload</button>
+          </td>
+        </tr>
+
+        <tr class="bg-slate-800 alternate-row search-result">
+          <td class="px-4 py-2 flex items-center mt-1.5">
+            <img src="images\turbobit.png" alt="Turbobit Logo" class="h-6 ml-1 mr-2">
+            Turbobit&nbsp(<a class="text-sky-400" href="https://turbobit.net/">https://turbobit.net/</a>)
+          </td>
+          <td class="px-4 py-2">infinite</td>
+          <td class="px-4 py-2">infinite</td>
+          <td class="px-4 py-2">
+            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 active:scale-110" id="button_turbobit">Upload</button>
+          </td>
+        </tr>
+
+        <tr class="bg-slate-700 alternate-row search-result">
+          <td class="px-4 py-2 flex items-center mt-1.5">
+            <img src="images\hitfile.png" alt="Hitfile Logo" class="h-6 ml-1 mr-2">
+            Hitfile&nbsp(<a class="text-sky-400" href="https://hitfile.net/">https://hitfile.net/</a>)
+          </td>
+          <td class="px-4 py-2">100GB</td>
+          <td class="px-4 py-2">30d</td>
+          <td class="px-4 py-2">
+            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 active:scale-110" id="button_hitfile">Upload</button>
+          </td>
+        </tr>
+
+        <tr class="bg-slate-800 alternate-row search-result">
+          <td class="px-4 py-2 flex items-center mt-1.5">
+            <img src="images\file-uploadorg.png" alt="file-upload.org Logo" class="h-6 ml-1 mr-2">
+            file-upload.org&nbsp(<a class="text-sky-400" href="https://file-upload.org/">https://file-upload.org/</a>)
+          </td>
+          <td class="px-4 py-2">200MB</td>
+          <td class="px-4 py-2">infinite</td>
+          <td class="px-4 py-2">
+            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 active:scale-110" id="button_fileupload">Upload</button>
+          </td>
+        </tr>
+
+        <tr class="bg-slate-700 alternate-row search-result">
+          <td class="px-4 py-2 flex items-center mt-1.5">
+            <img src="images\hexupload.png" alt="HexUpload Logo" class="h-6 ml-1 mr-2">
+            HexUpload&nbsp(<a class="text-sky-400" href="https://hexupload.net/">https://hexupload.net/</a>)
+          </td>
+          <td class="px-4 py-2">2GB</td>
+          <td class="px-4 py-2">60d</td>
+          <td class="px-4 py-2">
+            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 active:scale-110" id="button_hexupload">Upload</button>
+          </td>
+        </tr>
+
+        <tr class="bg-slate-800 alternate-row search-result">
+          <td class="px-4 py-2 flex items-center mt-1.5">
+            <img src="images\mexash.png" alt="Mexa.sh Logo" class="h-6 ml-1 mr-2">
+            Mexa.sh&nbsp(<a class="text-sky-400" href="https://mexa.sh/">https://mexa.sh/</a>)
+          </td>
+          <td class="px-4 py-2">500MB</td>
+          <td class="px-4 py-2">60d</td>
+          <td class="px-4 py-2">
+            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 active:scale-110" id="button_mexash">Upload</button>
+          </td>
+        </tr>
+
+        <tr class="bg-slate-700 alternate-row search-result">
+          <td class="px-4 py-2 flex items-center mt-1.5">
+            <img src="images\rapidfileshare.png" alt="RapidFileShare Logo" class="h-5 ml-1 mr-2">
+            RapidFileShare&nbsp(<a class="text-sky-400" href="http://rapidfileshare.net/">http://rapidfileshare.net/</a>)
+          </td>
+          <td class="px-4 py-2">512MB</td>
+          <td class="px-4 py-2">5d</td>
+          <td class="px-4 py-2">
+            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 active:scale-110" id="button_rapidfileshare">Upload</button>
+          </td>
+        </tr>
+
+        <tr class="bg-slate-800 alternate-row search-result">
+          <td class="px-4 py-2 flex items-center mt-1.5">
+            <img src="images\sendcm.png" alt="Send.cm Logo" class="h-6 ml-1 mr-2">
+            Send.cm&nbsp(<a class="text-sky-400" href="https://send.cm/">https://send.cm/</a>)
+          </td>
+          <td class="px-4 py-2">100GB</td>
+          <td class="px-4 py-2">15d</td>
+          <td class="px-4 py-2">
+            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 active:scale-110" id="button_sendcm">Upload</button>
+          </td>
+        </tr>
+
+        <tr class="bg-slate-700 alternate-row search-result">
+          <td class="px-4 py-2 flex items-center mt-1.5">
+            <img src="images\no_logo.png" alt="up-load.io Logo" class="h-6 ml-1 mr-2">
+            up-load.io&nbsp(<a class="text-sky-400" href="https://up-load.io/">https://up-load.io/</a>)
+          </td>
+          <td class="px-4 py-2">100MB</td>
+          <td class="px-4 py-2">infinite</td>
+          <td class="px-4 py-2">
+            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 active:scale-110" id="button_uploadio">Upload</button>
+          </td>
+        </tr>
+
+        <tr class="bg-slate-800 alternate-row search-result">
+          <td class="px-4 py-2 flex items-center mt-1.5">
+            <img src="images\usercloud.png" alt="Usercloud Logo" class="h-6 ml-1 mr-2">
+            Usercloud&nbsp(<a class="text-sky-400" href="https://userscloud.com/">https://userscloud.com/</a>)
+          </td>
+          <td class="px-4 py-2">5GB</td>
+          <td class="px-4 py-2">infinite</td>
+          <td class="px-4 py-2">
+            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 active:scale-110" id="button_usercloud">Upload</button>
           </td>
         </tr>
 
       </tbody>
     </table>
   </div>
-  <div id="popup" class="fixed inset-0 flex justify-center items-center bg-gray-800 bg-opacity-50 z-50 hidden">
+  <div id="upload_popup" class="fixed inset-0 flex justify-center items-center bg-gray-800 bg-opacity-50 z-50 hidden">
     <div class="backdrop-blur-sm bg-white/10 p-10 rounded-2xl shadow-md text-center max-w-3xl max-h-96">
-      <input type="file" id="popupFileInput" class="mb-4 hidden">
-      <button id="popupBrowseButton" class="bg-gradient-to-r mt-1 from-sky-500 to-indigo-500 text-white px-5 py-2 rounded-lg transition hover:scale-105 hover:from-sky-500 hover:to-indigo-400">Browse</button>
-      <button id="popupUploadButton" class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-5 py-2 rounded-lg ml-8 opacity-50 cursor-not-allowed">Upload</button>
+      <input type="file" id="popup_file_input" class="mb-4 hidden">
+      <button id="popup_browse_button" class="bg-gradient-to-r mt-1 from-sky-500 to-indigo-500 text-white px-5 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-sky-500 hover:to-indigo-400 active:scale-110">Browse</button>
+      <button id="popup_upload_button" class="bg-gradient-to-r from-red-500 to-rose-600 text-white transition duration-200 px-5 py-2 rounded-lg ml-8 opacity-50 cursor-not-allowed active:scale-105">Upload</button>
       <p id="p-for-margin" class="text-white-950 text-center mt-6 mb-3">
-        <a class="text-white-950" id="urlFinalUpload" href=""></a>
-        <button id="copyButton" class="ml-2 hidden hover:scale-105 ">
+        <a class="text-white-950" id="final_upload_url" href=""></a>
+        <button id="copy_button" class="ml-2 hidden transition active:scale-125" alt="Copy link">
           <i class="far fa-copy"></i>
         </button>
       </p>
-      <a class="text-sky-400 text-sm" id="conditionsOfUse" href="#">See conditions of use</a>
+      <a class="text-sky-400 text-sm" id="conditions_of_use_link" href="#">See conditions of use</a>
     </div>
   </div>
   <p class="text-base mt-12 text-slate-400 text-center">Project created by Spel987 (<a class="text-sky-400" href="https://github.com/spel987">https://github.com/spel987</a>).</p>
-  <p class="text-base mt-2 mb-14 text-slate-400 text-center">Project made with Tailwind CSS (<a class="text-sky-400" href="https://tailwindcss.com">https://tailwindcss.com</a>), Electron JS (<a class="text-sky-400" href="https://electronjs.org/">https://electronjs.org/</a>) and all the APIs of the above sites.</p>
+  <p class="text-base mt-2 mb-14 text-slate-400 text-center">For more information, see the <a class="text-sky-400" href="https://github.com/spel987/Automatic-File-Uploader">GitHub repository</a>.</p>
 </body>
 </html>
 <script src="script.js"></script>
