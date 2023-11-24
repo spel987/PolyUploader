@@ -17,13 +17,13 @@ This project lets you upload your files remotely to different hosting sites.
 - Install Tauri-CLI with this command:
 
 ```
-
+cargo install tauri-cli
 ```
 
 - Start compilation with this command:
 
 ```
-tauri build
+cargo tauri build
 ```
 
 You'll find the installer in the `.\src-tauri\target\release\bundle` folder.
@@ -43,7 +43,7 @@ You have access to a history of links created, showing its upload date and the t
 
 Every day, a check is made to see if the hosts are still online. If this is not the case, the script makes it unavailable.
 
-You can manually delete the file uploaded to the host from the history, provided that the host is able to delete it and offers the ability to do so. You'll find a list here.
+You can manually delete the file uploaded to the host from the history, provided that the host is able to delete it and offers the ability to do so. You'll find a list below.
 
 # Code and precision
 
