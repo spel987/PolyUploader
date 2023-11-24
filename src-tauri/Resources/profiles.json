@@ -1,0 +1,37 @@
+{
+  "File size limit greater than 10GB": [
+    "gofile.io",
+    "filebin.net",
+    "transfer.sh",
+    "bashupload.com",
+    "pixeldrain.com",
+    "www.udrop.com",
+    "1fichier.com",
+    "hitfile.net",
+    "send.cm"
+  ],
+  "No retention period": [
+    "uploadify.net",
+    "www.udrop.com",
+    "1fichier.com",
+    "turbobit.net",
+    "up-load.io",
+    "userscloud.com",
+    "filetmp.com"
+  ],
+  "Retention period of less than one day": [
+    "litter.catbox.moe",
+    "tmpfiles.org",
+    "oshi.at",
+    "tempfiles.ninja",
+    "a.uguu.se"
+  ],
+  "Manual file deletion possible": [
+    "gofile.io",
+    "oshi.at",
+    "filebin.net",
+    "uploadify.net",
+    "www.udrop.com",
+    "1fichier.com"
+  ]
+}

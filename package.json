@@ -1,34 +1,9 @@
 {
   "name": "Automatic-File-Uploader",
-  "version": "1.2.0",
-  "description": "Upload your files to various platforms via their API. ",
-  "main": "main.js",
-  "scripts": {
-    "start": "electron .",
-    "build": "electron-builder"
-  },
-  "keywords": [],
-  "author": "spel987",
-  "license": "ISC",
+  "private": true,
+  "version": "1.3.0",
+  "type": "module",
   "devDependencies": {
-    "electron": "^26.1.0",
-    "electron-builder": "^24.6.3"
-  },
-  "dependencies": {
-    "cors-anywhere": "^0.4.4"
-  },
-  "build": {
-    "appId": "Automatic-File-Uploader",
-    "copyright": "spel987",
-    "directories": {
-      "output": "build"
-    },
-    "win": {
-      "target": ["portable"],
-      "icon": "./src/icon.ico"
-    },
-    "portable": {
-      "artifactName": "Automatic-File-Uploader Portable.exe"
-    }
+    "@tauri-apps/cli": "^1.5.0"
   }
 }

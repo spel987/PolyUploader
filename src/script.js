@@ -1,10 +1,13 @@
+const { appWindow } = window.__TAURI__.window;
+const { invoke, convertFileSrc } = window.__TAURI__.tauri;
+const { resolveResource } = window.__TAURI__.path;
+const { getVersion } = window.__TAURI__.app;
+
 document.addEventListener("DOMContentLoaded", function () {
+  document.addEventListener('contextmenu', event => event.preventDefault());
 
-  const {ipcRenderer} = require('electron')
-  const ipc = ipcRenderer
+  const url_for_bypass_cors = "http://127.0.0.1:61337/";
 
-  const url_for_bypass_cors = "http://127.0.0.1:61337"
-  
   const button_gofile = document.getElementById("button_gofile");
   const button_litterbox = document.getElementById("button_litterbox");
   const button_fileio = document.getElementById("button_fileio");
@@ -15,11 +18,9 @@ document.addEventListener("DOMContentLoaded", function () {
   const button_oshi = document.getElementById("button_oshi");
   const button_filebin = document.getElementById("button_filebin");
   const button_transfersh = document.getElementById("button_transfersh");
-  const button_frocdn = document.getElementById("button_frocdn");
   const button_bashupload = document.getElementById("button_bashupload");
   const button_curlby = document.getElementById("button_curlby");
   const button_x0at = document.getElementById("button_x0at");
-  const button_tempfilesorg = document.getElementById("button_tempfilesorg");
   const button_uplooad = document.getElementById("button_uplooad");
   const button_tommoteam = document.getElementById("button_tommoteam");
   const button_anonymfile = document.getElementById("button_anonymfile");
@@ -27,10 +28,8 @@ document.addEventListener("DOMContentLoaded", function () {
   const button_gofilecc = document.getElementById("button_gofilecc");
   const button_tempfilesninja = document.getElementById("button_tempfilesninja");
   const button_pixeldrain = document.getElementById("button_pixeldrain");
-  const button_uploadhub = document.getElementById("button_uploadhub");
   const button_1cloudfile = document.getElementById("button_1cloudfile");
   const button_bowfile = document.getElementById("button_bowfile");
-  const button_zeroupload = document.getElementById("button_zeroupload");
   const button_uploadify = document.getElementById("button_uploadify");
   const button_anonfilesme = document.getElementById("button_anonfilesme");
   const button_anontransfer = document.getElementById("button_anontransfer");
@@ -50,120 +49,413 @@ document.addEventListener("DOMContentLoaded", function () {
   const button_sendcm = document.getElementById("button_sendcm");
   const button_uploadio = document.getElementById("button_uploadio");
   const button_usercloud = document.getElementById("button_usercloud");
+  const button_filetmp = document.getElementById("button_filetmp");
+  const button_bayfiles = document.getElementById("button_bayfiles");
+
+  const toggle_upload_mode = document.getElementById("toggle_upload_mode");
+  const button_multiple_host_popup = document.getElementById("button_multiple_host_popup");
+
+  const upload_button_generic = document.querySelectorAll('[value="upload_button"]');
+  const select_box_container = document.querySelectorAll('[id="select_box_container"]');
+  const select_box = document.querySelectorAll('[id="select_box"]');
+  const button_save_selected_host = document.getElementById("button_save_selected_host");
+  const button_cancel_selected_host = document.getElementById("button_cancel_selected_host");
+
+  const upload_name = document.getElementById("upload_name");
+
+  const button_upload_profile = document.getElementById("button_upload_profile");
+  const profile_select = document.getElementById("profile_select");
+
+  const popup_new_profile_button = document.getElementById("popup_new_profile_button");
+  const profile_maker_popup = document.getElementById("profile_maker_popup");
+  const select_host_button = document.getElementById("select_host_button");
+  const profile_name_input = document.getElementById("profile_name");
+  const delete_profiles_button = document.getElementById("delete_profiles_button");
+  const rename_profiles_button = document.getElementById("rename_profiles_button");
 
   const close_button = document.getElementById("close_button");
-  const minimize_button = document.getElementById("minimize_button")
+  const minimize_button = document.getElementById("minimize_button");
 
-  const update_popup = document.getElementById("update_popup")
-  const new_version_text = document.getElementById("new_version_text")
-  const current_version_text = document.getElementById("current_version_text")
-  const popup_new_version_download = document.getElementById("popup_new_version_download")
+  const update_popup = document.getElementById("update_popup");
+  const new_version_text = document.getElementById("new_version_text");
+  const current_version_text = document.getElementById("current_version_text");
+  const popup_new_version_download = document.getElementById("popup_new_version_download");
 
   const upload_popup = document.getElementById("upload_popup");
+  const popup_container = document.getElementById("popup_container")
   const popup_browse_button = document.getElementById("popup_browse_button");
   const popup_upload_button = document.getElementById("popup_upload_button");
   const popup_file_input = document.getElementById("popup_file_input");
   const final_upload_url = document.getElementById("final_upload_url");
   const copy_button = document.getElementById("copy_button");
+  const delete_file_input = document.getElementById("delete_file_input_button");
+
+  const select_profile_menu = document.getElementById("profile_selector");
 
   const conditions_of_use_link = document.getElementById("conditions_of_use_link");
-  const table_of_providers = document.querySelector('table');
-  const tbody_of_providers = table_of_providers.querySelector('tbody');
-  const rows_of_providers = Array.from(tbody_of_providers.querySelectorAll('tr'));
+  const table_of_providers = document.querySelector('[value="host"]');
+  const tbody_of_providers = table_of_providers.querySelector("tbody");
+  const rows_of_providers = Array.from(tbody_of_providers.querySelectorAll("tr"));
+
+  const history_table_body = document.getElementById("history_table_body");
+  const upload_history_button = document.getElementById("upload_history_button");
+  const uploaded_files_history_popup = document.getElementById("uploaded_files_history_popup");
+  const clear_history_button = document.getElementById("clear_history_button");
+
+  const check_status_button = document.getElementById("check_status_button");
 
   const sort_states = [null, null, null];
 
-  let requests_controller = new AbortController()
-  let controller_signal = requests_controller.signal
+  let requests_controller = new AbortController();
+  let controller_signal = requests_controller.signal;
 
-  close_button.addEventListener('click', () => {
-    ipc.send("closeApp")
-  })
-  
-  minimize_button.addEventListener('click', () => {
-    ipc.send("minimizeApp")
-  })
-
-  ipcRenderer.on('current-version', (event, currentVersion) => {
-    const current_version = currentVersion;
-
-    fetch('https://api.github.com/repos/spel987/Automatic-File-Uploader/releases', {method: 'GET'})
-    .then(response => response.json())
-    .then(data => {
-      const latest_version = data[0].tag_name
-
-      new_version_text.innerHTML = 'A new version of Automatic-File-Downloader is now available : <b>' + latest_version + '<b>'
-      popup_new_version_download.href = 'https://github.com/spel987/Automatic-File-Uploader/releases/tag/' + latest_version
-      current_version_text.innerHTML = '(Current version : <b>'+ current_version +'</b>)'
-
-      if (current_version != latest_version) {
-        update_popup.classList.remove("hidden");
-      }
-
-      update_popup.addEventListener("click", function (event) {
-        if (event.target === update_popup) {
-          update_popup.classList.add("hidden");
-        }})
-    })
+  close_button.addEventListener("click", (event) => {
+    appWindow.close();
+    invoke("kill_warp_cors");
   });
 
-  ipcRenderer.send('request-current-version');
+  minimize_button.addEventListener("click", (event) => {
+    appWindow.minimize();
+  });
 
-  function upload_to_host(url, method, data, format, dataExtraction = [], regexExtraction = null, existingFinalUrl = null, urlPrefixToAdd = []) {
+  const host_sites = [
+    { url: 'https://gofile.io', discriminator: 'gofile.io' },
+    { url: 'https://litterbox.catbox.moe/', discriminator: 'litter.catbox.moe' },
+    { url: 'https://file.io/', discriminator: 'file.io' },
+    { url: 'https://tmpfiles.org/', discriminator: 'tmpfiles.org' },
+    { url: 'https://0x0.st/', discriminator: '0x0.st' },
+    { url: 'https://c-v.sh/', discriminator: 'c-v.sh' },
+    { url: 'https://ki.tc/', discriminator: 'ki.tc' },
+    { url: 'https://oshi.at/', discriminator: 'oshi.at' },
+    { url: 'https://filebin.net/', discriminator: 'filebin.net' },
+    { url: 'https://transfer.sh/', discriminator: 'transfer.sh' },
+    { url: 'https://bashupload.com/', discriminator: 'bashupload.com' },
+    { url: 'https://www.curl.by/', discriminator: 'curl.by' },
+    { url: 'https://x0.at/', discriminator: 'x0.at' },
+    { url: 'https://uplooad.net/', discriminator: 'uplooad.net' },
+    { url: 'https://tommo.team/', discriminator: 'a.tommo.team' },
+    { url: 'https://anonymfile.com/', discriminator: 'anonymfile.com' },
+    { url: 'https://anyfile.co/', discriminator: 'gofile.cc' },
+    { url: 'https://gofile.cc/', discriminator: 'anyfile.co' },
+    { url: 'https://tempfiles.ninja/', discriminator: 'tempfiles.ninja' },
+    { url: 'https://pixeldrain.com/', discriminator: 'pixeldrain.com' },
+    { url: 'https://1cloudfile.com/', discriminator: '1cloudfile.com' },
+    { url: 'https://bowfile.com/', discriminator: 'bowfile.com' },
+    { url: 'https://uploadify.net/', discriminator: 'uploadify.net' },
+    { url: 'https://anonfiles.me/', discriminator: 'anonfiles.me' },
+    { url: 'https://anontransfer.com/', discriminator: 'anontransfer.com' },
+    { url: 'https://anonsharing.com/', discriminator: 'anonsharing.com' },
+    { url: 'https://temp.sh/', discriminator: 'temp.sh' },
+    { url: 'https://uguu.se/', discriminator: 'a.uguu.se' },
+    { url: 'https://nopaste.net/', discriminator: 'nopaste.net' },
+    { url: 'https://www.udrop.com/', discriminator: 'www.udrop.com' },
+    { url: 'https://tempsend.com/', discriminator: 'tempsend.com' },
+    { url: 'https://1fichier.com/', discriminator: '1fichier.com' },
+    { url: 'https://turbobit.net/', discriminator: 'turbobit.net' },
+    { url: 'https://hitfile.net/', discriminator: 'hitfile.net' },
+    { url: 'https://file-upload.org/', discriminator: 'file-upload.org' },
+    { url: 'https://hexupload.net/', discriminator: 'hexupload.net' },
+    { url: 'https://mexa.sh/', discriminator: 'mexa.sh' },
+    { url: 'http://rapidfileshare.net/', discriminator: 'www.rapidfileshare.net' },
+    { url: 'https://send.cm/', discriminator: 'send.cm' },
+    { url: 'https://up-load.io/', discriminator: 'up-load.io' },
+    { url: 'https://userscloud.com/', discriminator: 'userscloud.com' },
+    { url: 'https://filetmp.com/', discriminator: 'filetmp.com' },
+    { url: 'https://bayfiles.io/', discriminator: 'bayfiles.io' }
+  ];
 
-    disabled_upload_button()
+  function check_host_status(forced) {
+    host_sites.forEach((site) => {
+    
+      const last_check_date = localStorage.getItem(`${site.discriminator}_last_check_date`);
+      const current_time = new Date().getTime();
+  
+      const last_check_status = localStorage.getItem(`${site.discriminator}_status`);
 
-    fetch(url, {
-        method: method,
-        body: data,
-        signal: controller_signal,
-        headers: {
-          'X-Requested-With': '*',
+        if (forced || !last_check_date || (current_time - last_check_date > 12 * 60 * 60 * 1000)) {
+          fetch(url_for_bypass_cors + site.url)
+              .then((response) => {
+                  if (!response.ok) {
+                    disable_host(site.discriminator);
+                    localStorage.setItem(`${site.discriminator}_status`, 'offline');
+                  } else {
+                    localStorage.setItem(`${site.discriminator}_status`, 'online');
+                  }
+              })
+              .catch(() => {
+                disable_host(site.discriminator);
+                localStorage.setItem(`${site.discriminator}_status`, 'offline');
+              })
+              .finally(() => {
+                  localStorage.setItem(`${site.discriminator}_last_check_date`, current_time);
+              });
+        } else if (last_check_status === 'offline') {
+            disable_host(site.discriminator);
         }
-    })
+    });
+  }
+  
+  check_host_status(false);
 
-    .then(response => {
-        if (format === 'json') {
-            return response.json();
-        } else if (format === 'text') {
-            return response.text()
-        }
-    })
+  function disable_host(host) {
+    const table_rows = document.querySelectorAll(".search-result");
+  
+    for (const row of table_rows) {
+      const checkbox_element = row.querySelector('input[type="checkbox"]');
+      const checkbox_value = checkbox_element.value;
+  
+      if (checkbox_value === host) {
+        row.classList.add("opacity-50", "cursor-not-allowed", "pointer-events-none");
+        row.setAttribute("disabled", "");
 
-    .then(data => {
-      let final_url = null;
-      
-      if (existingFinalUrl) {
-        final_url = existingFinalUrl
+        const host_element = row.querySelector("td:nth-child(1)");
 
-      } else if (regexExtraction) {
-        if (regexExtraction[0] === 'match') {
-          final_url = (urlPrefixToAdd[0] ? urlPrefixToAdd[0] : '') + (data.match(regexExtraction[1])[0]) + (urlPrefixToAdd[1] ? urlPrefixToAdd[1] : '')
-        } else if (regexExtraction[0] === 'substr') {
-          final_url = (urlPrefixToAdd[0] ? urlPrefixToAdd[0] : '') + (data.substr(data.indexOf(regexExtraction[1]) + regexExtraction[2])) + (urlPrefixToAdd[1] ? urlPrefixToAdd[1] : '')
+        const host_name = host_element.innerHTML;
+
+        host_element.innerHTML = host_name + `<p class="ml-2" style="color: #ff2828;"><i class="fa-solid fa-circle-exclamation" style="color: #ff2828;"></i> <strong>Offline</strong></p>`   
+      }
+    }
+  
+    return null;
+  }
+
+  function enable_hosts() {
+    const table_rows = document.querySelectorAll(".search-result");
+
+    for (const row of table_rows) {
+        const host_element = row.querySelector("td:nth-child(1)");
+        const host_name = host_element.innerHTML;
+
+        if (host_name.includes("Offline")) {
+            host_element.innerHTML = host_name.replace(`<p class="ml-2" style="color: #ff2828;"><i class="fa-solid fa-circle-exclamation" style="color: #ff2828;"></i> <strong>Offline</strong></p>`, "");
+            row.classList.remove("opacity-50", "cursor-not-allowed", "pointer-events-none");
+            const checkbox_element = row.querySelector('input[type="checkbox"]');
+            checkbox_element.removeAttribute("disabled");
+        }     
+    }
+  }
+
+  async function get_resource_path() {
+    try {
+      const resource_path = await resolveResource("Resources");
+      return resource_path.slice(4);
+    } catch (error) {
+      console.error("Error obtaining local data directory : ", error);
+    }
+  }
+
+  async function get_app_version() {
+    try {
+      const appVersion = await getVersion();
+      return appVersion;
+    } catch (error) {
+      console.error("Error obtaining current app version : ", error);
+    }
+  }
+
+  function is_update_available(current_version, latest_version){
+    let current_version_parts = current_version.split('.');
+    let latest_version_parts = latest_version.split('.');
+
+    for (let i = 0; i < current_version_parts.length; ++i) {
+        if (current_version_parts[i] === latest_version_parts[i]) {
+            continue;
         }
         
-      } else {
-        final_url = (urlPrefixToAdd[0] ? urlPrefixToAdd[0] : '') + (dataExtraction.reduce((initial_data, key) => initial_data?.[key], data)) + (urlPrefixToAdd[1] ? urlPrefixToAdd[1] : '')
-      }
-      
-      if (final_url) {
-        enable_button_and_display_result(final_url)
-        copy_button.addEventListener("click", function() {
-          copy_to_clipboard(final_url);
-        });
-      } else {
-        enable_button_and_display_result("Error during upload. Check the console and requests in developper tools for more information.")
-      }
-    })
+        if (latest_version_parts[i] > current_version_parts[i]) {
+            return true;
+        }
+    }
+    
+    return false;
+  }
 
-    .catch(error => {
-      enable_button_and_display_result(error);
+  get_app_version()
+    .then((result) => {
+      const current_version = result;
+
+      fetch("https://api.github.com/repos/spel987/Automatic-File-Uploader/releases", {method: "GET"})
+        .then((response) => response.json())
+        .then((data) => {
+          const latest_version = data[0].tag_name;
+
+          new_version_text.innerHTML = "A new version of Automatic-File-Downloader is now available : <b>" + latest_version +"<b>";
+          popup_new_version_download.href = "https://github.com/spel987/Automatic-File-Uploader/releases/latest";
+          current_version_text.innerHTML = "(Current version : <b>" + current_version + "</b>)";
+
+          if (is_update_available(current_version, latest_version)) {
+            update_popup.classList.remove("hidden");
+          }
+
+          update_popup.addEventListener("click", function (event) {
+            if (event.target === update_popup) {
+              update_popup.classList.add("hidden");
+            }
+          });
+        });
+    })
+    .catch((error) => {
+      console.error("Error retrieving current app version : " + error);
     });
+
+  let host = "";
+
+  let is_drag_file = false
+
+  let link_receive = 0;
+
+  function get_value_from_path(path, json_data) {
+    return path.reduce((current, key) => current?.[key], json_data);
+  }
+
+  function disable_button(button) {
+    button.classList.add("opacity-50", "cursor-not-allowed");
+    button.classList.remove("transition", "hover:scale-105", "hover:from-red-500", "hover:to-rose-500", "hover:scale-[1.01]", "hover:from-violet-600", "hover:to-purple-500", "hover:scale-[1.03]", "active:scale-[1.03]", "active:scale-[1.05]");
+    button.setAttribute("disabled", "");
+  }
+
+  function enable_button(button, color, size) {
+    button.classList.remove("opacity-50", "cursor-not-allowed");
+
+    if (color == "red") {
+      button.classList.add("transition", "hover:from-red-500", "hover:to-rose-500");
+    } else if (color == "purple") {
+      button.classList.add("transition", "hover:from-violet-600", "hover:to-purple-500");
+    }
+
+    if (size == "small") {
+      button.classList.add("hover:scale-[1.01]", "active:scale-[1.03]")
+    } else if (size == "big") {
+      button.classList.add("hover:scale-105", "active:scale-110")
+    }
+    
+    button.removeAttribute("disabled", "");
+  }
+
+  function upload_to_host(request_data, response_format, link_extraction = [], affix = [], manage_file = []) {
+    disabled_upload_button();
+
+    fetch(request_data[0], {
+      method: request_data[1],
+      body: request_data[2],
+      signal: controller_signal,
+      headers: {
+        'X-Requested-With': '*'
+      },
+    })
+      .then((response) => {
+        if (response.status === 415 || response.status === 412) {
+          return Promise.reject(new Error('File format not supported by host'));
+        } else if (response.status === 507) {
+          return Promise.reject(new Error('Insufficient storage space'));
+        } else if (response.ok) {
+          if (response_format === "json") {
+            return response.json();
+          } else if (response_format === "text") {
+            return response.text();
+          }
+        }
+      })
+
+      .then((data) => {
+        let final_url = null;
+        let delete_url = "";
+        let delete_method = "";
+        let delete_data = {};
+
+        const url_prefix = (affix[0] ? affix[0] : "");
+        const url_suffix = (affix[1] ? affix[1] : "");
+
+        let url_cores = "";
+
+        if (String(link_extraction[0]).includes("https://")) {
+          url_cores = link_extraction[0];
+        } else if (link_extraction[0] === "match") {
+          url_cores = data.match(link_extraction[1])[0];
+        } else {
+          url_cores = get_value_from_path(link_extraction, data);
+        }
+
+        final_url = url_prefix + url_cores + url_suffix
+
+        if (manage_file[0]) {
+          if (manage_file[0][0] === "match") {
+            delete_url = data.match(manage_file[0][1])[0];
+          } else if (Array.isArray(manage_file[0])) {
+            delete_url = get_value_from_path(manage_file[0], data);
+          } else {
+            delete_url = manage_file[0];
+          }
+
+          if (host == "oshi.at") {
+            delete_url = delete_url + "?delete=1"
+          }
+        }
+
+        if (manage_file[1]) {
+          delete_method = manage_file[1];
+        }
+
+        if (manage_file[2]) {
+          for (const key in manage_file[2]) {
+              if (manage_file[2].hasOwnProperty(key) && Array.isArray(manage_file[2][key])) {
+                delete_data[key] = get_value_from_path(manage_file[2][key], data);
+              } else {
+                delete_data = manage_file[2]
+              }
+          }
+        }
+
+        if (final_url) {
+          if (Array.isArray(final_url)) {
+            final_url = final_url.join("");
+          }
+
+          if (final_url.endsWith("\n")) {
+            final_url = final_url.slice(0, final_url.length - "\n".length);
+          }
+
+          const new_upload_date = new Date().toLocaleString("en-US", {month: "2-digit", day: "2-digit", year: "numeric", hour: "numeric", minute: "numeric", hour12: true}).replace(",", "");
+
+          const host_index = host.indexOf(final_url.split("/")[2]);
+
+          const retention_duration = get_retention_duration(host[host_index]);
+
+          const new_upload_date_formatted = new Date(new_upload_date);
+
+          let new_expiration_date = "";
+
+          if (retention_duration.endsWith("d")) {
+            new_upload_date_formatted.setDate(new_upload_date_formatted.getDate() + parseInt(retention_duration.slice(0, -1)));
+            new_expiration_date = new_upload_date_formatted.toLocaleString("en-US", {month: "2-digit", day: "2-digit", year: "numeric", hour: "numeric", minute: "numeric", hour12: true}).replace(",", "");
+
+          } else if (retention_duration.endsWith("h")) {
+            new_upload_date_formatted.setHours(new_upload_date_formatted.getHours() + parseInt(retention_duration.slice(0, -1)));
+            new_expiration_date = new_upload_date_formatted.toLocaleString("en-US", {month: "2-digit", day: "2-digit", year: "numeric", hour: "numeric", minute: "numeric", hour12: true,}).replace(",", "");
+            
+          } else if (retention_duration === "infinite") {
+            new_expiration_date = "Infinite";
+
+          } else if (retention_duration === "depends on the size of your file") {
+            new_expiration_date = "Depends on the size of your file";
+          }        
+
+          //invoke("add_history_json", {newLink: final_url, newUploadDate: new_upload_date, newExpirationDate: new_expiration_date, manageLink: delete_url, deleteMethod: delete_method, deleteParameters: JSON.stringify(delete_data)});
+
+          display_final_url(final_url);
+
+        } else {
+          display_final_url('Unable to retrieve the download link.');
+        }
+      })
+
+      .catch((error) => {
+          display_final_url(error);
+      });
   }
 
   function copy_to_clipboard(url) {
-    navigator.clipboard.writeText(url)
+    navigator.clipboard.writeText(url);
   }
 
   function reset_popup() {
@@ -171,544 +463,1143 @@ document.addEventListener("DOMContentLoaded", function () {
     popup_file_input.value = "";
     final_upload_url.textContent = "";
     popup_browse_button.textContent = "Browse";
-    popup_upload_button.classList.add("opacity-50", "cursor-not-allowed");
-    popup_upload_button.classList.remove("transition", "hover:scale-105", "hover:from-red-500", "hover:to-rose-500")
-    popup_upload_button.setAttribute('disabled', '')
+    disable_button(popup_upload_button);
     popup_upload_button.innerHTML = "Upload";
     copy_button.classList.add("hidden");
+    select_profile_menu.classList.add("hidden");
+    document.getElementById("p-for-margin").classList.remove("hidden");
+    select_host_button.textContent = "Select host";
+    conditions_of_use_link.classList.remove("hidden");
+    delete_file_input.classList.add("hidden");
+  }
+
+  function drag_and_drop_hover() {
+    popup_container.classList.add("border-4", "p-20");
+  }
+
+  function drag_and_drop_cancel() {
+    popup_container.classList.remove("border-4", "p-20");
   }
 
   function disabled_upload_button() {
-    popup_upload_button.setAttribute('disabled', '')
+    popup_upload_button.setAttribute("disabled", "");
     popup_upload_button.classList.add("cursor-not-allowed");
-    popup_upload_button.classList.remove("transition", "hover:scale-105", "hover:from-red-500", "hover:to-rose-500", "active:scale-105")
+    popup_upload_button.classList.remove("transition", "hover:scale-105", "hover:from-red-500", "hover:to-rose-500", "active:scale-105");
   }
 
-  function enable_button_and_display_result(result) {
-    popup_upload_button.removeAttribute('disabled', '')
+  function enable_upload_button() {
+    popup_upload_button.removeAttribute("disabled", "");
     popup_upload_button.classList.remove("cursor-not-allowed");
-    popup_upload_button.innerHTML = 'Upload'
-    popup_upload_button.classList.add("transition", "hover:scale-105", "hover:from-red-500", "hover:to-rose-500", "active:scale-105")
-    if (String(result).includes('undef')) {
-      final_upload_url.textContent = 'Error : undef (often when the file format is not supported).\n For more information, open the developper tool and look in the console and/or in the requests.'
-      final_upload_url.href = "#"
-      copy_button.classList.add("hidden")
-    } else if (String(result).includes('https://') || String(result).includes('http://')) {
-      final_upload_url.textContent = result
-      final_upload_url.href = result
-      copy_button.classList.remove("hidden")
-    } else {
-      final_upload_url.textContent = 'Error : ' + result + '\n For more information, open the developper tool and look in the console and/or in the requests.'
-      final_upload_url.href = "#"
-      copy_button.classList.add("hidden")
-    }
-  }  
+    popup_upload_button.innerHTML = "Upload";
+    popup_upload_button.classList.add("transition", "hover:scale-105", "hover:from-red-500", "hover:to-rose-500", "active:scale-105");
+  }
 
-  function upload_preparation(uploadButton, hostName, indicationsSendingFiles, conditionOfUseUrl) {
-    uploadButton.addEventListener("click", function () {
-      reset_popup()
-      host = hostName
-      final_upload_url.textContent = indicationsSendingFiles
-      final_upload_url.href = "#"
-      conditions_of_use_link.href = conditionOfUseUrl
+  function display_final_url(result) {
+    if (link_receive == 0) {
+      final_upload_url.innerHTML = '';
+    }
+
+    link_receive++;
+
+    const link_to_receive = host.length;
+
+    const indication_of_host = document.getElementsByClassName("indication_of_host")[0];
+    document.getElementById("p-for-margin").classList.remove("hidden");
+
+    if (indication_of_host) {
+      indication_of_host.classList.add("hidden");
+    }
+
+    if (String(result).includes('File format not supported by host')) {
+      const final_url = document.createElement("a");
+      final_url.href = "#";
+      final_url.textContent = 'Error : File format are not allowed by the host.';
+      
+      const final_url_container = document.createElement("a");
+      final_url_container.style.display = "block";
+      final_url_container.appendChild(final_url);
+
+      final_upload_url.appendChild(final_url_container);
+
+    } else if (String(result).includes('Insufficient storage space')) {
+      const final_url = document.createElement("a");
+      final_url.href = "#";
+      final_url.textContent = 'Error : Insufficient storage space.';
+
+      const final_url_container = document.createElement("a");
+      final_url_container.style.display = "block";
+      final_url_container.appendChild(final_url);
+
+      final_upload_url.appendChild(final_url_container);
+
+    } else if (String(result).includes("https://") || String(result).includes("http://")) {
+      const final_url = document.createElement("a");
+      final_url.href = result;
+      final_url.textContent = result;
+
+      const final_url_container = document.createElement("a");
+      final_url_container.href = "#";
+      final_url_container.style.display = "block";
+      final_url_container.innerHTML = `<a href="${result}" target="_blank">${result}</a><button id="copy_button" class="ml-2 transition active:scale-125" alt="Copy link" link_to_copy="${result}"><i class="far fa-copy"></i></button>`;
+
+      final_upload_url.appendChild(final_url_container);
+
+      const copy_buttons = document.querySelectorAll("[id='copy_button']");
+      copy_buttons.forEach((button) => {
+        button.addEventListener("click", function () {
+          copy_to_clipboard(button.getAttribute("link_to_copy"));
+        });
+      });
+
+    } else {
+      const final_url = document.createElement("a");
+      final_url.href = "#";
+      final_url.textContent = 'Error : ' + result + '\n For more information, open the developper tool and look in the console and/or in the requests.';
+
+      const final_url_container = document.createElement("a");
+      final_url_container.style.display = "block";
+      final_url_container.appendChild(final_url);
+
+      final_upload_url.appendChild(final_url_container);
+    }
+
+    popup_upload_button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Uploading... (' + link_receive + '/' + link_to_receive + ')';
+
+    if (link_receive === link_to_receive) {
+      enable_upload_button();
+      link_receive = 0;
+
+      if (link_to_receive >= 2) {
+        const copy_all_button = document.createElement("a");
+        copy_all_button.href = "#";
+        copy_all_button.innerHTML = `<button id="copy_all_button" class="mt-5 underline transition duration-200 hover:scale-[1.02] active:scale-[1.05]">Copy all links</button>`;
+
+        final_upload_url.appendChild(copy_all_button);
+
+        document.getElementById("copy_all_button").addEventListener("click", function () {
+            const all_links_to_copy = document.querySelectorAll("button[link_to_copy]");
+            let all_links_copy = "";
+            let current_link_index = 1;
+
+            all_links_to_copy.forEach(function (link_button) {
+              const link = link_button.getAttribute("link_to_copy");
+
+              if (current_link_index < all_links_to_copy.length) {
+                all_links_copy += link + "\n";
+
+              } else {
+                all_links_copy += link;
+              }
+              current_link_index++;
+            });
+            copy_to_clipboard(all_links_copy);
+          });
+      }
+    }
+  }
+
+  function enable_drag_file() {
+    upload_popup.addEventListener('dragover', function(event) {
+        event.preventDefault();
+        drag_and_drop_hover();
+    });
+
+    upload_popup.addEventListener('drop', function(event) {
+        event.preventDefault();
+        drag_and_drop_cancel();
+
+        drag_file = event.dataTransfer.files[0];
+        let filename = drag_file.name;
+        drag_file_name = filename;
+
+        if (filename.length > 30) {
+            popup_browse_button.textContent = filename.substring(0, 30) + "...";
+        } else {
+            popup_browse_button.textContent = filename;
+        }
+
+        check_prohibited_format(filename).then((response) => {
+            let prohibited_format = response;
+
+            delete_file_input.classList.remove("hidden");
+
+            if (host && JSON.stringify(host) !== "[]" && prohibited_format === false) {
+              enable_button(popup_upload_button, "red", "big")
+            }
+        });
+
+        is_drag_file = true;
+    });
+
+    upload_popup.addEventListener('dragleave', function(event) {
+        drag_and_drop_cancel();
     });
   }
 
-  upload_preparation(button_gofile, "gofile", "Gofile has no known bugs or problems.", "https://gofile.io/terms")
-  upload_preparation(button_litterbox, "litterbox", "Litterbox is regularly down.", "https://litterbox.catbox.moe/faq.php")
-  upload_preparation(button_fileio, "fileio", "File.io has no known bugs or problems.", "https://www.file.io/tos/")
-  upload_preparation(button_tmpfilesorg, "tmpfilesorg", "TmpFiles.org does not accept all file formats.", "https://tmpfiles.org/about")
-  upload_preparation(button_0x0, "0x0", "0x0.st has no known bugs or problems.", "https://0x0.st/")
-  upload_preparation(button_cvsh, "CV", "C-V.sh has no known bugs or problems.", "https://c-v.sh/")
-  upload_preparation(button_kitc, "KITc", "Ki.tc has no known bugs or problems.", "https://logic-gate-demo.readthedocs.io/en/latest/readme.html")
-  upload_preparation(button_oshi, "Oshi", "Ohsi.at is inaccessible from certain IPs with the error \"Connection reset\".", "https://oshi.at/abuse")
-  upload_preparation(button_filebin, "Filebin", "Filebin often runs out of storage.", "https://filebin.net/terms")
-  upload_preparation(button_transfersh, "TransferSh", "Transfer.sh has no known bugs or problems.", "https://transfer.sh/")
-  upload_preparation(button_frocdn, "FroCDN", "FroCDN.com has no known bugs or problems.", "https://frocdn.com/tos.html")
-  upload_preparation(button_bashupload, "Bashupload", "Bashupload.com allows only one download per link.", "https://bashupload.com/disclaimer")
-  upload_preparation(button_curlby, "CurlBy", "Curl.by has no known bugs or problems.", "https://www.curl.by/disclaimer")
-  upload_preparation(button_x0at, "x0At", "x0.at has no known bugs or problems.", "https://x0.at/")
-  upload_preparation(button_tempfilesorg, "TempFilesOrg", "temp-file.org has no known bugs or problems.", "https://temp-file.org/en/page/terms-of-service")
-  upload_preparation(button_uplooad, "Uplooad", "Uplooad has no known bugs or problems.", "https://uplooad.net/tos.html")
-  upload_preparation(button_tommoteam, "TommoTeam", "Tommo.team has no known bugs or problems.", "https://tommo.team/faq.html")
-  upload_preparation(button_anonymfile, "AnonymFile", "AnonymFiles imposes a 12-second waiting time before the file can be downloaded.", "https://anonymfile.com/terms")
-  upload_preparation(button_gofilecc, "GofileCc", "Gofile.cc imposes a 12-second waiting time before the file can be downloaded.", "https://gofile.cc/terms")
-  upload_preparation(button_anyfile, "Anyfile", "Anyfile has no known bugs or problems.", "https://anyfile.co/terms")
-  upload_preparation(button_tempfilesninja, "TempFilesNinja", "tempfiles.ninja has no known bugs or problems.", "https://tempfiles.ninja/")
-  upload_preparation(button_pixeldrain, "Pixeldrain", "Pixeldrain has no known bugs or problems.", "https://pixeldrain.com/abuse")
-  upload_preparation(button_uploadhub, "UploadHub", "UploadHub imposes a 10-second waiting time before the file can be downloaded, and is sometimes down.", "https://uploadhub.to/tos.html")
-  upload_preparation(button_1cloudfile, "1Cloudfile", "1Cloudfile has no known bugs or problems.", "https://1cloudfile.com/terms")
-  upload_preparation(button_bowfile, "Bowfile", "Bowfile has no known bugs or problems.", "https://bowfile.com/terms")
-  upload_preparation(button_zeroupload, "ZeroUpload", "Zero Upload imposes a 5-second waiting time before the file can be downloaded.", "https://zeroupload.com/terms")
-  upload_preparation(button_uploadify, "Uploadify", "Uplodify imposes a 20-second waiting time before the file can be downloaded.", "https://uploadify.net/terms.html")
-  upload_preparation(button_anonfilesme, "AnonFilesMe", "AnonFiles.me imposes a 3-second waiting time before the file can be downloaded.", "https://anonfiles.me/terms")
-  upload_preparation(button_anontransfer, "AnonTransfer", "AnonTransfer does not accept all file formats.", "https://anontransfer.com/terms")
-  upload_preparation(button_anonsharing, "AnonSharing", "AnonSharing imposes a 20-second waiting time before the file can be downloaded.", "https://anonsharing.com/terms")
-  upload_preparation(button_tempsh, "TempSh", "Temp.sh has no known bugs or problems.", "https://temp.sh/")
-  upload_preparation(button_uguuse, "UguuSe", "Uguu.se has no known bugs or problems.", "https://uguu.se/faq.html")
-  upload_preparation(button_nopaste, "Nopaste", "Nopaste has no known bugs or problems.", "https://nopaste.net/")
-  upload_preparation(button_udrop, "Udrop", "udrop has no known bugs or problems.", "https://www.udrop.com/terms")
-  upload_preparation(button_tempsend, "Tempsend", "Tempsend has no known bugs or problems.", "https://tempsend.com/")
-  upload_preparation(button_1fichier, "1fichier", "1fichier limits the connection during download and imposes a waiting time between file downloads.", "https://img.1fichier.com/2021-10-01-CGU.pdf")
-  upload_preparation(button_turbobit, "Turbobit", "Turbobit limits the connection during download and imposes a waiting time between file downloads.", "https://turbobit.net/rules")
-  upload_preparation(button_hitfile, "Hitfile", "Hitfile limits the connection during download and imposes a waiting time between file downloads.", "https://hitfile.net/rules")
-  upload_preparation(button_fileupload, "FileUpload", "file-upload.org limits the connection during download and imposes a waiting time before the file can be downloaded.", "https://www.file-upload.org/tos.html")
-  upload_preparation(button_hexupload, "HexUpload", "HexUpload does not accept jpeg/jpg/png files.", "https://hexupload.net/tos.html")
-  upload_preparation(button_mexash, "MexaSh", "Mexa.sh does not accept .exe files.", "https://mexa.sh/tos.html")
-  upload_preparation(button_rapidfileshare, "RapidFileShare", "RapidFileShare limits the connection and restricts downloads to 1GB per day.", "http://rapidfileshare.net/tos.html")
-  upload_preparation(button_sendcm, "SendCm", "Send.cm has no known bugs or problems.", "https://send.cm/terms")
-  upload_preparation(button_uploadio, "UpLoadIo", "up-load.io imposes a 30-second delay before the file can be downloaded.", "https://up-load.io/tos.html")
-  upload_preparation(button_usercloud, "Usercloud", "Usercloud has no known bugs or problems.", "https://userscloud.com/tos.html")
+  let drag_file = null;
+  let drag_file_name = null;
+
+  function upload_preparation(uploadButton, hostName, indicationsSendingFiles, conditionOfUseUrl) {
+    uploadButton.addEventListener("click", function () {
+      reset_popup();
+      
+      enable_drag_file();
+
+      host = hostName;
+
+      const indication_of_host_text = document.createElement("a");
+      indication_of_host_text.href = "#";
+      indication_of_host_text.textContent = indicationsSendingFiles;
+
+      const indication_of_host = document.createElement("div");
+      indication_of_host.classList.add("indication_of_host");
+      indication_of_host.appendChild(indication_of_host_text);
+
+      final_upload_url.appendChild(indication_of_host);
+
+      conditions_of_use_link.href = conditionOfUseUrl;
+    });
+  }
+
+  function reset_upload_profile() {
+    profile_maker_popup.classList.add("hidden");
+    popup_new_profile_button.textContent = "Create a new profile";
+    popup_new_profile_button.classList.add("hidden");
+    selected_profile = "";
+    document.getElementById("profile_name_text").textContent = "Profile name:";
+    delete_profiles_button.classList.add("hidden");
+    rename_profiles_button.classList.add("hidden");
+    profile_name_input.value = "";
+    profile_status = 0;
+    disable_button(rename_profiles_button);
+    disable_button(select_host_button);
+
+    select_box.forEach((checkbox) => {
+      checkbox.checked = false;
+    });
+  }
+
+  function get_retention_duration(host) {
+    const table_rows = document.querySelectorAll(".search-result");
+
+    for (const row of table_rows) {
+      const checkbox_element = row.querySelector('input[type="checkbox"]');
+
+      const checkbox_value = checkbox_element.value;
+
+      if (checkbox_value === host) {
+        const retention_element = row.querySelector("td:nth-child(3)");
+
+        const retention_value = retention_element.textContent.trim();
+
+        return retention_value;
+      }
+    }
+  }
+  
+  async function check_prohibited_format(selected_file_name) {
+    let prohibited_format = false;
+  
+    try {
+      const result = await get_resource_path();
+      const response = await fetch(convertFileSrc(result + "/prohibited_format.json"));
+      const data = await response.json();
+  
+      if (host in data) {
+        const prohibited_formats_for_host = data[host];
+        const file_extension = selected_file_name.split('.').pop();
+  
+        if (prohibited_formats_for_host.includes(file_extension)) {
+          prohibited_format = true;
+        }
+      }
+  
+    } catch (error) {
+      console.error("Error retrieving path to local application data: " + error);
+    }
+  
+    return prohibited_format;
+  }
 
   popup_browse_button.addEventListener("click", function () {
     popup_file_input.click();
   });
-  
+
   popup_file_input.addEventListener("change", function () {
-    const fileName = popup_file_input.files[0].name;
-    if (fileName.length > 30) {
-      popup_browse_button.textContent = fileName.substring(0, 30) + "...";;
+    const filename = popup_file_input.files[0].name;
+    is_drag_file = false
+
+    if (filename.length > 30) {
+      popup_browse_button.textContent = filename.substring(0, 30) + "...";
     } else {
-      popup_browse_button.textContent = fileName;
+      popup_browse_button.textContent = filename;
     }
-    popup_upload_button.classList.remove("opacity-50", "cursor-not-allowed");
-    popup_upload_button.classList.add("transition", "hover:scale-105", "hover:from-red-500", "hover:to-rose-500")
-    popup_upload_button.removeAttribute('disabled', '')
-    });
-    
-    upload_popup.addEventListener("click", function (event) {
-      if (event.target === upload_popup) {
-        requests_controller.abort();
-        requests_controller = new AbortController();
-        controller_signal = requests_controller.signal;
-        upload_popup.classList.add("hidden");
+
+    check_prohibited_format(popup_file_input.files[0].name).then((response) => {
+      let prohibited_format = response
+
+      delete_file_input.classList.remove("hidden");
+
+      if (host && JSON.stringify(host) !== "[]" && prohibited_format === false) {
+        enable_button(popup_upload_button, "red", "big")
       }
+    });
   });
-  
+
+  upload_popup.addEventListener("click", function (event) {
+    if (event.target === upload_popup) {
+      requests_controller.abort();
+      requests_controller = new AbortController();
+      controller_signal = requests_controller.signal;
+      upload_popup.classList.add("hidden");
+      popup_new_profile_button.classList.add("hidden");
+      popup_new_profile_button.textContent = "Create a new profile";
+      reset_upload_profile();
+    }
+  });
+
+  let selected_profile = "";
+
+  function load_profiles() {
+    get_resource_path()
+      .then((result) => {
+        fetch(convertFileSrc(result + "/profiles.json"))
+          .then((response) => response.json())
+          .then((data) => {
+            profile_select.innerHTML = `<option id="default_option" value="default" disabled selected>Select a profile</option>`;
+            for (const profil in data) {
+              if (data.hasOwnProperty(profil)) {
+                const option = document.createElement("option");
+                option.value = profil;
+                option.text = profil;
+                profile_select.appendChild(option);
+              }
+            }
+
+            profile_select.addEventListener("change", function () {
+              selected_profile = profile_select.value;
+              const values = data[selected_profile];
+
+              popup_new_profile_button.textContent = 'Edit "' + selected_profile + '"';
+
+              host = [];
+
+              for (const host_site of values) {
+                host.push(host_site);
+              }
+
+              if (host && JSON.stringify(host) !== "[]" && popup_file_input.files.length > 0) {
+                enable_button(popup_upload_button, "red", "big");
+              }
+            });
+          });
+      })
+      .catch((error) => {
+        console.error("Error retrieving path app data local : " + error);
+      });
+  }
+
+  button_upload_profile.addEventListener("click", function () {
+    load_profiles();
+    host = [];
+    reset_popup();
+    conditions_of_use_link.classList.add("hidden");
+    select_profile_menu.classList.remove("hidden");
+    popup_new_profile_button.classList.remove("hidden");
+    upload_button_generic.forEach((element) => {
+      element.classList.remove("hidden");
+    });
+    select_box_container.forEach((element) => {
+      element.classList.add("hidden");
+    });
+
+    upload_name.textContent = "Upload";
+    toggle_upload_mode.textContent = "Switch to multiple upload mode";
+    button_multiple_host_popup.classList.add("hidden");
+    button_upload_status = 0;
+    profile_select.value = "default";
+  });
+
+  let profile_status = 0;
+
+  popup_new_profile_button.addEventListener("click", function () {
+    if (selected_profile !== "") {
+      document.getElementById("profile_name_text").textContent = 'New name for "' + selected_profile + '":';
+      delete_profiles_button.classList.remove("hidden");
+      delete_profiles_button.innerHTML = 'Delete "' + selected_profile + '" <i class="ml-2 fa-solid fa-trash"></i>';
+      rename_profiles_button.classList.remove("hidden");
+      rename_profiles_button.innerHTML = 'Rename "' + selected_profile + '"';
+      select_host_button.textContent = 'Change selected hosts';
+      profile_status = 1;
+      enable_button(select_host_button, "purple", "small");
+    }
+    upload_popup.classList.add("hidden");
+    profile_maker_popup.classList.remove("hidden");
+  });
+
+  profile_maker_popup.addEventListener("click", function (event) {
+    if (event.target === profile_maker_popup) {
+      reset_upload_profile();
+    }
+  });
+
+  select_host_button.addEventListener("click", function () {
+    disable_button(button_save_selected_host);
+    profile_maker_popup.classList.add("hidden");
+    upload_button_generic.forEach((element) => {
+      element.classList.add("hidden");
+    });
+    select_box_container.forEach((element) => {
+      element.classList.remove("hidden");
+    });
+
+    upload_name.textContent = "Selected";
+
+    select_box.forEach((checkbox) => {
+      if (host.includes(checkbox.value)) {
+          checkbox.checked = true;
+      }
+    });
+
+    button_save_selected_host.classList.remove("hidden");
+    button_cancel_selected_host.classList.remove("hidden");
+  });
+
+  button_save_selected_host.addEventListener("click", function () {
+    const selected_host = [];
+
+    select_box.forEach((checkbox) => {
+      if (checkbox.checked) {
+        selected_host.push(checkbox.value);
+      }
+    });
+
+    let profile_name = "";
+
+    if (profile_status === 0) {
+      profile_name = profile_name_input.value;
+    } else if (profile_status === 1) {
+      profile_name = selected_profile;
+    }
+
+    invoke("add_profile_json", {profileName: profile_name, selectedHost: selected_host});
+
+    upload_button_generic.forEach((element) => {
+      element.classList.remove("hidden");
+    });
+    select_box_container.forEach((element) => {
+      element.classList.add("hidden");
+    });
+    upload_name.textContent = "Upload";
+    button_save_selected_host.classList.add("hidden");
+    button_cancel_selected_host.classList.add("hidden");
+    reset_upload_profile();
+  });
+
+  button_cancel_selected_host.addEventListener("click", function () {
+    upload_button_generic.forEach((element) => {
+      element.classList.remove("hidden");
+    });
+    select_box_container.forEach((element) => {
+      element.classList.add("hidden");
+    });
+    upload_name.textContent = "Upload";
+
+    button_save_selected_host.classList.add("hidden");
+    button_cancel_selected_host.classList.add("hidden");
+    reset_upload_profile();
+  })
+
+  let button_upload_status = 0;
+
+  toggle_upload_mode.addEventListener("click", function () {
+    if (button_upload_status === 0) {
+      upload_button_generic.forEach((element) => {
+        element.classList.add("hidden");
+      });
+      select_box_container.forEach((element) => {
+        element.classList.remove("hidden");
+      });
+
+      upload_name.textContent = "Selected";
+      toggle_upload_mode.textContent = "Switch to single upload mode";
+      button_multiple_host_popup.classList.remove("hidden");
+      button_upload_status = 1;
+
+    } else if (button_upload_status === 1) {
+      upload_button_generic.forEach((element) => {
+        element.classList.remove("hidden");
+      });
+      select_box_container.forEach((element) => {
+        element.classList.add("hidden");
+      });
+
+      upload_name.textContent = "Upload";
+      toggle_upload_mode.textContent = "Switch to multiple upload mode";
+      button_multiple_host_popup.classList.add("hidden");
+      button_upload_status = 0;
+    }
+  });
+
+  select_box.forEach(checkbox => {
+    checkbox.addEventListener('change', function() {
+        if (Array.from(select_box).some(checkbox => checkbox.checked)) {
+            enable_button(button_save_selected_host, "purple", "small");
+            enable_button(button_multiple_host_popup, "red", "small");
+        } else {
+            disable_button(button_save_selected_host);
+            disable_button(button_multiple_host_popup);
+        }
+    });
+  });
+
+  button_multiple_host_popup.addEventListener("click", function () {
+    reset_popup();
+
+    enable_drag_file();
+
+    const selected_host = [];
+
+    select_box.forEach((checkbox) => {
+      if (checkbox.checked) {
+        selected_host.push(checkbox.value);
+      }
+    });
+
+    host = selected_host;
+    document.getElementById("p-for-margin").classList.add("hidden");
+    conditions_of_use_link.classList.add("hidden");
+  });
+
+  delete_file_input.addEventListener("click", function () {
+    popup_file_input.value = "";
+    disabled_upload_button();
+    popup_upload_button.classList.add("opacity-50");
+    popup_browse_button.textContent = "Browse";
+    delete_file_input.classList.add("hidden");
+  });
+
+  delete_profiles_button.addEventListener("click", function () {
+    invoke("delete_profile_json", { profileName: selected_profile });
+    profile_maker_popup.classList.add("hidden");
+    reset_upload_profile();
+  });
+
+  rename_profiles_button.addEventListener("click", function () {
+    invoke("rename_profile_json", {
+      oldProfileName: selected_profile,
+      newProfileName: profile_name_input.value,
+    });
+    reset_upload_profile();
+  });
+
+  profile_name_input.addEventListener("input", function () {
+    if (profile_name_input.value) {
+      enable_button(rename_profiles_button, "purple", "small");
+
+      if (profile_status === 0) {
+        enable_button(select_host_button, "purple", "small");
+      }
+
+    } else {
+      disable_button(rename_profiles_button);
+
+      if (profile_status === 0) {
+        disable_button(select_host_button);
+      }
+    }
+  });
+
+  upload_history_button.addEventListener("click", function () {
+    uploaded_files_history_popup.classList.remove("hidden");
+
+    while (history_table_body.firstChild) {
+      history_table_body.removeChild(history_table_body.firstChild);
+    }
+
+    get_resource_path()
+      .then((result) => {
+        fetch(convertFileSrc(result + "/history.json"))
+          .then((response) => response.json())
+          .then((data) => {
+            const keys = Object.keys(data).reverse();
+
+            for (const link of keys) {
+              const row = document.createElement("tr");
+              const link_cell = document.createElement("td");
+              const link_text = document.createElement("a");
+              link_cell.className = "border px-4 py-2 max-w-sm truncate";
+              link_text.textContent = link;
+              link_cell.classList.add("text-sky-400");
+              link_text.href = link;
+              link_text.target = '_blank'
+
+              enable_button(clear_history_button, "red", "big");
+
+              const upload_date_cell = document.createElement("td");
+              upload_date_cell.className = "border px-4 py-2";
+              upload_date_cell.textContent = data[link].date_upload;
+
+              const expiration_date_cell = document.createElement("td");
+              expiration_date_cell.className = "border px-4 py-2";
+
+              const expiry_date = new Date(data[link].date_expires);
+              const current_date = new Date();
+
+              const difference_in_milliseconds = Math.abs(current_date - expiry_date);
+              const difference_in_minutes = Math.floor(difference_in_milliseconds / (1000 * 60));
+              const difference_in_hours = Math.floor(difference_in_minutes / 60);
+              const difference_in_days = Math.floor(difference_in_hours / 24);
+              const remaining_hours = difference_in_hours % 24;
+              const remaining_minutes = difference_in_minutes % 60;
+
+              let time_to_expiration = "";
+              
+              if (current_date > expiry_date || localStorage.getItem(`${link}_alive`) == "expired") {
+                time_to_expiration = `<p style="color: #ff2828;"><i class="fa-solid fa-circle-exclamation" style="color: #ff2828;"></i> <strong>Expired file</strong></p>`;
+              } else if (data[link].date_expires == "Depends on the size of your file") {
+                time_to_expiration = "Depends on the size of your file";
+              } else if (data[link].date_expires == "Infinite") {
+                time_to_expiration = "Infinite";
+              } else if (difference_in_days >= 1) {
+                time_to_expiration = difference_in_days + "d " + remaining_hours + "h";
+              } else if (difference_in_hours >= 1){
+                time_to_expiration = remaining_hours + "h " + remaining_minutes + "min";
+              } else {
+                time_to_expiration = difference_in_minutes + "min";
+              }
+
+              expiration_date_cell.innerHTML = time_to_expiration;
+
+              const delete_link_cell = document.createElement("td");
+              const delete_link_button = document.createElement("button");
+              delete_link_cell.className = "border px-4 py-2";
+
+              const file_status = localStorage.getItem(`${link}_file_status`);
+
+              if (data[link].manage[0] && file_status != "delete") {
+                delete_link_button.innerHTML = `<button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-[1.03] hover:from-red-500 hover:to-rose-500 active:scale-[1.05]" id="delete_file" value=${link}>Delete file <i class="fa-solid fa-trash"></i></button>`;
+              } else {
+                delete_link_button.innerHTML = `<div class="inline-block relative group">
+                <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 opacity-50 cursor-not-allowed" id="delete_file" disabled>Delete file <i class="fa-solid fa-trash"></i></button>
+            
+                  <div class="absolute bottom-full mb-1 group-hover:block w-48 hidden">
+                      <div class="bg-slate-900 text-white text-xs rounded-lg py-1 px-2">
+                      The host doesn't offer a delete option, or the file has already been deleted.
+                      </div>
+                  </div>
+                </div>`;
+              }
+
+              link_cell.appendChild(link_text);
+              row.appendChild(link_cell);
+              row.appendChild(upload_date_cell);
+              row.appendChild(expiration_date_cell);
+              delete_link_cell.appendChild(delete_link_button);
+              row.appendChild(delete_link_cell);
+
+              history_table_body.appendChild(row);
+
+            }
+
+            document.querySelectorAll("#delete_file").forEach(button => {
+              button.addEventListener("click", function () {               
+                const delete_url = data[button.value].manage[0]
+                const delete_method = data[button.value].manage[1]
+                const delete_data = data[button.value].manage[2]
+
+                let delete_data_formatted = Object.keys(delete_data).map(key => {
+                  return encodeURIComponent(key) + '=' + encodeURIComponent(delete_data[key]);
+                }).join('&');
+
+                let delete_request_config = {
+                  method: delete_method,
+                  headers: {
+                      "Content-Type": "application/x-www-form-urlencoded",
+                      "Access-Control-Allow-Methods": "GET, POST, OPTIONS, PUT, DELETE"
+                  }
+                };
+
+                if (delete_method !== "GET") {
+                  delete_request_config.body = delete_data_formatted;
+                }
+
+                fetch(url_for_bypass_cors + delete_url, delete_request_config)
+                .then(response => {
+                  disable_button(button);
+                  localStorage.setItem(`${button.value}_file_status`, 'delete');
+                  localStorage.setItem(`${button.value}_alive`, 'expired');
+                })
+              })
+            })
+          });
+      })
+      .catch((error) => {
+        console.error("Error retrieving path to local application data : " + error);
+      });
+  });
+
+  uploaded_files_history_popup.addEventListener("click", function (event) {
+    if (event.target === uploaded_files_history_popup) {
+      uploaded_files_history_popup.classList.add("hidden");
+    }
+  });
+
+  clear_history_button.addEventListener("click", function () {
+    invoke("clear_history_json");
+
+    uploaded_files_history_popup.classList.add("hidden");
+    disable_button(clear_history_button);
+  });
+
+  check_status_button.addEventListener("click", function () {
+    enable_hosts();
+    check_status_button.innerHTML = `Check host status <i class="fa-solid fa-check" style="color: #ffffff;"></i>`;
+    check_host_status(true);
+    setTimeout(function() {
+      check_status_button.innerHTML = `Check host status <i class="fa-solid fa-arrows-rotate" style="color: #fefefe;"></i>`;
+    }, 2000);
+  })
+
+  upload_preparation(button_gofile, ["gofile.io"], "Gofile has no known bugs or problems.", "https://gofile.io/terms");
+  upload_preparation(button_litterbox, ["litter.catbox.moe"], "Litterbox is regularly down and does not accept .exe, .scr, .cpl, .doc*, .jar files.", "https://litterbox.catbox.moe/faq.php");
+  upload_preparation(button_fileio, ["file.io"], "File.io has no known bugs or problems.", "https://www.file.io/tos/");
+  upload_preparation(button_tmpfilesorg, ["tmpfiles.org"], "TmpFiles.org does not accept .js, .html files.", "https://tmpfiles.org/about");
+  upload_preparation(button_0x0, ["0x0.st"], "0x0.st doe not accept .exe, .rar, .jar, .apk, .scr, .dll files", "https://0x0.st/");
+  upload_preparation(button_cvsh, ["c-v.sh"], "C-V.sh has no known bugs or problems.", "https://c-v.sh/");
+  upload_preparation(button_kitc, ["ki.tc"], "Ki.tc has no known bugs or problems.", "https://logic-gate-demo.readthedocs.io/en/latest/readme.html");
+  upload_preparation(button_oshi, ["oshi.at"], "Oshi.at is inaccessible from certain IPs with the error \"Connection reset\".", "https://oshi.at/abuse");
+  upload_preparation(button_filebin, ["filebin.net"], "Filebin often runs out of storage.", "https://filebin.net/terms");
+  upload_preparation(button_transfersh, ["transfer.sh"], "Transfer.sh has no known bugs or problems.", "https://transfer.sh/");
+  upload_preparation(button_bashupload, ["bashupload.com"], "Bashupload.com allows only one download per link.", "https://bashupload.com/disclaimer");
+  upload_preparation(button_curlby, ["curl.by"], "Curl.by has no known bugs or problems.", "https://www.curl.by/disclaimer");
+  upload_preparation(button_x0at, ["x0.at"], "x0.at does not accept .exe, .rar, .jar, .apk, .scr, .dll files.", "https://x0.at/");
+  upload_preparation(button_uplooad, ["uplooad.net"], "Uplooad has no known bugs or problems.", "https://uplooad.net/tos.html");
+  upload_preparation(button_tommoteam, ["a.tommo.team"], "Tommo.team has no known bugs or problems.", "https://tommo.team/faq.html");
+  upload_preparation(button_anonymfile, ["anonymfile.com"], "AnonymFiles imposes a 12-second waiting time before the file can be downloaded.", "https://anonymfile.com/terms");
+  upload_preparation(button_gofilecc, ["gofile.cc"], "Gofile.cc imposes a 12-second waiting time before the file can be downloaded.", "https://gofile.cc/terms");
+  upload_preparation(button_anyfile, ["anyfile.co"], "Anyfile has no known bugs or problems.", "https://anyfile.co/terms");
+  upload_preparation(button_tempfilesninja, ["tempfiles.ninja"], "tempfiles.ninja has no known bugs or problems.", "https://tempfiles.ninja/");
+  upload_preparation(button_pixeldrain, ["pixeldrain.com"], "Pixeldrain has no known bugs or problems.", "https://pixeldrain.com/abuse");
+  upload_preparation(button_1cloudfile, ["1cloudfile.com"], "1Cloudfile has no known bugs or problems.", "https://1cloudfile.com/terms");
+  upload_preparation(button_bowfile, ["bowfile.com"], "Bowfile has no known bugs or problems.", "https://bowfile.com/terms");
+  upload_preparation(button_uploadify, ["uploadify.net"], "Uplodify imposes a 20-second waiting time before the file can be downloaded.", "https://uploadify.net/terms.html");
+  upload_preparation(button_anonfilesme, ["anonfiles.me"], "AnonFiles.me imposes a 3-second waiting time before the file can be downloaded.", "https://anonfiles.me/terms");
+  upload_preparation(button_anontransfer, ["anontransfer.com"], "AnonTransfer does not accept all file formats.", "https://anontransfer.com/terms");
+  upload_preparation(button_anonsharing, ["anonsharing.com"], "AnonSharing imposes a 20-second waiting time before the file can be downloaded.", "https://anonsharing.com/terms");
+  upload_preparation(button_tempsh, ["temp.sh"], "Temp.sh has no known bugs or problems.", "https://temp.sh/");
+  upload_preparation(button_uguuse, ["a.uguu.se"], "Uguu.se does not accept .exe files.", "https://uguu.se/faq.html");
+  upload_preparation(button_nopaste, ["nopaste.net"], "Nopaste has no known bugs or problems.", "https://nopaste.net/");
+  upload_preparation(button_udrop, ["www.udrop.com"], "udrop does not accept .exe, .dll, .apk files.", "https://www.udrop.com/terms");
+  upload_preparation(button_tempsend, ["tempsend.com"], "Tempsend has no known bugs or problems.", "https://tempsend.com/");
+  upload_preparation(button_1fichier, ["1fichier.com"], "1fichier limits the connection during download and imposes a waiting time between file downloads.", "https://img.1fichier.com/2021-10-01-CGU.pdf");
+  upload_preparation(button_turbobit, ["turbobit.net"], "Turbobit limits the connection during download and imposes a waiting time between file downloads.", "https://turbobit.net/rules");
+  upload_preparation(button_hitfile, ["hitfile.net"], "Hitfile limits the connection during download and imposes a waiting time between file downloads.", "https://hitfile.net/rules");
+  upload_preparation(button_fileupload, ["file-upload.org"], "file-upload.org limits the connection during download and imposes a waiting time before the file can be downloaded.", "https://www.file-upload.org/tos.html");
+  upload_preparation(button_hexupload, ["hexupload.net"], "HexUpload does not accept .jpeg, .jpg, .png files.", "https://hexupload.net/tos.html");
+  upload_preparation(button_mexash, ["mexa.sh"], "Mexa.sh does not accept .exe files.", "https://mexa.sh/tos.html");
+  upload_preparation(button_rapidfileshare, ["www.rapidfileshare.net"], "RapidFileShare limits the connection and restricts downloads to 1GB per day.", "http://rapidfileshare.net/tos.html");
+  upload_preparation(button_sendcm, ["send.cm"], "Send.cm has no known bugs or problems.", "https://send.cm/terms");
+  upload_preparation(button_uploadio, ["up-load.io"], "up-load.io imposes a 30-second delay before the file can be downloaded.", "https://up-load.io/tos.html");
+  upload_preparation(button_usercloud, ["userscloud.com"], "Userscloud has no known bugs or problems.", "https://userscloud.com/tos.html");
+  upload_preparation(button_filetmp, ["filetmp.com"], "FileTmp has no known bugs or problems.", "https://filetmp.com/");
+  upload_preparation(button_bayfiles, ["bayfiles.io"], "Bayfiles.io imposes a 30-second waiting time before the file can be downloaded.", "https://bayfiles.io/terms");
+
   popup_upload_button.addEventListener("click", function (event) {
     event.preventDefault();
 
-    popup_upload_button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Uploading...'
-
-    const sent_data_form = new FormData();
-
-    if (host === "gofile") {
-
-      sent_data_form.append("file", popup_file_input.files[0]);
-      upload_to_host(url_for_bypass_cors + '/https://store2.gofile.io/uploadFile', 'POST', sent_data_form, 'json', ['data', 'downloadPage'])
-
-    } else if (host === "litterbox") {
-
-      sent_data_form.append('reqtype', 'fileupload');
-      sent_data_form.append('time', '24h');
-      sent_data_form.append("fileToUpload", popup_file_input.files[0]);
-      upload_to_host(url_for_bypass_cors + '/https://litterbox.catbox.moe/resources/internals/api.php', 'POST', sent_data_form, 'text')
-
-    } else if (host === "fileio") {
-
-      sent_data_form.append("file", popup_file_input.files[0]);
-      upload_to_host('https://file.io/', 'POST', sent_data_form, 'json', ['link'])
-
-    } else if (host === "tmpfilesorg") {
-
-      sent_data_form.append("file", popup_file_input.files[0]);
-      upload_to_host('https://tmpfiles.org/api/v1/upload', 'POST', sent_data_form, 'json', ['data', 'url'])
-     
-    } else if (host === "0x0") {
-
-      sent_data_form.append("file", popup_file_input.files[0]);
-      upload_to_host(url_for_bypass_cors + '/https://0x0.st/', 'POST', sent_data_form, 'text')
-    
-    } else if (host === "CV") {
-
-      sent_data_form.append("a", popup_file_input.files[0]);
-      upload_to_host(url_for_bypass_cors + '/https://c-v.sh/', 'POST', sent_data_form, 'text', [], ['match', /https:\/\/c-v\.sh\/[^\s]+/])
-
-    } else if (host === "KITc") {
-
-      sent_data_form.append("file", popup_file_input.files[0]);
-      upload_to_host(url_for_bypass_cors + '/https://ki.tc/file/u/', 'POST', sent_data_form, 'json', ['file', 'download_page'])
-
-    } else if (host === "Oshi") {
-
-      sent_data_form.append("f", popup_file_input.files[0]);
-      sent_data_form.append("expire", "120");
-      upload_to_host(url_for_bypass_cors + '/https://oshi.at/', 'POST', sent_data_form, 'text', [], ['substr', 'DL:', 4])
-
-    } else if (host === "Filebin") {
-
-      const bin = (Math.random() + 1).toString(36).substring(2, 12);
-      const filename = (Math.random() + 1).toString(36).substring(2, 12);
-      const url_Filebin = `https://filebin.net/${bin}/${filename}`
-      upload_to_host(url_for_bypass_cors + '/' + url_Filebin, 'POST', popup_file_input.files[0], 'json', [], null, [url_Filebin])
-
-    } else if (host === "TransferSh") {
-
-      upload_to_host(url_for_bypass_cors + '/https://transfer.sh/${popup_file_input.files[0].name}', 'PUT', popup_file_input.files[0], 'text')
-
-    } else if (host === "FroCDN") {
-
-      sent_data_form.append("file", popup_file_input.files[0]);
-      upload_to_host(url_for_bypass_cors + '/https://frocdn.com/curl.php', 'POST', sent_data_form, 'text', [], ['substr', ['https://cdn1.frocdn.ch/'], 0])
-
-    } else if (host === "Bashupload") {
-
-      sent_data_form.append("file_1", popup_file_input.files[0]);
-      upload_to_host(url_for_bypass_cors + '/https://bashupload.com/', 'POST', sent_data_form, 'text', [], ['match', /https:\/\/bashupload\.com\/[^\s]+/])
-    
-    } else if (host === "CurlBy") {
-
-      sent_data_form.append("file_3", popup_file_input.files[0]);
-      upload_to_host(url_for_bypass_cors + '/https://curl.by/', 'POST', sent_data_form, 'text', [], ['match', /http:\/\/curl\.by\/[^\s]+/])
-  
-    } else if (host === "x0At") {
-
-      sent_data_form.append("file", popup_file_input.files[0]);
-      upload_to_host(url_for_bypass_cors + '/https://x0.at/', 'POST', sent_data_form, 'text')
-
-    } else if (host === "TempFilesOrg") {
-
-      sent_data_form.append("file", popup_file_input.files[0]);
-      sent_data_form.append("upload_auto_delete", "8");
-      upload_to_host(url_for_bypass_cors + '/https://temp-file.org/upload', 'POST', sent_data_form, 'json', ['download_link'])
-
-    } else if (host === "Uplooad") {
-
-      sent_data_form.append("file_0", popup_file_input.files[0]);
-      upload_to_host(url_for_bypass_cors + '/https://serv1.uplooad.net/cgi-bin/upload.cgi?upload_type=file&utype=anon', 'POST', sent_data_form, 'json', [0, 'file_code'], null, null, ['https://uplooad.net/'])
-    
-    } else if (host === "TommoTeam") {
-
-      sent_data_form.append("files[]", popup_file_input.files[0]);
-      upload_to_host(url_for_bypass_cors + '/https://www.tommo.team/upload.php', 'POST', sent_data_form, 'json', ['files', 0, 'url'])
-
-    } else if (host === "AnonymFile") {
-
-      sent_data_form.append("file", popup_file_input.files[0]);
-      upload_to_host('https://anonymfile.com/api/v1/upload', 'POST', sent_data_form, 'json', ['data', 'file', 'url', 'full'])
-
-    } else if (host === "Anyfile") {
-
-      sent_data_form.append("file", popup_file_input.files[0]);
-      upload_to_host('https://anyfile.co/api/v1/upload', 'POST', sent_data_form, 'json', ['data', 'file', 'url', 'full'])
-    
-    } else if (host === "GofileCc") {
-
-      sent_data_form.append("file", popup_file_input.files[0]);
-      upload_to_host('https://gofile.cc/api/v1/upload', 'POST', sent_data_form, 'json', ['data', 'file', 'url', 'full'])
-
-    } else if (host === "TempFilesNinja") {
-
-      upload_to_host(url_for_bypass_cors + '/https://tempfiles.ninja/api/upload?${popup_file_input.files[0].name}', 'POST', popup_file_input.files[0], 'json', ['download_url'])
-
-    } else if (host === "Pixeldrain") {
-
-      upload_to_host(url_for_bypass_cors + '/https://pixeldrain.com/api/file/${popup_file_input.files[0].name}', 'PUT', popup_file_input.files[0], 'json', ['id'], null, null, ['https://pixeldrain.com/u/'])
-
-    } else if (host === "UploadHub") {
-
-      sent_data_form.append("file_0", popup_file_input.files[0])
-      upload_to_host(url_for_bypass_cors + '/https://upload100.uploadhub.to:83/cgi-bin/upload.cgi?upload_type=file&utype=anon', 'POST', sent_data_form, 'json', [0, 'file_code'], null, null, ['https://uploadhub.to/'])
-
-    } else if (host === "1Cloudfile") {
-
-      sent_data_form.append("files[]", popup_file_input.files[0])
-      upload_to_host(url_for_bypass_cors + '/https://fs9.1cloudfile.com/ajax/file_upload_handler', 'POST', sent_data_form, 'json', [0, 'url'])
-
-    } else if (host === "Bowfile") {
-
-      sent_data_form.append("files[]", popup_file_input.files[0])
-      upload_to_host(url_for_bypass_cors + '/https://fs8.bowfile.com/ajax/file_upload_handler', 'POST', sent_data_form, 'json', [0, 'url'])
-    
-    } else if (host === "ZeroUpload") {
-
-      sent_data_form.append("files[]", popup_file_input.files[0])
-      upload_to_host(url_for_bypass_cors + '/https://ww2.zeroupload.xyz/ajax/file_upload_handler', 'POST', sent_data_form, 'json', [0, 'url'])
-    
-    } else if (host === "Uploadify") {
-
-      sent_data_form.append("files[]", popup_file_input.files[0])
-      upload_to_host(url_for_bypass_cors + '/https://uploadify.net/core/page/ajax/file_upload_handler.ajax.php', 'POST', sent_data_form, 'json', [0, 'url'])
-    
-    } else if (host === "AnonFilesMe") {
-
-      sent_data_form.append("file", popup_file_input.files[0]);
-      upload_to_host('https://anonfiles.me/api/v1/upload', 'POST', sent_data_form, 'json', ['data', 'file', 'url', 'full'])
-
-    } else if (host === "AnonTransfer") {
-
-      sent_data_form.append("file", popup_file_input.files[0]);
-      upload_to_host(url_for_bypass_cors + '/https://www.anontransfer.com/upload.php', 'POST', sent_data_form, 'json', ['uri'])
-
-    } else if (host === "AnonSharing") {
-
-      sent_data_form.append("files[]", popup_file_input.files[0])
-      upload_to_host(url_for_bypass_cors + '/https://anonsharing.com/ajax/file_upload_handler', 'POST', sent_data_form, 'json', [0, 'url'])
-
-    } else if (host === "TempSh") {
-
-      sent_data_form.append("file", popup_file_input.files[0])
-      upload_to_host(url_for_bypass_cors + '/https://temp.sh/upload', 'POST', sent_data_form, 'text')
-
-    } else if (host === "UguuSe") {
-
-      sent_data_form.append("files[]", popup_file_input.files[0])
-      upload_to_host(url_for_bypass_cors + '/https://uguu.se/upload.php', 'POST', sent_data_form, 'json', ['files', 0, 'url'])
-
-    } else if (host === "Nopaste") {
-
-      upload_to_host(url_for_bypass_cors + '/https://nopaste.net/', 'PUT', popup_file_input.files[0], 'text', [], ['match', /https:\/\/nopaste\.net\/([A-Za-z0-9]+)/])
-    
-    } else if (host === "Udrop") {
-
-      sent_data_form.append("files[]", popup_file_input.files[0])
-      upload_to_host(url_for_bypass_cors + '/https://www.udrop.com/ajax/file_upload_handler', 'POST', sent_data_form, 'json', [0, 'url'])
-
-    } else if (host === "Tempsend") {
-
-        sent_data_form.append("file", popup_file_input.files[0])
-        sent_data_form.append("expire", '604800')
-  
-        upload_to_host(url_for_bypass_cors + '/https://tempsend.com/send', 'POST', sent_data_form, 'text', [], ['match', /https:\/\/tempsend\.com\/([A-Za-z0-9]+)/])
-    
-    } else if (host === "1fichier") {
-
-      disabled_upload_button()
-
-      fetch(url_for_bypass_cors + '/https://api.1fichier.com/v1/upload/get_upload_server.cgi', {method: 'POST', headers: {'Content-Type': 'application/json', 'X-Requested-With': '*'}})
-      .then(response => response.json())
-      .then(data => {
-        const url_1fichier_for_upload = data.url
-        const id_1fichier_for_upload = data.id
-
-        sent_data_form.append("file[]", popup_file_input.files[0])
-        sent_data_form.append("send_ssl", 'on')
-        sent_data_form.append("domain", '0')
-        sent_data_form.append("mail", '')
-        sent_data_form.append("dpass", '')
-        sent_data_form.append("mails", '')
-        sent_data_form.append("message", '')
-        sent_data_form.append("did", '0')
-        sent_data_form.append("submit", 'Envoyer')
-  
-        upload_to_host(url_for_bypass_cors + '/https://' + url_1fichier_for_upload + '/upload.cgi?id=' + id_1fichier_for_upload, 'POST', sent_data_form, 'text', [], ['match', /https:\/\/1fichier\.com\/\?([A-Za-z0-9]+)/])
-      })
-
-    } else if (host === "Turbobit") {
-
-      sent_data_form.append("apptype", 'fd1')
-      sent_data_form.append("sort-by", 'defaultSort')
-      sent_data_form.append("sort-by", 'defaultSort')
-      sent_data_form.append("sort-by", 'defaultSort')
-      sent_data_form.append("Filedata", popup_file_input.files[0])
-
-      upload_to_host(url_for_bypass_cors + '/https://s341.turbobit.net/uploadfile', 'POST', sent_data_form, 'json', ['id'], null, null, ['https://turbobit.net/', '.html'])
-
-    } else if (host === "Hitfile") {
-
-      sent_data_form.append("apptype", 'fd2')
-      sent_data_form.append("Filedata", popup_file_input.files[0])
-
-      upload_to_host(url_for_bypass_cors + '/https://s379.hitfile.net/uploadfile', 'POST', sent_data_form, 'json', ['id'], null, null, ['https://hitfile.net/'])
-
-    } else if (host === "FileUpload") {
-
-      sent_data_form.append("sess_id", '')
-      sent_data_form.append("utype", 'anon')
-      sent_data_form.append("file_descr", '')
-      sent_data_form.append("file_public", '1')
-      sent_data_form.append("link_rcpt", '')
-      sent_data_form.append("link_pass", '')
-      sent_data_form.append("to_folder", '')
-      sent_data_form.append("upload", 'Start upload')
-      sent_data_form.append("", 'Add more')
-      sent_data_form.append("keepalive", '1')
-      sent_data_form.append("file_0", popup_file_input.files[0])
-
-      upload_to_host(url_for_bypass_cors + '/https://f3.file-upload.download/cgi-bin/upload.cgi?upload_type=file&utype=anon', 'POST', sent_data_form, 'json', [0, 'file_code'], null, null, ['https://file-upload.org/'])
-
-    } else if (host === "HexUpload") {
-
-      sent_data_form.append("sess_id", '')
-      sent_data_form.append("utype", 'anon')
-      sent_data_form.append("mode", '')
-      sent_data_form.append("file_public", '')
-      sent_data_form.append("link_rcpt", '')
-      sent_data_form.append("link_pass", '')
-      sent_data_form.append("keepalive", '1')
-      sent_data_form.append("file_0", popup_file_input.files[0])
-
-      upload_to_host(url_for_bypass_cors + '/https://cloudflare-944btwd2ivy.mx-content-delivery.com/cgi-bin/upload.cgi?upload_type=file&utype=anon', 'POST', sent_data_form, 'json', [0, 'file_code'], null, null, ['https://hexupload.net/'])
-
-    } else if (host === "MexaSh") {
-
-      sent_data_form.append("sess_id", '')
-      sent_data_form.append("utype", 'anon')
-      sent_data_form.append("to_folder", '')
-      sent_data_form.append("", 'Start upload')
-      sent_data_form.append("", 'Add more')
-      sent_data_form.append("keepalive", '1')
-      sent_data_form.append("file_0", popup_file_input.files[0])
-
-      upload_to_host(url_for_bypass_cors + '/https://srv29.mexa.sh/cgi-bin/upload.cgi?upload_type=file', 'POST', sent_data_form, 'json', [0, 'file_code'], null, null, ['https://mexa.sh/', '.html'])
-
-    } else if (host === "RapidFileShare") {
-
-      sent_data_form.append("sess_id", '')
-      sent_data_form.append("utype", 'anon')
-      sent_data_form.append("file_descr", '')
-      sent_data_form.append("file_public", '')
-      sent_data_form.append("link_rcpt", '')
-      sent_data_form.append("link_pass", '')
-      sent_data_form.append("to_folder", '')
-      sent_data_form.append("upload", 'Start upload')
-      sent_data_form.append("", 'Add more')
-      sent_data_form.append("keepalive", '1')
-      sent_data_form.append("file_0", popup_file_input.files[0])
-
-      upload_to_host(url_for_bypass_cors + '/http://trinity.rapidfileshare.net/cgi-bin/upload.cgi?upload_type=file&utype=anon', 'POST', sent_data_form, 'json', [0, 'file_code'], null, null, ['http://www.rapidfileshare.net/', '.html'])
-
-    } else if (host === "SendCm") {
-
-      sent_data_form.append("sess_id", '')
-      sent_data_form.append("utype", 'anon')
-      sent_data_form.append("hidden", '')
-      sent_data_form.append("file_public", '')
-      sent_data_form.append("enableemail", '')
-      sent_data_form.append("link_rcpt", '')
-      sent_data_form.append("link_pass", '')
-      sent_data_form.append("file_expire_time", '15')
-      sent_data_form.append("file_expire_unit", 'DAY')
-      sent_data_form.append("file_max_dl", '')
-      sent_data_form.append("keepalive", '1')
-      sent_data_form.append("file_0", popup_file_input.files[0])
-
-      upload_to_host(url_for_bypass_cors + '/https://4884.send.cm/cgi-bin/upload.cgi?upload_type=file&utype=anon', 'POST', sent_data_form, 'json', [0, 'file_code'], null, null, ['https://send.cm/'])
-
-    } else if (host === "UpLoadIo") {
-
-      sent_data_form.append("sess_id", '')
-      sent_data_form.append("utype", 'anon')
-      sent_data_form.append("file_public", '1')
-      sent_data_form.append("link_rcpt", '')
-      sent_data_form.append("link_pass", '')
-      sent_data_form.append("to_folder", '')
-      sent_data_form.append("keepalive", '1')
-      sent_data_form.append("file_0", popup_file_input.files[0])
-
-      upload_to_host(url_for_bypass_cors + '/https://s2.up-load.download/cgi-bin/upload.cgi?upload_type=file&utype=anon', 'POST', sent_data_form, 'json', [0, 'file_code'], null, null, ['https://up-load.io/'])
-
-    } else if (host === "Usercloud") {
-
-      sent_data_form.append("sess_id", '')
-      sent_data_form.append("utype", 'anon')
-      sent_data_form.append("link_rcpt", '')
-      sent_data_form.append("link_pass", '')
-      sent_data_form.append("keepalive", '1')
-      sent_data_form.append("file_0", popup_file_input.files[0])
-
-      upload_to_host(url_for_bypass_cors + '/https://u3174.userscloud.com/cgi-bin/upload.cgi?upload_type=file&utype=anon', 'POST', sent_data_form, 'json', [0, 'file_code'], null, null, ['https://userscloud.com/'])
-
+    popup_upload_button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Uploading...';
+
+    let file_to_upload = "";
+    let file_to_upload_name = "";
+
+    if (is_drag_file === false) {
+      file_to_upload = popup_file_input.files[0];
+      file_to_upload_name = popup_file_input.files[0].name;
+    } else {
+      file_to_upload = drag_file;
+      file_to_upload_name = drag_file_name;
     }
+
+    host.forEach(function (current_host) {
+      const sent_data_form = new FormData();
+
+      if (current_host === "gofile.io") {
+        fetch(url_for_bypass_cors + "https://api.gofile.io/getServer", {method: "GET", headers: {"Content-Type": "application/json", "X-Requested-With": "*"}})
+          .then((response) => response.json())
+          .then((data) => {
+            const gofile_server = data.data.server;
+            sent_data_form.append("file", file_to_upload);
+            upload_to_host([url_for_bypass_cors + "https://" + gofile_server + ".gofile.io/uploadFile", "POST", sent_data_form], "json", ["data", "downloadPage"], [], ["https://api.gofile.io/deleteContent", "DELETE", {"contentsId": ["data", "fileId"], "token": ["data", "guestToken"]}]);
+        });
+
+      } else if (current_host === "litter.catbox.moe") {
+        sent_data_form.append("reqtype", "fileupload");
+        sent_data_form.append("time", "24h");
+        sent_data_form.append("fileToUpload", file_to_upload);
+        upload_to_host([url_for_bypass_cors + "https://litterbox.catbox.moe/resources/internals/api.php", "POST", sent_data_form], "text");
+
+      } else if (current_host === "file.io") {
+        sent_data_form.append("file", file_to_upload);
+        upload_to_host(["https://file.io/", "POST", sent_data_form], "json", ["link"]);
+
+      } else if (current_host === "tmpfiles.org") {
+        sent_data_form.append("file", file_to_upload);
+        upload_to_host(["https://tmpfiles.org/api/v1/upload", "POST", sent_data_form], "json", ["data", "url"]);
+
+      } else if (current_host === "0x0.st") {
+        sent_data_form.append("file", file_to_upload);
+        upload_to_host([url_for_bypass_cors + "https://0x0.st/", "POST", sent_data_form], "text");
+
+      } else if (current_host === "c-v.sh") {
+        sent_data_form.append("a", file_to_upload);
+        upload_to_host([url_for_bypass_cors + "https://c-v.sh/", "POST", sent_data_form], "text", ["match", /https:\/\/c-v\.sh\/[^\s]+/]);
+
+      } else if (current_host === "ki.tc") {
+        sent_data_form.append("file", file_to_upload);
+        upload_to_host([url_for_bypass_cors + "https://ki.tc/file/u/", "POST", sent_data_form], "json", ["file", "download_page"]);
+
+      } else if (current_host === "oshi.at") {
+        sent_data_form.append("f", file_to_upload);
+        sent_data_form.append("expire", "120");
+        upload_to_host([url_for_bypass_cors + "https://oshi.at/", "POST", sent_data_form], "text", ["match", /(?<=DL: )\S+/], [], [["match", /(?<=MANAGE: )\S+/], "GET"]);
+
+      } else if (current_host === "filebin.net") {
+        const bin = (Math.random() + 1).toString(36).substring(2, 12);
+        const filename = (Math.random() + 1).toString(36).substring(2, 12);
+        const url_filebin = "https://filebin.net/" + bin + "/" + filename;
+        upload_to_host([url_for_bypass_cors + url_filebin, "POST", file_to_upload], "json", [url_filebin], [], [url_filebin, "DELETE"]);
+
+      } else if (current_host === "transfer.sh") {
+        upload_to_host([url_for_bypass_cors + "https://transfer.sh/" + file_to_upload_name, "PUT", file_to_upload], "text");
+
+      } else if (current_host === "bashupload.com") {
+        sent_data_form.append("file_1", file_to_upload);
+        upload_to_host([url_for_bypass_cors + "https://bashupload.com/", "POST", sent_data_form], "text", ["match", /https:\/\/bashupload\.com\/[^\s]+/]);
+
+      } else if (current_host === "curl.by") {
+        sent_data_form.append("file_3", file_to_upload);
+        upload_to_host([url_for_bypass_cors + "https://curl.by/", "POST", sent_data_form], "text", ["match", /http:\/\/curl\.by\/[^\s]+/]);
+
+      } else if (current_host === "x0.at") {
+        sent_data_form.append("file", file_to_upload);
+        upload_to_host([url_for_bypass_cors + "https://x0.at/", "POST", sent_data_form], "text");
+
+      } else if (current_host === "uplooad.net") {
+        sent_data_form.append("file_0", file_to_upload);
+        upload_to_host([url_for_bypass_cors + "https://serv1.uplooad.net/cgi-bin/upload.cgi?upload_type=file&utype=anon", "POST", sent_data_form], "json", [0, "file_code"], ["https://uplooad.net/"]);
+
+      } else if (current_host === "a.tommo.team") {
+        sent_data_form.append("files[]", file_to_upload);
+        upload_to_host([url_for_bypass_cors + "https://www.tommo.team/upload.php", "POST", sent_data_form], "json", ["files", 0, "url"]);
+
+      } else if (current_host === "anonymfile.com") {
+        sent_data_form.append("file", file_to_upload);
+        upload_to_host(["https://anonymfile.com/api/v1/upload", "POST", sent_data_form], "json", ["data", "file", "url", "full"]);
+
+      } else if (current_host === "anyfile.co") {
+        sent_data_form.append("file", file_to_upload);
+        upload_to_host(["https://anyfile.co/api/v1/upload", "POST", sent_data_form], "json", ["data", "file", "url", "full"]);
+
+      } else if (current_host === "gofile.cc") {
+        sent_data_form.append("file", file_to_upload);
+        upload_to_host(["https://gofile.cc/api/v1/upload", "POST", sent_data_form], "json", ["data", "file", "url", "full"]);
+
+      } else if (current_host === "tempfiles.ninja") {
+        upload_to_host([url_for_bypass_cors + "https://tempfiles.ninja/api/upload?" + file_to_upload_name], "POST", file_to_upload, "json", ["download_url"]);
+
+      } else if (current_host === "pixeldrain.com") {
+        upload_to_host([url_for_bypass_cors + "https://pixeldrain.com/api/file/" + file_to_upload_name, "PUT", file_to_upload], "json", ["id"],["https://pixeldrain.com/u/"]);
+
+      } else if (current_host === "1cloudfile.com") {
+        sent_data_form.append("files[]", file_to_upload);
+        upload_to_host([url_for_bypass_cors + "https://fs9.1cloudfile.com/ajax/file_upload_handler", "POST", sent_data_form], "json", [0, "url"]);
+
+      } else if (current_host === "bowfile.com") {
+        sent_data_form.append("files[]", file_to_upload);
+        upload_to_host([url_for_bypass_cors + "https://fs8.bowfile.com/ajax/file_upload_handler", "POST", sent_data_form], "json", [0, "url"]);
+
+      } else if (current_host === "uploadify.net") {
+        sent_data_form.append("files[]", file_to_upload);
+        upload_to_host([url_for_bypass_cors + "https://uploadify.net/core/page/ajax/file_upload_handler.ajax.php", "POST", sent_data_form], "json", [0, "url"], [], [[0, "delete_url"], "POST", {"delete": "1", "submitme": "1", "returnAccount": "0", "submit": ""}]);
+
+      } else if (current_host === "anonfiles.me") {
+        sent_data_form.append("file", file_to_upload);
+        upload_to_host(["https://anonfiles.me/api/v1/upload", "POST", sent_data_form], "json", ["data", "file", "url", "full"]);
+
+      } else if (current_host === "anontransfer.com") {
+        sent_data_form.append("file", file_to_upload);
+        upload_to_host([url_for_bypass_cors + "https://www.anontransfer.com/upload.php", "POST", sent_data_form], "json", ["uri"]);
+
+      } else if (current_host === "anonsharing.com") {
+        sent_data_form.append("files[]", file_to_upload);
+        upload_to_host([url_for_bypass_cors + "https://anonsharing.com/ajax/file_upload_handler", "POST", sent_data_form], "json", [0, "url"]);
+
+      } else if (current_host === "temp.sh") {
+        sent_data_form.append("file", file_to_upload);
+        upload_to_host([url_for_bypass_cors + "https://temp.sh/upload", "POST", sent_data_form], "text");
+
+      } else if (current_host === "a.uguu.se") {
+        sent_data_form.append("files[]", file_to_upload);
+        upload_to_host([url_for_bypass_cors + "https://uguu.se/upload.php", "POST", sent_data_form], "json", ["files", 0, "url"]);
+
+      } else if (current_host === "nopaste.net") {
+        upload_to_host([url_for_bypass_cors + "https://nopaste.net/", "PUT", file_to_upload], "text", ["match", /https:\/\/nopaste\.net\/([A-Za-z0-9]+)/]);
+
+      } else if (current_host === "www.udrop.com") {
+        sent_data_form.append("files[]", file_to_upload);
+        upload_to_host([url_for_bypass_cors + "https://www.udrop.com/ajax/file_upload_handler", "POST", sent_data_form], "json", [0, "url"], [], [[0, "delete_url"], "POST", {"submitted": "1"}]);
+
+      } else if (current_host === "tempsend.com") {
+        sent_data_form.append("file", file_to_upload);
+        sent_data_form.append("expire", "604800");
+        upload_to_host([url_for_bypass_cors + "https://tempsend.com/send", "POST", sent_data_form], "text", ["match", /https:\/\/tempsend\.com\/([A-Za-z0-9]+)/]);
+
+      } else if (current_host === "1fichier.com") {
+        disabled_upload_button();
+
+        fetch(url_for_bypass_cors + "https://api.1fichier.com/v1/upload/get_upload_server.cgi", {method: "POST", headers: {"Content-Type": "application/json", "X-Requested-With": "*"}})
+          .then((response) => response.json())
+          .then((data) => {
+            const url_1fichier_for_upload = data.url;
+            const id_1fichier_for_upload = data.id;
+
+            sent_data_form.append("file[]", file_to_upload);
+            sent_data_form.append("send_ssl", "on");
+            sent_data_form.append("domain", "0");
+            sent_data_form.append("mail", "");
+            sent_data_form.append("dpass", "");
+            sent_data_form.append("mails", "");
+            sent_data_form.append("message", "");
+            sent_data_form.append("did", "0");
+            sent_data_form.append("submit", "Envoyer");
+            upload_to_host([url_for_bypass_cors + "https://" + url_1fichier_for_upload + "/upload.cgi?id=" + id_1fichier_for_upload, "POST", sent_data_form], "text", ["match", /https:\/\/1fichier\.com\/\?([A-Za-z0-9]+)/], [], [["match", /https:\/\/1fichier\.com\/remove\/([A-Za-z0-9]+)\/([A-Za-z0-9]+)/], "POST", {"force": "1"}]);
+        });
+
+      } else if (current_host === "turbobit.net") {
+        sent_data_form.append("apptype", "fd1");
+        sent_data_form.append("sort-by", "defaultSort");
+        sent_data_form.append("sort-by", "defaultSort");
+        sent_data_form.append("sort-by", "defaultSort");
+        sent_data_form.append("Filedata", file_to_upload);
+        upload_to_host([url_for_bypass_cors + "https://s341.turbobit.net/uploadfile", "POST", sent_data_form], "json", ["id"], ["https://turbobit.net/", ".html"]);
+
+      } else if (current_host === "hitfile.net") {
+        sent_data_form.append("apptype", "fd2");
+        sent_data_form.append("Filedata", file_to_upload);
+        upload_to_host([url_for_bypass_cors + "https://s379.hitfile.net/uploadfile", "POST", sent_data_form], "json", ["id"], ["https://hitfile.net/"]);
+
+      } else if (current_host === "file-upload.org") {
+        sent_data_form.append("sess_id", "");
+        sent_data_form.append("utype", "anon");
+        sent_data_form.append("file_descr", "");
+        sent_data_form.append("file_public", "1");
+        sent_data_form.append("link_rcpt", "");
+        sent_data_form.append("link_pass", "");
+        sent_data_form.append("to_folder", "");
+        sent_data_form.append("upload", "Start upload");
+        sent_data_form.append("", "Add more");
+        sent_data_form.append("keepalive", "1");
+        sent_data_form.append("file_0", file_to_upload);
+        upload_to_host([url_for_bypass_cors + "https://f3.file-upload.download/cgi-bin/upload.cgi?upload_type=file&utype=anon", "POST", sent_data_form], "json", [0, "file_code"], ["https://file-upload.org/"]);
+
+      } else if (current_host === "hexupload.net") {
+        sent_data_form.append("sess_id", "");
+        sent_data_form.append("utype", "anon");
+        sent_data_form.append("mode", "");
+        sent_data_form.append("file_public", "");
+        sent_data_form.append("link_rcpt", "");
+        sent_data_form.append("link_pass", "");
+        sent_data_form.append("keepalive", "1");
+        sent_data_form.append("file_0", file_to_upload);
+        upload_to_host([url_for_bypass_cors + "https://cloudflare-944btwd2ivy.mx-content-delivery.com/cgi-bin/upload.cgi?upload_type=file&utype=anon", "POST", sent_data_form], "json", [0, "file_code"], ["https://hexupload.net/"]);
+
+      } else if (current_host === "mexa.sh") {
+        sent_data_form.append("sess_id", "");
+        sent_data_form.append("utype", "anon");
+        sent_data_form.append("to_folder", "");
+        sent_data_form.append("", "Start upload");
+        sent_data_form.append("", "Add more");
+        sent_data_form.append("keepalive", "1");
+        sent_data_form.append("file_0", file_to_upload);
+        upload_to_host([url_for_bypass_cors + "https://srv68.mexa.sh/cgi-bin/upload.cgi?upload_type=file", "POST", sent_data_form], "json", [0, "file_code"], ["https://mexa.sh/", ".html"]);
+
+      } else if (current_host === "www.rapidfileshare.net") {
+        sent_data_form.append("sess_id", "");
+        sent_data_form.append("utype", "anon");
+        sent_data_form.append("file_descr", "");
+        sent_data_form.append("file_public", "");
+        sent_data_form.append("link_rcpt", "");
+        sent_data_form.append("link_pass", "");
+        sent_data_form.append("to_folder", "");
+        sent_data_form.append("upload", "Start upload");
+        sent_data_form.append("", "Add more");
+        sent_data_form.append("keepalive", "1");
+        sent_data_form.append("file_0", file_to_upload);
+        upload_to_host([url_for_bypass_cors + "http://trinity.rapidfileshare.net/cgi-bin/upload.cgi?upload_type=file&utype=anon", "POST", sent_data_form], "json", [0, "file_code"], ["http://www.rapidfileshare.net/", ".html"]);
+
+      } else if (current_host === "send.cm") {
+        sent_data_form.append("sess_id", "");
+        sent_data_form.append("utype", "anon");
+        sent_data_form.append("hidden", "");
+        sent_data_form.append("file_public", "");
+        sent_data_form.append("enableemail", "");
+        sent_data_form.append("link_rcpt", "");
+        sent_data_form.append("link_pass", "");
+        sent_data_form.append("file_expire_time", "15");
+        sent_data_form.append("file_expire_unit", "DAY");
+        sent_data_form.append("file_max_dl", "");
+        sent_data_form.append("keepalive", "1");
+        sent_data_form.append("file_0", file_to_upload);
+        upload_to_host([url_for_bypass_cors + "https://4884.send.cm/cgi-bin/upload.cgi?upload_type=file&utype=anon", "POST", sent_data_form], "json", [0, "file_code"], ["https://send.cm/"]);
+
+      } else if (current_host === "up-load.io") {
+        sent_data_form.append("sess_id", "");
+        sent_data_form.append("utype", "anon");
+        sent_data_form.append("file_public", "1");
+        sent_data_form.append("link_rcpt", "");
+        sent_data_form.append("link_pass", "");
+        sent_data_form.append("to_folder", "");
+        sent_data_form.append("keepalive", "1");
+        sent_data_form.append("file_0", file_to_upload);
+        upload_to_host([url_for_bypass_cors + "https://s2.up-load.download/cgi-bin/upload.cgi?upload_type=file&utype=anon", "POST", sent_data_form], "json", [0, "file_code"], ["https://up-load.io/"]);
+
+      } else if (current_host === "userscloud.com") {
+        sent_data_form.append("sess_id", "");
+        sent_data_form.append("utype", "anon");
+        sent_data_form.append("link_rcpt", "");
+        sent_data_form.append("link_pass", "");
+        sent_data_form.append("keepalive", "1");
+        sent_data_form.append("file_0", file_to_upload);
+        upload_to_host([url_for_bypass_cors + "https://u3174.userscloud.com/cgi-bin/upload.cgi?upload_type=file&utype=anon", "POST", sent_data_form], "json", [0, "file_code"], ["https://userscloud.com/"]);
+
+      } else if (current_host === "filetmp.com") {
+        fetch(url_for_bypass_cors + "https://filetmp.com/upload/genid?_=" + Date.now(), {method: "GET", headers: {"Content-Type": "application/json", "X-Requested-With": "*"}})
+          .then((response) => response.json())
+          .then((data) => {
+            const filetmp_upload_id = data.upload_id;
+
+            const data_filetmp = {destruct: "no", "email_to[]": "", share: "link", email_from: "", message: "", password: "", expire: "3600", upload_id: filetmp_upload_id};
+
+            const data_filetmp_encoded = new URLSearchParams(data_filetmp).toString();
+
+            fetch(url_for_bypass_cors + "https://filetmp.com/upload/register", {method: "POST", body: data_filetmp_encoded, headers: {"Content-Type": "application/x-www-form-urlencoded; charset=UTF-8", "X-Requested-With": "XMLHttpRequest"}})
+              .then((response) => response.json())
+              .then((data) => {
+                sent_data_form.append("upload_id", filetmp_upload_id);
+                sent_data_form.append("files[]", file_to_upload);
+                upload_to_host([url_for_bypass_cors + "https://filetmp.com/upload", "POST", sent_data_form], "json", ["https://filetmp.com/" + filetmp_upload_id]);
+              });
+        });
+
+      } else if (current_host === "bayfiles.io") {
+        sent_data_form.append("file", file_to_upload);
+        upload_to_host(["https://bayfiles.io/api/v1/upload", "POST", sent_data_form], "json", ["data", "file", "url", "full"]);
+
+      }
+    });
   });
 
-  // I'll be honest, the part of the script that sorts the hosts according to their maximum file size and the time before the file is deleted was generated with ChatGPT, but I tried to understand and decompose it as much as possible to get a better view.
   const sort_table = (sortIndex, getValue) => {
-    const sort_order = sort_states[sortIndex] === 'asc' ? -1 : 1;
+    const sort_order = sort_states[sortIndex] === "asc" ? -1 : 1;
 
     rows_of_providers.sort((rowA, rowB) => {
       const valueA = getValue(rowA.cells[sortIndex]);
       const valueB = getValue(rowB.cells[sortIndex]);
+
+      if (valueA === "depends" && valueB !== "depends") {
+        return 1;
+      } else if (valueB === "depends" && valueA !== "depends") {
+        return -1;
+      }
+
       return sort_order * (valueB - valueA);
     });
 
-    tbody_of_providers.innerHTML = '';
+    tbody_of_providers.innerHTML = "";
     rows_of_providers.forEach((row, index) => {
-      const originalClass = index % 2 === 0 ? 'bg-slate-800' : 'bg-slate-700';
-      row.classList.remove('bg-slate-800', 'bg-slate-700');
-      row.classList.add(originalClass, 'alternate-row');
+      const originalClass = index % 2 === 0 ? "bg-slate-800" : "bg-slate-700";
+      row.classList.remove("bg-slate-800", "bg-slate-700");
+      row.classList.add(originalClass, "alternate-row");
       tbody_of_providers.appendChild(row);
     });
 
-    sort_states[sortIndex] = sort_states[sortIndex] === 'asc' ? 'desc' : 'asc';
+    sort_states[sortIndex] = sort_states[sortIndex] === "asc" ? "desc" : "asc";
   };
 
-  const get_max_size_file_value = cell => {
-      const text = cell.textContent.trim();
-      if (text === 'infinite') return Infinity;
-      const unit = text.slice(-2);
-      const size = parseFloat(text);
-      switch (unit) {
-        case 'GB':
-          return size * 1024;
-        case 'MB':
-          return size;
-        default:
-          return 0;
-      }
-    };
+  const get_max_size_file_value = (cell) => {
+    const text = cell.textContent.trim().toLowerCase();
+    if (text === "infinite") return Infinity;
 
-    const get_expire_value = cell => {
-      const text = cell.textContent.trim();
-      if (text === 'infinite') return Infinity;
-      const unit = text.slice(-1);
-      const time = parseFloat(text);
-      switch (unit) {
-        case 'd':
-          return time * 24 * 60;
-        case 'h':
-          return time * 60;
-        default:
-          return 0;
-      }
-    };
+    const unit = text.slice(-2);
+    const size = parseFloat(text);
+    switch (unit) {
+      case "gb":
+        return size * 1024;
+      case "mb":
+        return size;
+      default:
+        return 0;
+    }
+  };
 
-    document.getElementById('max_file_size_header').addEventListener('click', () => {
-      sort_table(1, get_max_size_file_value);
+  const get_expire_value = (cell) => {
+    const text = cell.textContent.trim();
+    if (text === "infinite") return Infinity;
+    if (text.includes("depends on the size of your file")) return "depends";
+    const unit = text.slice(-1);
+    const time = parseFloat(text);
+    switch (unit) {
+      case "d":
+        return time * 24 * 60;
+      case "h":
+        return time * 60;
+      default:
+        return 0;
+    }
+  };
+
+  document.getElementById("max_file_size_header").addEventListener("click", () => {sort_table(1, get_max_size_file_value)});
+
+  document.getElementById("expire_header").addEventListener("click", () => {sort_table(2, get_expire_value)});
+
+  const search_input = document.getElementById("search_input");
+
+  search_input.addEventListener("input", () => {
+    const searchTerm = search_input.value.toLowerCase();
+
+    rows_of_providers.forEach((row) => {
+      const providerName = row.cells[0].textContent.toLowerCase();
+      const isSearchResult = providerName.includes(searchTerm);
+
+      if (isSearchResult) {
+        row.classList.add("search-result");
+        row.classList.remove("cursor-not-allowed", "blur-[2px]");
+      } else {
+        row.classList.remove("search-result");
+        row.classList.add("cursor-not-allowed", "blur-[2px]");
+      }
     });
 
-    document.getElementById('expire_header').addEventListener('click', () => {
-      sort_table(2, get_expire_value);
-    }); 
+    rows_of_providers.sort((rowA, rowB) => {
+      const isSearchResultA = rowA.classList.contains("search-result");
+      const isSearchResultB = rowB.classList.contains("search-result");
 
-
-    const search_input = document.getElementById('search_input');
-
-    search_input.addEventListener('input', () => {
-      const searchTerm = search_input.value.toLowerCase();
-
-      rows_of_providers.forEach((row) => {
-        const providerName = row.cells[0].textContent.toLowerCase();
-        const isSearchResult = providerName.includes(searchTerm);
-
-        if (isSearchResult) {
-          row.classList.add('search-result'); 
-          row.classList.remove("cursor-not-allowed", 'blur-[2px]');
-        } else {
-          row.classList.remove('search-result');
-          row.classList.add("cursor-not-allowed", 'blur-[2px]');
-        }
-      });
-
-      rows_of_providers.sort((rowA, rowB) => {
-        const isSearchResultA = rowA.classList.contains('search-result');
-        const isSearchResultB = rowB.classList.contains('search-result');
-
-        if (isSearchResultA && !isSearchResultB) {
-          return -1;
-        } else if (!isSearchResultA && isSearchResultB) {
-          return 1;
-        } else {
-          return 0;
-        }
-      });
-
-      tbody_of_providers.innerHTML = '';
-      rows_of_providers.forEach((row, index) => {
-        const originalClass = index % 2 === 0 ? 'bg-slate-800' : 'bg-slate-700';
-        row.classList.remove('bg-slate-800', 'bg-slate-700');
-        row.classList.add(originalClass, 'alternate-row');
-        tbody_of_providers.appendChild(row);
-      });
+      if (isSearchResultA && !isSearchResultB) {
+        return -1;
+      } else if (!isSearchResultA && isSearchResultB) {
+        return 1;
+      } else {
+        return 0;
+      }
     });
+
+    tbody_of_providers.innerHTML = "";
+    rows_of_providers.forEach((row, index) => {
+      const originalClass = index % 2 === 0 ? "bg-slate-800" : "bg-slate-700";
+      row.classList.remove("bg-slate-800", "bg-slate-700");
+      row.classList.add(originalClass, "alternate-row");
+      tbody_of_providers.appendChild(row);
+    });
+  });
 });
