@@ -86,7 +86,7 @@ fn rename_profile_json(oldProfileName: &str, newProfileName: &str) {
 fn add_history_json(newLink: &str, newUploadDate: &str, newExpirationDate: &str, manageLink: &str, deleteMethod: &str, deleteParameters: &str) {
     let history_file_path = "Resources/history.json";
 
-    let mut file = File::open(history_file_path.clone()).unwrap(); // Clone history_file_path
+    let mut file = File::open(history_file_path.clone()).unwrap();
     let mut contents = String::new();
     file.read_to_string(&mut contents).unwrap();
 
@@ -142,7 +142,7 @@ fn main() {
     let CREATE_NO_WINDOW = 0x08000000;
 
     let child = Command::new("cmd")
-        .args(["/C", "cd", "Resources", "&&", "warp-cors.exe", "--port", "61337"])
+        .args(["/C", "cd", "Resources", "&", "warp-cors.exe", "--port", "61337"])
         .creation_flags(CREATE_NO_WINDOW)
         .spawn()
         .expect("Error launching warp-cors server process");

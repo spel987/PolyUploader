@@ -165,6 +165,7 @@ document.addEventListener("DOMContentLoaded", function () {
   ];
 
   function check_host_status(forced) {
+    const requests_promises = [];
     host_sites.forEach((site) => {
     
       const last_check_date = localStorage.getItem(`${site.discriminator}_last_check_date`);
@@ -173,7 +174,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const last_check_status = localStorage.getItem(`${site.discriminator}_status`);
 
         if (forced || !last_check_date || (current_time - last_check_date > 12 * 60 * 60 * 1000)) {
-          fetch(url_for_bypass_cors + site.url)
+          const requests_promise = fetch(url_for_bypass_cors + site.url)
               .then((response) => {
                   if (!response.ok) {
                     disable_host(site.discriminator);
@@ -189,10 +190,21 @@ document.addEventListener("DOMContentLoaded", function () {
               .finally(() => {
                   localStorage.setItem(`${site.discriminator}_last_check_date`, current_time);
               });
+
+          requests_promises.push(requests_promise);
         } else if (last_check_status === 'offline') {
             disable_host(site.discriminator);
         }
     });
+
+    Promise.all(requests_promises)
+    .then(() => {
+      check_status_button.innerHTML = `Check host status <i class="fa-solid fa-arrows-rotate" style="color: #fefefe;"></i>`;
+    })
+    .catch((error) => {
+      console.log(error)
+    })
+    
   }
   
   check_host_status(false);
@@ -440,7 +452,7 @@ document.addEventListener("DOMContentLoaded", function () {
             new_expiration_date = "Depends on the size of your file";
           }        
 
-          //invoke("add_history_json", {newLink: final_url, newUploadDate: new_upload_date, newExpirationDate: new_expiration_date, manageLink: delete_url, deleteMethod: delete_method, deleteParameters: JSON.stringify(delete_data)});
+          invoke("add_history_json", {newLink: final_url, newUploadDate: new_upload_date, newExpirationDate: new_expiration_date, manageLink: delete_url, deleteMethod: delete_method, deleteParameters: JSON.stringify(delete_data)});
 
           display_final_url(final_url);
 
@@ -1055,8 +1067,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
               let time_to_expiration = "";
               
-              if (current_date > expiry_date || localStorage.getItem(`${link}_alive`) == "expired") {
+              if (current_date > expiry_date ) {
                 time_to_expiration = `<p style="color: #ff2828;"><i class="fa-solid fa-circle-exclamation" style="color: #ff2828;"></i> <strong>Expired file</strong></p>`;
+              } else if (localStorage.getItem(`${link}_alive`) == "deleted") {
+                time_to_expiration = `<p style="color: #ff2828;"><i class="fa-solid fa-circle-exclamation" style="color: #ff2828;"></i> <strong>File deleted</strong></p>`;
               } else if (data[link].date_expires == "Depends on the size of your file") {
                 time_to_expiration = "Depends on the size of your file";
               } else if (data[link].date_expires == "Infinite") {
@@ -1128,7 +1142,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 .then(response => {
                   disable_button(button);
                   localStorage.setItem(`${button.value}_file_status`, 'delete');
-                  localStorage.setItem(`${button.value}_alive`, 'expired');
+                  localStorage.setItem(`${button.value}_alive`, 'deleted');
                 })
               })
             })
@@ -1154,11 +1168,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
   check_status_button.addEventListener("click", function () {
     enable_hosts();
-    check_status_button.innerHTML = `Check host status <i class="fa-solid fa-check" style="color: #ffffff;"></i>`;
+    check_status_button.innerHTML = `Check host status <i class="fas fa-spinner fa-spin"></i>`;
     check_host_status(true);
-    setTimeout(function() {
-      check_status_button.innerHTML = `Check host status <i class="fa-solid fa-arrows-rotate" style="color: #fefefe;"></i>`;
-    }, 2000);
   })
 
   upload_preparation(button_gofile, ["gofile.io"], "Gofile has no known bugs or problems.", "https://gofile.io/terms");
@@ -1230,7 +1241,7 @@ document.addEventListener("DOMContentLoaded", function () {
           .then((data) => {
             const gofile_server = data.data.server;
             sent_data_form.append("file", file_to_upload);
-            upload_to_host([url_for_bypass_cors + "https://" + gofile_server + ".gofile.io/uploadFile", "POST", sent_data_form], "json", ["data", "downloadPage"], [], ["https://api.gofile.io/deleteContent", "DELETE", {"contentsId": ["data", "fileId"], "token": ["data", "guestToken"]}]);
+            upload_to_host([url_for_bypass_cors + "https://" + gofile_server + ".gofile.io/uploadFile", "POST", sent_data_form], "json", ["data", "downloadPage"], [], ["https://api.gofile.io/deleteContent", "DELETE", {"contentsId": ["data", "parentFolder"], "token": ["data", "guestToken"]}]);
         });
 
       } else if (current_host === "litter.catbox.moe") {
