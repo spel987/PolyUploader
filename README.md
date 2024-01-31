@@ -7,7 +7,9 @@ This project lets you upload your files remotely to different hosting sites.
 <h1 align="center">
 <a href="#"><img src="https://i.imgur.com/KHRMPL8.png"></a>
 </h1>
-### [The official website with documentation and code details](https://spel987.github.io/Automatic-File-Uploader/)
+
+## [The official website with documentation and code details](https://spel987.github.io/Automatic-File-Uploader/)
+
 # Installation
 
 ### - Use the application by compiling it by hand:
