@@ -23,15 +23,11 @@ document.addEventListener("DOMContentLoaded", function () {
   const button_x0at = document.getElementById("button_x0at");
   const button_uplooad = document.getElementById("button_uplooad");
   const button_tommoteam = document.getElementById("button_tommoteam");
-  const button_anonymfile = document.getElementById("button_anonymfile");
-  const button_anyfile = document.getElementById("button_anyfile");
-  const button_gofilecc = document.getElementById("button_gofilecc");
   const button_tempfilesninja = document.getElementById("button_tempfilesninja");
   const button_pixeldrain = document.getElementById("button_pixeldrain");
   const button_1cloudfile = document.getElementById("button_1cloudfile");
   const button_bowfile = document.getElementById("button_bowfile");
   const button_uploadify = document.getElementById("button_uploadify");
-  const button_anonfilesme = document.getElementById("button_anonfilesme");
   const button_anontransfer = document.getElementById("button_anontransfer");
   const button_anonsharing = document.getElementById("button_anonsharing");
   const button_tempsh = document.getElementById("button_tempsh");
@@ -50,7 +46,13 @@ document.addEventListener("DOMContentLoaded", function () {
   const button_uploadio = document.getElementById("button_uploadio");
   const button_usercloud = document.getElementById("button_usercloud");
   const button_filetmp = document.getElementById("button_filetmp");
-  const button_bayfiles = document.getElementById("button_bayfiles");
+  const button_usersdrive = document.getElementById("button_usersdrive");
+  const button_downloadgg = document.getElementById("button_downloadgg");
+  const button_megaup = document.getElementById("button_megaup");
+  const button_krakenfiles = document.getElementById("button_krakenfiles");
+  const button_clicknupload = document.getElementById("button_clicknupload");
+  const button_dailyuploads = document.getElementById("button_dailyuploads");
+  const button_uploadee = document.getElementById("button_uploadee");
 
   const toggle_upload_mode = document.getElementById("toggle_upload_mode");
   const button_multiple_host_popup = document.getElementById("button_multiple_host_popup");
@@ -75,6 +77,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const close_button = document.getElementById("close_button");
   const minimize_button = document.getElementById("minimize_button");
+  const maximize_button = document.getElementById("maximize_button");
 
   const update_popup = document.getElementById("update_popup");
   const new_version_text = document.getElementById("new_version_text");
@@ -106,17 +109,37 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const sort_states = [null, null, null];
 
+  let window_status = "minimize";
+
   let requests_controller = new AbortController();
   let controller_signal = requests_controller.signal;
 
-  close_button.addEventListener("click", (event) => {
+  close_button.addEventListener("click", () => {
     appWindow.close();
     invoke("kill_warp_cors");
   });
 
-  minimize_button.addEventListener("click", (event) => {
+  minimize_button.addEventListener("click", () => {
     appWindow.minimize();
   });
+
+  maximize_button.addEventListener("click", () => {
+    if (window_status == "minimize") {
+      appWindow.maximize();
+      window_status = "maximize"
+    } else {
+      appWindow.unmaximize();
+      window_status = "minimize"
+    }
+  })
+
+  tbody_of_providers.innerHTML = "";
+    rows_of_providers.forEach((row, index) => {
+      const originalClass = index % 2 === 0 ? "bg-slate-800" : "bg-slate-700";
+      row.classList.remove("bg-slate-800", "bg-slate-700");
+      row.classList.add(originalClass, "alternate-row");
+      tbody_of_providers.appendChild(row);
+    });
 
   const host_sites = [
     { url: 'https://gofile.io', discriminator: 'gofile.io' },
@@ -134,15 +157,11 @@ document.addEventListener("DOMContentLoaded", function () {
     { url: 'https://x0.at/', discriminator: 'x0.at' },
     { url: 'https://uplooad.net/', discriminator: 'uplooad.net' },
     { url: 'https://tommo.team/', discriminator: 'a.tommo.team' },
-    { url: 'https://anonymfile.com/', discriminator: 'anonymfile.com' },
-    { url: 'https://anyfile.co/', discriminator: 'gofile.cc' },
-    { url: 'https://gofile.cc/', discriminator: 'anyfile.co' },
     { url: 'https://tempfiles.ninja/', discriminator: 'tempfiles.ninja' },
     { url: 'https://pixeldrain.com/', discriminator: 'pixeldrain.com' },
     { url: 'https://1cloudfile.com/', discriminator: '1cloudfile.com' },
     { url: 'https://bowfile.com/', discriminator: 'bowfile.com' },
     { url: 'https://uploadify.net/', discriminator: 'uploadify.net' },
-    { url: 'https://anonfiles.me/', discriminator: 'anonfiles.me' },
     { url: 'https://anontransfer.com/', discriminator: 'anontransfer.com' },
     { url: 'https://anonsharing.com/', discriminator: 'anonsharing.com' },
     { url: 'https://temp.sh/', discriminator: 'temp.sh' },
@@ -154,14 +173,20 @@ document.addEventListener("DOMContentLoaded", function () {
     { url: 'https://turbobit.net/', discriminator: 'turbobit.net' },
     { url: 'https://hitfile.net/', discriminator: 'hitfile.net' },
     { url: 'https://file-upload.org/', discriminator: 'file-upload.org' },
-    { url: 'https://hexupload.net/', discriminator: 'hexupload.net' },
+    { url: 'https://hexload.com/', discriminator: 'hexload.com' },
     { url: 'https://mexa.sh/', discriminator: 'mexa.sh' },
     { url: 'http://rapidfileshare.net/', discriminator: 'www.rapidfileshare.net' },
     { url: 'https://send.cm/', discriminator: 'send.cm' },
     { url: 'https://up-load.io/', discriminator: 'up-load.io' },
     { url: 'https://userscloud.com/', discriminator: 'userscloud.com' },
     { url: 'https://filetmp.com/', discriminator: 'filetmp.com' },
-    { url: 'https://bayfiles.io/', discriminator: 'bayfiles.io' }
+    { url: 'https://usersdrive.com/', discriminator: 'usersdrive.com' },
+    { url: 'https://download.gg/', discriminator: 'download.gg' },
+    { url: 'https://megaup.net/', discriminator: 'megaup.net' },
+    { url: 'https://krakenfiles.com/', discriminator: 'krakenfiles.com' },
+    { url: 'https://clicknupload.click/', discriminator: 'clicknupload.click' },
+    { url: 'https://dailyuploads.net/', discriminator: 'dailyuploads.net' },
+    { url: 'https://www.upload.ee/', discriminator: 'www.upload.ee' }
   ];
 
   function check_host_status(forced) {
@@ -285,6 +310,7 @@ document.addEventListener("DOMContentLoaded", function () {
   get_app_version()
     .then((result) => {
       const current_version = result;
+      document.getElementById("window_title").textContent = "Automatic File Uploader - " + current_version;
 
       fetch("https://api.github.com/repos/spel987/Automatic-File-Uploader/releases", {method: "GET"})
         .then((response) => response.json())
@@ -318,6 +344,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function get_value_from_path(path, json_data) {
     return path.reduce((current, key) => current?.[key], json_data);
+  }
+
+  function get_values_from_paths(paths, json_data) {
+      return paths.map(path => 
+          path.reduce((current, key) => current?.[key], json_data)
+      ).join('/');
   }
 
   function disable_button(button) {
@@ -374,6 +406,7 @@ document.addEventListener("DOMContentLoaded", function () {
         let delete_url = "";
         let delete_method = "";
         let delete_data = {};
+        let delete_url_core = "";
 
         const url_prefix = (affix[0] ? affix[0] : "");
         const url_suffix = (affix[1] ? affix[1] : "");
@@ -382,8 +415,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if (String(link_extraction[0]).includes("https://")) {
           url_cores = link_extraction[0];
+
         } else if (link_extraction[0] === "match") {
-          url_cores = data.match(link_extraction[1])[0];
+          url_cores = data.match(link_extraction[1])[link_extraction[2]];
+
+        } else if (link_extraction[0] === "replace") {
+          url_cores = data.replace(link_extraction[1], link_extraction[2]);
+
         } else {
           url_cores = get_value_from_path(link_extraction, data);
         }
@@ -391,32 +429,75 @@ document.addEventListener("DOMContentLoaded", function () {
         final_url = url_prefix + url_cores + url_suffix
 
         if (manage_file[0]) {
+          const url_delete_prefix = (manage_file[3] && manage_file[3][0]) ?? "";
+          const url_delete_suffix = (manage_file[3] && manage_file[3][1]) ?? "";
           if (manage_file[0][0] === "match") {
-            delete_url = data.match(manage_file[0][1])[0];
+            delete_url_core = data.match(manage_file[0][1])[0];
           } else if (Array.isArray(manage_file[0])) {
-            delete_url = get_value_from_path(manage_file[0], data);
+            delete_url_core = get_values_from_paths(manage_file[0], data);
           } else {
-            delete_url = manage_file[0];
+            delete_url_core = manage_file[0];
           }
 
-          if (host == "oshi.at") {
-            delete_url = delete_url + "?delete=1"
-          }
+          delete_url = url_delete_prefix + delete_url_core + url_delete_suffix;
         }
 
         if (manage_file[1]) {
           delete_method = manage_file[1];
         }
 
+        let delete_data_promise = new Promise((resolve) => {
+        
         if (manage_file[2]) {
-          for (const key in manage_file[2]) {
-              if (manage_file[2].hasOwnProperty(key) && Array.isArray(manage_file[2][key])) {
+            let promises = [];
+        
+            for (const key in manage_file[2]) {
+              if (manage_file[2].hasOwnProperty(key) && Array.isArray(manage_file[2][key]) && manage_file[2][key][0] === "killcode") {
+                let file_id = "";
+
+                if (manage_file[2][key][3][0] === "match"){
+                  file_id = data.match(manage_file[2][key][3][1])[manage_file[2][key][3][2]]
+                } else {
+                  file_id = get_value_from_path(manage_file[2][key][3], data);
+                }
+                
+                let promise = fetch(url_for_bypass_cors + manage_file[2][key][2] + file_id, {method: "GET"})
+                  .then((response) => response.text())
+                  .then((html_response) => {
+                    const killcode_url = html_response.match(manage_file[2][key][1])[0];
+                    const killcode = killcode_url.match(/killcode=([^&]+)/)[1];
+                    delete_data[key] = killcode;
+
+                    if (delete_data["token"]) {
+                      return fetch(url_for_bypass_cors + killcode_url, { method: "GET" })
+                        .then((response) => response.text())
+                        .then((html_response) => {
+                          const csrf_token = html_response.match(/<input type="hidden" name="token" value="([^"]+)">/)[1];
+                          delete_data["token"] = csrf_token;
+                        });
+                    }
+                  });
+        
+                promises.push(promise);
+
+              } else if (manage_file[2].hasOwnProperty(key) && Array.isArray(manage_file[2][key]) && manage_file[2][key][0] === "match") {
+                delete_data[key] = data.match(manage_file[2][key][1])[manage_file[2][key][2]];
+
+              } else if (manage_file[2].hasOwnProperty(key) && Array.isArray(manage_file[2][key])) {
                 delete_data[key] = get_value_from_path(manage_file[2][key], data);
+
               } else {
-                delete_data = manage_file[2]
+                delete_data = manage_file[2];
               }
+            }
+        
+            Promise.all(promises).then(() => {
+              resolve(delete_data);
+            });
+          } else {
+            resolve(delete_data);
           }
-        }
+        });
 
         if (final_url) {
           if (Array.isArray(final_url)) {
@@ -426,7 +507,6 @@ document.addEventListener("DOMContentLoaded", function () {
           if (final_url.endsWith("\n")) {
             final_url = final_url.slice(0, final_url.length - "\n".length);
           }
-
           const new_upload_date = new Date().toLocaleString("en-US", {month: "2-digit", day: "2-digit", year: "numeric", hour: "numeric", minute: "numeric", hour12: true}).replace(",", "");
 
           const host_index = host.indexOf(final_url.split("/")[2]);
@@ -437,11 +517,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
           let new_expiration_date = "";
 
-          if (retention_duration.endsWith("d")) {
+          if (retention_duration.endsWith("days")) {
             new_upload_date_formatted.setDate(new_upload_date_formatted.getDate() + parseInt(retention_duration.slice(0, -1)));
             new_expiration_date = new_upload_date_formatted.toLocaleString("en-US", {month: "2-digit", day: "2-digit", year: "numeric", hour: "numeric", minute: "numeric", hour12: true}).replace(",", "");
 
-          } else if (retention_duration.endsWith("h")) {
+          } else if (retention_duration.endsWith("hours")) {
             new_upload_date_formatted.setHours(new_upload_date_formatted.getHours() + parseInt(retention_duration.slice(0, -1)));
             new_expiration_date = new_upload_date_formatted.toLocaleString("en-US", {month: "2-digit", day: "2-digit", year: "numeric", hour: "numeric", minute: "numeric", hour12: true,}).replace(",", "");
             
@@ -450,9 +530,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
           } else if (retention_duration === "depends on the size of your file") {
             new_expiration_date = "Depends on the size of your file";
-          }        
+          }
 
-          invoke("add_history_json", {newLink: final_url, newUploadDate: new_upload_date, newExpirationDate: new_expiration_date, manageLink: delete_url, deleteMethod: delete_method, deleteParameters: JSON.stringify(delete_data)});
+          delete_data_promise.then((delete_data) => {
+            invoke("add_history_json", {newLink: final_url, newUploadDate: new_upload_date, newExpirationDate: new_expiration_date, manageLink: delete_url, deleteMethod: delete_method, deleteParameters: JSON.stringify(delete_data)});
+          });   
 
           display_final_url(final_url);
 
@@ -500,10 +582,9 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function enable_upload_button() {
-    popup_upload_button.removeAttribute("disabled", "");
-    popup_upload_button.classList.remove("cursor-not-allowed");
     popup_upload_button.innerHTML = "Upload";
-    popup_upload_button.classList.add("transition", "hover:scale-105", "hover:from-red-500", "hover:to-rose-500", "active:scale-105");
+    popup_upload_button.classList.remove("transition", "active:scale-110");
+    popup_upload_button.classList.add("cursor-not-allowed", "opacity-50");
   }
 
   function display_final_url(result) {
@@ -685,6 +766,7 @@ document.addEventListener("DOMContentLoaded", function () {
     profile_status = 0;
     disable_button(rename_profiles_button);
     disable_button(select_host_button);
+    disable_button(button_multiple_host_popup);
 
     select_box.forEach((checkbox) => {
       checkbox.checked = false;
@@ -836,11 +918,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
   popup_new_profile_button.addEventListener("click", function () {
     if (selected_profile !== "") {
-      document.getElementById("profile_name_text").textContent = 'New name for "' + selected_profile + '":';
+      document.getElementById("profile_name_text").textContent = 'New profile name:';
       delete_profiles_button.classList.remove("hidden");
-      delete_profiles_button.innerHTML = 'Delete "' + selected_profile + '" <i class="ml-2 fa-solid fa-trash"></i>';
+      delete_profiles_button.innerHTML = 'Delete profile';
       rename_profiles_button.classList.remove("hidden");
-      rename_profiles_button.innerHTML = 'Rename "' + selected_profile + '"';
+      rename_profiles_button.innerHTML = 'Rename profile';
       select_host_button.textContent = 'Change selected hosts';
       profile_status = 1;
       enable_button(select_host_button, "purple", "small");
@@ -1121,6 +1203,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 const delete_url = data[button.value].manage[0]
                 const delete_method = data[button.value].manage[1]
                 const delete_data = data[button.value].manage[2]
+                button.innerHTML = `Delete file <i class="fas fa-spinner fa-spin"></i>`
 
                 let delete_data_formatted = Object.keys(delete_data).map(key => {
                   return encodeURIComponent(key) + '=' + encodeURIComponent(delete_data[key]);
@@ -1141,6 +1224,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 fetch(url_for_bypass_cors + delete_url, delete_request_config)
                 .then(response => {
                   disable_button(button);
+                  const time_to_expiration = button.parentNode.parentNode.parentNode.children[2];                  
+                  button.innerHTML = `Delete file <i class="fa-solid fa-check"></i>`
+                  setTimeout(function() {
+                    button.innerHTML = 'Delete file <i class="fa-solid fa-trash"></i>';
+                  }, 1500);
+                  time_to_expiration.innerHTML = `<p style="color: #ff2828;"><i class="fa-solid fa-circle-exclamation" style="color: #ff2828;"></i> <strong>File deleted</strong></p>`;
                   localStorage.setItem(`${button.value}_file_status`, 'delete');
                   localStorage.setItem(`${button.value}_alive`, 'deleted');
                 })
@@ -1187,15 +1276,11 @@ document.addEventListener("DOMContentLoaded", function () {
   upload_preparation(button_x0at, ["x0.at"], "x0.at does not accept .exe, .rar, .jar, .apk, .scr, .dll files.", "https://x0.at/");
   upload_preparation(button_uplooad, ["uplooad.net"], "Uplooad has no known bugs or problems.", "https://uplooad.net/tos.html");
   upload_preparation(button_tommoteam, ["a.tommo.team"], "Tommo.team has no known bugs or problems.", "https://tommo.team/faq.html");
-  upload_preparation(button_anonymfile, ["anonymfile.com"], "AnonymFiles imposes a 12-second waiting time before the file can be downloaded.", "https://anonymfile.com/terms");
-  upload_preparation(button_gofilecc, ["gofile.cc"], "Gofile.cc imposes a 12-second waiting time before the file can be downloaded.", "https://gofile.cc/terms");
-  upload_preparation(button_anyfile, ["anyfile.co"], "Anyfile has no known bugs or problems.", "https://anyfile.co/terms");
   upload_preparation(button_tempfilesninja, ["tempfiles.ninja"], "tempfiles.ninja has no known bugs or problems.", "https://tempfiles.ninja/");
   upload_preparation(button_pixeldrain, ["pixeldrain.com"], "Pixeldrain has no known bugs or problems.", "https://pixeldrain.com/abuse");
   upload_preparation(button_1cloudfile, ["1cloudfile.com"], "1Cloudfile has no known bugs or problems.", "https://1cloudfile.com/terms");
   upload_preparation(button_bowfile, ["bowfile.com"], "Bowfile has no known bugs or problems.", "https://bowfile.com/terms");
   upload_preparation(button_uploadify, ["uploadify.net"], "Uplodify imposes a 20-second waiting time before the file can be downloaded.", "https://uploadify.net/terms.html");
-  upload_preparation(button_anonfilesme, ["anonfiles.me"], "AnonFiles.me imposes a 3-second waiting time before the file can be downloaded.", "https://anonfiles.me/terms");
   upload_preparation(button_anontransfer, ["anontransfer.com"], "AnonTransfer does not accept all file formats.", "https://anontransfer.com/terms");
   upload_preparation(button_anonsharing, ["anonsharing.com"], "AnonSharing imposes a 20-second waiting time before the file can be downloaded.", "https://anonsharing.com/terms");
   upload_preparation(button_tempsh, ["temp.sh"], "Temp.sh has no known bugs or problems.", "https://temp.sh/");
@@ -1207,14 +1292,20 @@ document.addEventListener("DOMContentLoaded", function () {
   upload_preparation(button_turbobit, ["turbobit.net"], "Turbobit limits the connection during download and imposes a waiting time between file downloads.", "https://turbobit.net/rules");
   upload_preparation(button_hitfile, ["hitfile.net"], "Hitfile limits the connection during download and imposes a waiting time between file downloads.", "https://hitfile.net/rules");
   upload_preparation(button_fileupload, ["file-upload.org"], "file-upload.org limits the connection during download and imposes a waiting time before the file can be downloaded.", "https://www.file-upload.org/tos.html");
-  upload_preparation(button_hexupload, ["hexupload.net"], "HexUpload does not accept .jpeg, .jpg, .png files.", "https://hexupload.net/tos.html");
+  upload_preparation(button_hexupload, ["hexload.com"], "HexUpload does not accept .jpeg, .jpg, .png files.", "https://hexload.com/tos.html");
   upload_preparation(button_mexash, ["mexa.sh"], "Mexa.sh does not accept .exe files.", "https://mexa.sh/tos.html");
   upload_preparation(button_rapidfileshare, ["www.rapidfileshare.net"], "RapidFileShare limits the connection and restricts downloads to 1GB per day.", "http://rapidfileshare.net/tos.html");
   upload_preparation(button_sendcm, ["send.cm"], "Send.cm has no known bugs or problems.", "https://send.cm/terms");
   upload_preparation(button_uploadio, ["up-load.io"], "up-load.io imposes a 30-second delay before the file can be downloaded.", "https://up-load.io/tos.html");
   upload_preparation(button_usercloud, ["userscloud.com"], "Userscloud has no known bugs or problems.", "https://userscloud.com/tos.html");
   upload_preparation(button_filetmp, ["filetmp.com"], "FileTmp has no known bugs or problems.", "https://filetmp.com/");
-  upload_preparation(button_bayfiles, ["bayfiles.io"], "Bayfiles.io imposes a 30-second waiting time before the file can be downloaded.", "https://bayfiles.io/terms");
+  upload_preparation(button_usersdrive, ["usersdrive.com"], "UsersDrive imposes a 17-second waiting time before the file can be downloaded.", "https://usersdrive.com/tos.html");
+  upload_preparation(button_downloadgg, ["download.gg"], "Download.gg has no known bugs or problems.", "https://download.gg");
+  upload_preparation(button_megaup, ["megaup.net"], "MegaUp imposes a 5-second waiting time before the file can be downloaded.", "https://megaup.net/terms.html");
+  upload_preparation(button_krakenfiles, ["krakenfiles.com"], "KrakenFiles has no known bugs or problems.", "https://krakenfiles.com/terms");
+  upload_preparation(button_clicknupload, ["clicknupload.click"], "Clicknupload imposes a 12-second waiting time before the file can be downloaded.", "https://clicknupload.click/tos.html");
+  upload_preparation(button_dailyuploads, ["dailyuploads.net"], "Daily Uploads has no known bugs or problems.", "https://dailyuploads.net/tos.html");
+  upload_preparation(button_uploadee, ["www.upload.ee"], "Upload.ee has no known bugs or problems.", "https://www.upload.ee/rules.html");
 
   popup_upload_button.addEventListener("click", function (event) {
     event.preventDefault();
@@ -1264,7 +1355,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
       } else if (current_host === "c-v.sh") {
         sent_data_form.append("a", file_to_upload);
-        upload_to_host([url_for_bypass_cors + "https://c-v.sh/", "POST", sent_data_form], "text", ["match", /https:\/\/c-v\.sh\/[^\s]+/]);
+        upload_to_host([url_for_bypass_cors + "https://c-v.sh/", "POST", sent_data_form], "text", ["match", /https:\/\/c-v\.sh\/[^\s]+/, 0]);
 
       } else if (current_host === "ki.tc") {
         sent_data_form.append("file", file_to_upload);
@@ -1273,7 +1364,7 @@ document.addEventListener("DOMContentLoaded", function () {
       } else if (current_host === "oshi.at") {
         sent_data_form.append("f", file_to_upload);
         sent_data_form.append("expire", "120");
-        upload_to_host([url_for_bypass_cors + "https://oshi.at/", "POST", sent_data_form], "text", ["match", /(?<=DL: )\S+/], [], [["match", /(?<=MANAGE: )\S+/], "GET"]);
+        upload_to_host([url_for_bypass_cors + "https://oshi.at/", "POST", sent_data_form], "text", ["match", /(?<=DL: )\S+/, 0], [], [["match", /(?<=MANAGE: )\S+/], "GET", {}, ["", "?delete=1"]]);
 
       } else if (current_host === "filebin.net") {
         const bin = (Math.random() + 1).toString(36).substring(2, 12);
@@ -1286,11 +1377,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
       } else if (current_host === "bashupload.com") {
         sent_data_form.append("file_1", file_to_upload);
-        upload_to_host([url_for_bypass_cors + "https://bashupload.com/", "POST", sent_data_form], "text", ["match", /https:\/\/bashupload\.com\/[^\s]+/]);
+        upload_to_host([url_for_bypass_cors + "https://bashupload.com/", "POST", sent_data_form], "text", ["match", /https:\/\/bashupload\.com\/[^\s]+/, 0]);
 
       } else if (current_host === "curl.by") {
         sent_data_form.append("file_3", file_to_upload);
-        upload_to_host([url_for_bypass_cors + "https://curl.by/", "POST", sent_data_form], "text", ["match", /http:\/\/curl\.by\/[^\s]+/]);
+        upload_to_host([url_for_bypass_cors + "https://curl.by/", "POST", sent_data_form], "text", ["match", /http:\/\/curl\.by\/[^\s]+/, 0]);
 
       } else if (current_host === "x0.at") {
         sent_data_form.append("file", file_to_upload);
@@ -1298,45 +1389,29 @@ document.addEventListener("DOMContentLoaded", function () {
 
       } else if (current_host === "uplooad.net") {
         sent_data_form.append("file_0", file_to_upload);
-        upload_to_host([url_for_bypass_cors + "https://serv1.uplooad.net/cgi-bin/upload.cgi?upload_type=file&utype=anon", "POST", sent_data_form], "json", [0, "file_code"], ["https://uplooad.net/"]);
+        upload_to_host([url_for_bypass_cors + "https://serv1.uplooad.net/cgi-bin/upload.cgi?upload_type=file&utype=anon", "POST", sent_data_form], "json", [0, "file_code"], ["https://uplooad.net/"], ["https://uplooad.net", "POST", {"op": "del_file", "id": [0, "file_code"], "del_id": ["killcode", /https:\/\/www\.uplooad\.net\/[A-Za-z0-9]+\?killcode=[A-Za-z0-9]+/, "https://uplooad.net/?op=upload_result&st=OK&fn=", [0, "file_code"]], "confirm": "yes", "token": "CSRF token to add"}]);
 
       } else if (current_host === "a.tommo.team") {
         sent_data_form.append("files[]", file_to_upload);
         upload_to_host([url_for_bypass_cors + "https://www.tommo.team/upload.php", "POST", sent_data_form], "json", ["files", 0, "url"]);
 
-      } else if (current_host === "anonymfile.com") {
-        sent_data_form.append("file", file_to_upload);
-        upload_to_host(["https://anonymfile.com/api/v1/upload", "POST", sent_data_form], "json", ["data", "file", "url", "full"]);
-
-      } else if (current_host === "anyfile.co") {
-        sent_data_form.append("file", file_to_upload);
-        upload_to_host(["https://anyfile.co/api/v1/upload", "POST", sent_data_form], "json", ["data", "file", "url", "full"]);
-
-      } else if (current_host === "gofile.cc") {
-        sent_data_form.append("file", file_to_upload);
-        upload_to_host(["https://gofile.cc/api/v1/upload", "POST", sent_data_form], "json", ["data", "file", "url", "full"]);
-
       } else if (current_host === "tempfiles.ninja") {
-        upload_to_host([url_for_bypass_cors + "https://tempfiles.ninja/api/upload?" + file_to_upload_name], "POST", file_to_upload, "json", ["download_url"]);
+        upload_to_host([url_for_bypass_cors + "https://tempfiles.ninja/api/upload?filename=" + file_to_upload_name, "POST", file_to_upload], "json", ["download_url"], [], [[["id"], ["delete_password"]], "DELETE", {}, ["https://tempfiles.ninja/api/delete/"]]);
 
       } else if (current_host === "pixeldrain.com") {
-        upload_to_host([url_for_bypass_cors + "https://pixeldrain.com/api/file/" + file_to_upload_name, "PUT", file_to_upload], "json", ["id"],["https://pixeldrain.com/u/"]);
+        upload_to_host([url_for_bypass_cors + "https://pixeldrain.com/api/file/" + file_to_upload_name, "PUT", file_to_upload], "json", ["id"], ["https://pixeldrain.com/u/"]);
 
       } else if (current_host === "1cloudfile.com") {
         sent_data_form.append("files[]", file_to_upload);
-        upload_to_host([url_for_bypass_cors + "https://fs9.1cloudfile.com/ajax/file_upload_handler", "POST", sent_data_form], "json", [0, "url"]);
+        upload_to_host([url_for_bypass_cors + "https://fs2.1cloudfile.com/ajax/file_upload_handler", "POST", sent_data_form], "json", [0, "url"], [], [[[0, "delete_url"]], "POST", {"submitted": "1"}]);
 
       } else if (current_host === "bowfile.com") {
         sent_data_form.append("files[]", file_to_upload);
-        upload_to_host([url_for_bypass_cors + "https://fs8.bowfile.com/ajax/file_upload_handler", "POST", sent_data_form], "json", [0, "url"]);
+        upload_to_host([url_for_bypass_cors + "https://fs1.bowfile.com/ajax/file_upload_handler", "POST", sent_data_form], "json", [0, "url"], [], [[[0, "delete_url"]], "POST", {"submitted": "1"}]);
 
       } else if (current_host === "uploadify.net") {
         sent_data_form.append("files[]", file_to_upload);
-        upload_to_host([url_for_bypass_cors + "https://uploadify.net/core/page/ajax/file_upload_handler.ajax.php", "POST", sent_data_form], "json", [0, "url"], [], [[0, "delete_url"], "POST", {"delete": "1", "submitme": "1", "returnAccount": "0", "submit": ""}]);
-
-      } else if (current_host === "anonfiles.me") {
-        sent_data_form.append("file", file_to_upload);
-        upload_to_host(["https://anonfiles.me/api/v1/upload", "POST", sent_data_form], "json", ["data", "file", "url", "full"]);
+        upload_to_host([url_for_bypass_cors + "https://uploadify.net/core/page/ajax/file_upload_handler.ajax.php", "POST", sent_data_form], "json", [0, "url"], [], [[[0, "delete_url"]], "POST", {"delete": "1", "submitme": "1", "returnAccount": "0", "submit": ""}]);
 
       } else if (current_host === "anontransfer.com") {
         sent_data_form.append("file", file_to_upload);
@@ -1344,7 +1419,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
       } else if (current_host === "anonsharing.com") {
         sent_data_form.append("files[]", file_to_upload);
-        upload_to_host([url_for_bypass_cors + "https://anonsharing.com/ajax/file_upload_handler", "POST", sent_data_form], "json", [0, "url"]);
+        upload_to_host([url_for_bypass_cors + "https://anonsharing.com/ajax/file_upload_handler", "POST", sent_data_form], "json", [0, "url"], [], [[[0, "delete_url"]], "POST", {"submitted": "1"}]);
 
       } else if (current_host === "temp.sh") {
         sent_data_form.append("file", file_to_upload);
@@ -1355,16 +1430,16 @@ document.addEventListener("DOMContentLoaded", function () {
         upload_to_host([url_for_bypass_cors + "https://uguu.se/upload.php", "POST", sent_data_form], "json", ["files", 0, "url"]);
 
       } else if (current_host === "nopaste.net") {
-        upload_to_host([url_for_bypass_cors + "https://nopaste.net/", "PUT", file_to_upload], "text", ["match", /https:\/\/nopaste\.net\/([A-Za-z0-9]+)/]);
+        upload_to_host([url_for_bypass_cors + "https://nopaste.net/", "PUT", file_to_upload], "text", ["match", /https:\/\/nopaste\.net\/([A-Za-z0-9]+)/, 0]);
 
       } else if (current_host === "www.udrop.com") {
         sent_data_form.append("files[]", file_to_upload);
-        upload_to_host([url_for_bypass_cors + "https://www.udrop.com/ajax/file_upload_handler", "POST", sent_data_form], "json", [0, "url"], [], [[0, "delete_url"], "POST", {"submitted": "1"}]);
+        upload_to_host([url_for_bypass_cors + "https://www.udrop.com/ajax/file_upload_handler", "POST", sent_data_form], "json", [0, "url"], [], [[[0, "delete_url"]], "POST", {"submitted": "1"}]);
 
       } else if (current_host === "tempsend.com") {
         sent_data_form.append("file", file_to_upload);
         sent_data_form.append("expire", "604800");
-        upload_to_host([url_for_bypass_cors + "https://tempsend.com/send", "POST", sent_data_form], "text", ["match", /https:\/\/tempsend\.com\/([A-Za-z0-9]+)/]);
+        upload_to_host([url_for_bypass_cors + "https://tempsend.com/send", "POST", sent_data_form], "text", ["match", /https:\/\/tempsend\.com\/([A-Za-z0-9]+)/, 0]);
 
       } else if (current_host === "1fichier.com") {
         disabled_upload_button();
@@ -1384,7 +1459,7 @@ document.addEventListener("DOMContentLoaded", function () {
             sent_data_form.append("message", "");
             sent_data_form.append("did", "0");
             sent_data_form.append("submit", "Envoyer");
-            upload_to_host([url_for_bypass_cors + "https://" + url_1fichier_for_upload + "/upload.cgi?id=" + id_1fichier_for_upload, "POST", sent_data_form], "text", ["match", /https:\/\/1fichier\.com\/\?([A-Za-z0-9]+)/], [], [["match", /https:\/\/1fichier\.com\/remove\/([A-Za-z0-9]+)\/([A-Za-z0-9]+)/], "POST", {"force": "1"}]);
+            upload_to_host([url_for_bypass_cors + "https://" + url_1fichier_for_upload + "/upload.cgi?id=" + id_1fichier_for_upload, "POST", sent_data_form], "text", ["match", /https:\/\/1fichier\.com\/\?([A-Za-z0-9]+)/, 0], [], [["match", /https:\/\/1fichier\.com\/remove\/([A-Za-z0-9]+)\/([A-Za-z0-9]+)/], "POST", {"force": "1"}]);
         });
 
       } else if (current_host === "turbobit.net") {
@@ -1412,9 +1487,9 @@ document.addEventListener("DOMContentLoaded", function () {
         sent_data_form.append("", "Add more");
         sent_data_form.append("keepalive", "1");
         sent_data_form.append("file_0", file_to_upload);
-        upload_to_host([url_for_bypass_cors + "https://f3.file-upload.download/cgi-bin/upload.cgi?upload_type=file&utype=anon", "POST", sent_data_form], "json", [0, "file_code"], ["https://file-upload.org/"]);
+        upload_to_host([url_for_bypass_cors + "https://f3.file-upload.download/cgi-bin/upload.cgi?upload_type=file&utype=anon", "POST", sent_data_form], "json", [0, "file_code"], ["https://file-upload.org/"], ["https://file-upload.org", "POST", {"op": "del_file", "id": [0, "file_code"], "del_id": ["killcode", /https:\/\/www\.file-upload\.org\/[A-Za-z0-9]+\?killcode=[A-Za-z0-9]+/, "https://file-upload.org/?op=upload_result&st=OK&fn=", [0, "file_code"]], "confirm": "yes", "token": "CSRF token to add"}]);
 
-      } else if (current_host === "hexupload.net") {
+      } else if (current_host === "hexload.com") {
         sent_data_form.append("sess_id", "");
         sent_data_form.append("utype", "anon");
         sent_data_form.append("mode", "");
@@ -1423,7 +1498,7 @@ document.addEventListener("DOMContentLoaded", function () {
         sent_data_form.append("link_pass", "");
         sent_data_form.append("keepalive", "1");
         sent_data_form.append("file_0", file_to_upload);
-        upload_to_host([url_for_bypass_cors + "https://cloudflare-944btwd2ivy.mx-content-delivery.com/cgi-bin/upload.cgi?upload_type=file&utype=anon", "POST", sent_data_form], "json", [0, "file_code"], ["https://hexupload.net/"]);
+        upload_to_host([url_for_bypass_cors + "https://hetbuild860092.takeplcdn.art/cgi-bin/upload.cgi?upload_type=file&utype=anon", "POST", sent_data_form], "json", [0, "file_code"], ["https://hexload.com/"], ["https://hexload.com", "POST", {"op": "del_file", "id": [0, "file_code"], "del_id": ["killcode", /https:\/\/hexload\.com\/[A-Za-z0-9]+\?killcode=[A-Za-z0-9]+/, "https://hexload.com/?op=upload_result&st=OK&fn=", [0, "file_code"]], "confirm": "yes", "token": "CSRF token to add"}]);
 
       } else if (current_host === "mexa.sh") {
         sent_data_form.append("sess_id", "");
@@ -1433,7 +1508,7 @@ document.addEventListener("DOMContentLoaded", function () {
         sent_data_form.append("", "Add more");
         sent_data_form.append("keepalive", "1");
         sent_data_form.append("file_0", file_to_upload);
-        upload_to_host([url_for_bypass_cors + "https://srv68.mexa.sh/cgi-bin/upload.cgi?upload_type=file", "POST", sent_data_form], "json", [0, "file_code"], ["https://mexa.sh/", ".html"]);
+        upload_to_host([url_for_bypass_cors + "https://srv68.mexa.sh/cgi-bin/upload.cgi?upload_type=file", "POST", sent_data_form], "json", [0, "file_code"], ["https://mexa.sh/", ".html"], ["https://mexa.sh", "POST", {"op": "del_file", "id": [0, "file_code"], "del_id": ["killcode", /https:\/\/mexa\.sh\/[A-Za-z0-9]+\/[A-Za-z0-9\W]+\.[A-Za-z0-9]+\.html\?killcode=[A-Za-z0-9]+/, "https://mexa.sh/?op=upload_result&st=OK&fn=", [0, "file_code"]], "confirm": "yes"}]);
 
       } else if (current_host === "www.rapidfileshare.net") {
         sent_data_form.append("sess_id", "");
@@ -1447,7 +1522,7 @@ document.addEventListener("DOMContentLoaded", function () {
         sent_data_form.append("", "Add more");
         sent_data_form.append("keepalive", "1");
         sent_data_form.append("file_0", file_to_upload);
-        upload_to_host([url_for_bypass_cors + "http://trinity.rapidfileshare.net/cgi-bin/upload.cgi?upload_type=file&utype=anon", "POST", sent_data_form], "json", [0, "file_code"], ["http://www.rapidfileshare.net/", ".html"]);
+        upload_to_host([url_for_bypass_cors + "http://trinity.rapidfileshare.net/cgi-bin/upload.cgi?upload_type=file&utype=anon", "POST", sent_data_form], "json", [0, "file_code"], ["http://www.rapidfileshare.net/", ".html"], ["http://www.rapidfileshare.net", "POST", {"op": "del_file", "id": [0, "file_code"], "del_id": ["killcode", /http:\/\/www\.rapidfileshare\.net\/[A-Za-z0-9]+\/[A-Za-z0-9\W]+\.[A-Za-z0-9]+\.html\?killcode=[A-Za-z0-9]+/, "http://www.rapidfileshare.net/?op=upload_result&st=OK&fn=", [0, "file_code"]], "confirm": "yes", "token": "CSRF token to add"}]);
 
       } else if (current_host === "send.cm") {
         sent_data_form.append("sess_id", "");
@@ -1462,7 +1537,7 @@ document.addEventListener("DOMContentLoaded", function () {
         sent_data_form.append("file_max_dl", "");
         sent_data_form.append("keepalive", "1");
         sent_data_form.append("file_0", file_to_upload);
-        upload_to_host([url_for_bypass_cors + "https://4884.send.cm/cgi-bin/upload.cgi?upload_type=file&utype=anon", "POST", sent_data_form], "json", [0, "file_code"], ["https://send.cm/"]);
+        upload_to_host([url_for_bypass_cors + "https://u1534.send.cm/cgi-bin/upload.cgi?upload_type=file&utype=anon", "POST", sent_data_form], "json", [0, "file_code"], ["https://send.cm/"]);
 
       } else if (current_host === "up-load.io") {
         sent_data_form.append("sess_id", "");
@@ -1473,7 +1548,7 @@ document.addEventListener("DOMContentLoaded", function () {
         sent_data_form.append("to_folder", "");
         sent_data_form.append("keepalive", "1");
         sent_data_form.append("file_0", file_to_upload);
-        upload_to_host([url_for_bypass_cors + "https://s2.up-load.download/cgi-bin/upload.cgi?upload_type=file&utype=anon", "POST", sent_data_form], "json", [0, "file_code"], ["https://up-load.io/"]);
+        upload_to_host([url_for_bypass_cors + "https://s2.up-load.download/cgi-bin/upload.cgi?upload_type=file&utype=anon", "POST", sent_data_form], "json", [0, "file_code"], ["https://up-load.io/"], ["https://up-load.io", "POST", {"op": "del_file", "id": [0, "file_code"], "del_id": ["killcode", /https:\/\/up-load\.io\/[A-Za-z0-9]+\?killcode=[A-Za-z0-9]+/, "https://up-load.io/?op=upload_result&st=OK&fn=", [0, "file_code"]], "confirm": "yes", "token": "CSRF token to add"}]);
 
       } else if (current_host === "userscloud.com") {
         sent_data_form.append("sess_id", "");
@@ -1482,7 +1557,7 @@ document.addEventListener("DOMContentLoaded", function () {
         sent_data_form.append("link_pass", "");
         sent_data_form.append("keepalive", "1");
         sent_data_form.append("file_0", file_to_upload);
-        upload_to_host([url_for_bypass_cors + "https://u3174.userscloud.com/cgi-bin/upload.cgi?upload_type=file&utype=anon", "POST", sent_data_form], "json", [0, "file_code"], ["https://userscloud.com/"]);
+        upload_to_host([url_for_bypass_cors + "https://u1241.userscloud.com/cgi-bin/upload.cgi?upload_type=file&utype=anon", "POST", sent_data_form], "json", [0, "file_code"], ["https://userscloud.com/"], ["https://userscloud.com", "POST", {"op": "del_file", "id": [0, "file_code"], "del_id": ["killcode", /https:\/\/userscloud\.com\/[A-Za-z0-9]+\?killcode=[A-Za-z0-9]+/, "https://userscloud.com/?op=upload_result&st=OK&fn=", [0, "file_code"]], "confirm": "yes"}]);
 
       } else if (current_host === "filetmp.com") {
         fetch(url_for_bypass_cors + "https://filetmp.com/upload/genid?_=" + Date.now(), {method: "GET", headers: {"Content-Type": "application/json", "X-Requested-With": "*"}})
@@ -1503,9 +1578,105 @@ document.addEventListener("DOMContentLoaded", function () {
               });
         });
 
-      } else if (current_host === "bayfiles.io") {
-        sent_data_form.append("file", file_to_upload);
-        upload_to_host(["https://bayfiles.io/api/v1/upload", "POST", sent_data_form], "json", ["data", "file", "url", "full"]);
+      } else if (current_host === "usersdrive.com") {
+        sent_data_form.append("sess_id", "");
+        sent_data_form.append("utype", "anon");
+        sent_data_form.append("link_rcpt", "");
+        sent_data_form.append("link_pass", "");
+        sent_data_form.append("to_folder", "");
+        sent_data_form.append("keepalive", "1");
+        sent_data_form.append("file_0", file_to_upload);
+        upload_to_host([url_for_bypass_cors + "https://d600.userdrive.me/cgi-bin/upload.cgi?upload_type=file", "POST", sent_data_form], "json", [0, "file_code"], ["https://usersdrive.com/", ".html"], ["https://usersdrive.com", "POST", {"op": "del_file", "id": [0, "file_code"], "del_id": ["killcode", /https:\/\/usersdrive\.com\/[A-Za-z0-9]+\.html\?killcode=[A-Za-z0-9]+/, "https://usersdrive.com/?op=upload_result&st=OK&fn=", [0, "file_code"]], "confirm": "yes", "token": "CSRF token to add"}]);
+
+      } else if (current_host === "download.gg") {
+        sent_data_form.append("file[]", file_to_upload);
+        upload_to_host([url_for_bypass_cors + "https://download.gg/server/upload.php", "POST", sent_data_form], "text", ["replace", "&", "_"], ["https://download.gg/file-"], ["https://download.gg/server/delete.php", "POST", {"send-id-file-delete": ["match", /^\d+/]}]);
+
+      } else if (current_host === "megaup.net") {
+        sent_data_form.append("sess_id", "");
+        sent_data_form.append("cTracker", "");
+        sent_data_form.append("maxChunkSize", "100000000");
+        sent_data_form.append("folderId", "");
+        sent_data_form.append("files[]", file_to_upload);
+
+        upload_to_host([url_for_bypass_cors + "https://f8.megaup.net/core/page/ajax/file_upload_handler.ajax.php", "POST", sent_data_form], "json", [0, "url"], [], [[[0, "delete_url"]], "POST", {"delete": "1", "submitme": "1", "returnAccount": "0", "submit": ""}]);
+
+      } else if (current_host === "krakenfiles.com") {
+        disabled_upload_button();
+
+        fetch(url_for_bypass_cors + "https://krakenfiles.com/api/server/available", {method: "GET"})
+          .then((response) => response.json())
+          .then((data) => {
+            const url_krakenfiles_upload = data.data.url;
+            const server_krakenfiles = url_krakenfiles_upload.match(/^https:\/\/([^/]+)/)[0];
+
+            sent_data_form.append("files[]", file_to_upload);
+            upload_to_host([url_for_bypass_cors + server_krakenfiles + "/_uploader/gallery/upload", "POST", sent_data_form], "json", ["files", "0", "url"], ["https://krakenfiles.com"]);
+        });
+
+      } else if (current_host === "clicknupload.click") {
+        sent_data_form.append("sess_id", "");
+        sent_data_form.append("utype", "anon");
+        sent_data_form.append("file_descr", "");
+        sent_data_form.append("file_public", "1");
+        sent_data_form.append("link_rcpt", "");
+        sent_data_form.append("link_pass", "");
+        sent_data_form.append("to_folder", "");
+        sent_data_form.append("upload", "Start upload");
+        sent_data_form.append("", "Add more");
+        sent_data_form.append("keepalive", "1");
+        sent_data_form.append("file_0", file_to_upload);
+
+        upload_to_host([url_for_bypass_cors + "https://mover08.clicknupload.net/cgi-bin/upload.cgi?upload_type=file&utype=anon", "POST", sent_data_form], "json", [0, "file_code"], ["https://clicknupload.click/"], ["https://clicknupload.click", "POST", {"op": "del_file", "id": [0, "file_code"], "del_id": ["killcode", /https:\/\/clicknupload\.click\/[A-Za-z0-9]+\?killcode=[A-Za-z0-9]+/, "https://clicknupload.click/?op=upload_result&st=OK&fn=", [0, "file_code"]], "confirm": "yes", "token": "CSRF token to add"}]);
+
+      } else if (current_host === "dailyuploads.net") {
+        sent_data_form.append("sess_id", "");
+        sent_data_form.append("upload_type", "file");
+        sent_data_form.append("srv_tmp_url", "https://down100.dailyuploads.net/tmp");
+        sent_data_form.append("file_0", file_to_upload);
+
+        upload_to_host([url_for_bypass_cors + "https://down100.dailyuploads.net/cgi-bin/upload.cgi?js_on=1&utype=anon&upload_type=file", "POST", sent_data_form], "text", ["match", /<textarea name='fn'>([^<]+)<\/textarea>/, 1], ["https://dailyuploads.net/"], ["https://dailyuploads.net", "POST", {"op": "del_file", "id": ["match", /<textarea name='fn'>([^<]+)<\/textarea>/, 1], "del_id": ["killcode", /https:\/\/dailyuploads\.net\/[A-Za-z0-9]+\?killcode=[A-Za-z0-9]+/, "https://dailyuploads.net/?op=upload_result&st=OK&fn=", ["match", /<textarea name='fn'>([^<]+)<\/textarea>/, 1]], "confirm": "yes"}]);
+
+      } else if (current_host === "www.upload.ee") {
+        disabled_upload_button();
+
+        const timestamp_date = new Date().getTime();
+
+        fetch(url_for_bypass_cors + "https://www.upload.ee/ubr_link_upload.php?page=uploadsimple&rnd_id=" + timestamp_date, {method: "GET"})
+          .then((response) => response.text())
+          .then((data) => {
+            const uploadee_upload_id = data.match(/"[A-Za-z0-9]+/)[0].slice(1);
+
+            sent_data_form.append("link", "");
+            sent_data_form.append("email", "");
+            sent_data_form.append("category", "cat_file");
+            sent_data_form.append("big_resize", "none");
+            sent_data_form.append("upfile_0", file_to_upload);
+
+            fetch(url_for_bypass_cors + "https://www.upload.ee/cgi-bin/ubr_upload.pl?X-Progress-ID=" + uploadee_upload_id + "&upload_id=" + uploadee_upload_id, {method:"POST", body:sent_data_form})
+            .then((response) => response.text())
+            .then(data => {
+              const uploadee_upload_url = "https://www.upload.ee/?page=finishedsimple&upload_id=" + uploadee_upload_id;
+
+              fetch(url_for_bypass_cors + uploadee_upload_url, {method:"GET"})
+              .then((response) => response.text())
+              .then(data => {
+                const uploadee_killcode_url = data.match(/https:\/\/www\.upload\.ee\/files\/[A-Za-z0-9]+\/[^"]+\?killcode=[A-Za-z0-9]+/)[0];
+                const uploadee_url = data.match(/https:\/\/www\.upload\.ee\/files\/[A-Za-z0-9]+\/.+(\.[A-Za-z0-9]+)+/)[0];
+
+                console.log(uploadee_url)
+
+                fetch(url_for_bypass_cors + uploadee_killcode_url, {method:"GET"})
+                .then((response) => response.text())
+                .then(data => {
+                  const uploadee_delete_url = data.match(/https:\/\/www\.upload\.ee\/files\/[A-Za-z0-9]+\/[^"]+\?killcode=[A-Za-z0-9]+&amp;confirm=([A-Za-z0-9_\-]+)[^"]+/)[0].replace("amp;", "");
+                  
+                  upload_to_host([url_for_bypass_cors + uploadee_upload_url, "GET"], "text", [uploadee_url], [], [uploadee_delete_url, "POST", {}]);
+                })
+              })
+            })
+            
+        });
 
       }
     });
@@ -1558,17 +1729,13 @@ document.addEventListener("DOMContentLoaded", function () {
     const text = cell.textContent.trim();
     if (text === "infinite") return Infinity;
     if (text.includes("depends on the size of your file")) return "depends";
-    const unit = text.slice(-1);
-    const time = parseFloat(text);
-    switch (unit) {
-      case "d":
-        return time * 24 * 60;
-      case "h":
-        return time * 60;
-      default:
-        return 0;
-    }
+  
+    const hasDays = text.includes("days");
+    const time = parseFloat(hasDays ? text.replace(" days", "") : text);
+  
+    return hasDays ? time * 24 * 60 : time;
   };
+  
 
   document.getElementById("max_file_size_header").addEventListener("click", () => {sort_table(1, get_max_size_file_value)});
 

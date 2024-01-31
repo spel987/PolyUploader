@@ -15,7 +15,7 @@ tauri-build = { version = "1.5", features = [] }
 [dependencies]
 serde = { version = "1.0.190", features = ["derive"] }
 serde_json = { version = "1.0.108", features = ["preserve_order"] }
-tauri = { version = "1.5", features = [ "fs-read-file", "shell-open", "fs-read-dir", "protocol-asset", "path-all", "window-start-dragging", "window-close", "window-minimize"] }
+tauri = { version = "1.5", features = [ "window-unmaximize", "window-maximize", "fs-read-file", "shell-open", "fs-read-dir", "protocol-asset", "path-all", "window-start-dragging", "window-close", "window-minimize"] }
 
 [features]
 # this feature is used for production builds or when `devPath` points to the filesystem

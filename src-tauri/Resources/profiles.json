@@ -8,7 +8,8 @@
     "www.udrop.com",
     "1fichier.com",
     "hitfile.net",
-    "send.cm"
+    "send.cm",
+    "download.gg"
   ],
   "No retention period": [
     "uploadify.net",
@@ -17,7 +18,8 @@
     "turbobit.net",
     "up-load.io",
     "userscloud.com",
-    "filetmp.com"
+    "filetmp.com",
+    "download.gg"
   ],
   "Retention period of less than one day": [
     "litter.catbox.moe",
@@ -30,8 +32,25 @@
     "gofile.io",
     "oshi.at",
     "filebin.net",
+    "uplooad.net",
+    "tempfiles.ninja",
+    "1cloudfile.com",
+    "bowfile.com",
     "uploadify.net",
+    "anonsharing.com",
     "www.udrop.com",
-    "1fichier.com"
+    "1fichier.com",
+    "file-upload.org",
+    "hexload.com",
+    "mexa.sh",
+    "www.rapidfileshare.net",
+    "up-load.io",
+    "userscloud.com",
+    "usersdrive.com",
+    "download.gg",
+    "megaup.net",
+    "clicknupload.click",
+    "dailyuploads.net",
+    "www.upload.ee"
   ]
 }
