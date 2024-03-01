@@ -1,7 +1,7 @@
 {
-  "name": "Automatic-File-Uploader",
+  "name": "PolyUploader",
   "private": true,
-  "version": "1.4.0",
+  "version": "1.5.0",
   "type": "module",
   "devDependencies": {
     "@tauri-apps/cli": "^1.5.0"

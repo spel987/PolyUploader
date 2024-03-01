@@ -7,8 +7,8 @@
     "withGlobalTauri": true
   },
   "package": {
-    "productName": "Automatic-File-Uploader",
-    "version": "1.4.0"
+    "productName": "PolyUploader",
+    "version": "1.5.0"
   },
   "tauri": {
     "allowlist": {
@@ -39,7 +39,7 @@
     "bundle": {
       "active": true,
       "targets": "all",
-      "identifier": "Automatic-File-Uploader",
+      "identifier": "PolyUploader",
       "icon": [
         "icons/32x32.png",
         "icons/128x128.png",
@@ -64,7 +64,7 @@
       {
         "fullscreen": false,
         "resizable": true,
-        "title": "Automatic-File-Uploader",
+        "title": "PolyUploader",
         "width": 1100,
         "height": 700,
         "minWidth": 1100,

@@ -3,14 +3,37 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Automatic-File-Uploader</title>
+  <title>PolyUploader</title>
   <script src="https://cdn.tailwindcss.com/3.3.5"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
 </html>
 <style>
-  ::-webkit-scrollbar {
+::-webkit-scrollbar {
     display: none;
+}
+
+@keyframes wiggle {
+    0% { transform: rotate(0deg); }
+    25% { transform: rotate(-2deg); }
+    50% { transform: rotate(2deg); }
+    75% { transform: rotate(-2deg); }
+    100% { transform: rotate(0deg); }
+}
+
+.animate-wiggle {
+    animation: wiggle 0.3s ease-in-out;
+}
+
+.drag_box_background {
+    position: absolute;
+    width: 60%;
+    height: 60%;
+    background-image: url('images/box_drag.png');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.17;
+    z-index: 1;
 }
 </style>
 
@@ -19,17 +42,17 @@
     <div class="backdrop-blur-lg bg-white/10 p-10 rounded-2xl shadow-md text-center max-w-3xl max-h-96">
       <p id="new_version_text" class="text-white-950 text-center mb-1"></p>
       <p id="current_version_text" class="text-white-950 text-center mb-6"></p>
-      <a id="popup_new_version_download" class="bg-gradient-to-r from-violet-700 to-purple-600 text-white transition duration-200 px-5 py-2 rounded-lg hover:scale-105 hover:from-violet-600 hover:to-purple-500 active:scale-110" href="#" target="_blank">Download</a>
+      <a id="popup_new_version_download" class="bg-gradient-to-r from-indigo-700 to-indigo-500 text-white transition duration-200 px-5 py-2 rounded-lg hover:scale-105 hover:from-indigo-600 hover:to-[#7072ee] hover:shadow-[0_0px_20px_rgba(99,_102,_241,_0.2)] active:scale-110" href="#" target="_blank">Download</a>
     </div>
   </div>
 
   <div id="profile_maker_popup" class="hidden fixed inset-0 flex justify-center items-center bg-gray-800 bg-opacity-50 z-50">
     <div class="backdrop-blur-lg bg-white/10 p-10 rounded-2xl shadow-md text-center max-w-3xl max-h-96 flex flex-col">
       <label id="profile_name_text" for="profile_name" class="mb-2">Profile name:</label>
-      <input type="text" id="profile_name" class="mb-5 pt-0.5 pb-0.5 bg-transparent rounded-lg transition duration-200 border-2 border-white-950 hover:border-rose-500 focus:outline-none active:scale-[1.05]" required>
-      <button id="rename_profiles_button" class="hidden bg-gradient-to-r from-violet-700 to-purple-600 text-white transition duration-200 px-5 py-2 rounded-lg cursor-not-allowed opacity-50" disabled>Rename</button>
-      <button id="select_host_button" class="bg-gradient-to-r from-violet-700 mt-4 to-purple-600 text-white transition duration-200 px-5 py-2 rounded-lg cursor-not-allowed opacity-50" disabled>Select host</button>
-      <button id="delete_profiles_button" class="hidden bg-gradient-to-r mt-4 from-red-500 to-rose-600 text-white transition duration-200 px-5 py-2 rounded-lg hover:scale-[1.01] hover:from-red-500 hover:to-rose-500 active:scale-[1.03]">Delete</button>
+      <input type="text" id="profile_name" class="mb-5 pt-0.5 pb-0.5 pl-2 bg-transparent rounded-lg transition duration-200 border-2 border-white-950 hover:border-rose-500 focus:outline-none hover:shadow-[0_0px_30px_rgba(244,_63,_94,_0.2)] active:scale-[1.05]" required>
+      <button id="rename_profiles_button" class="hidden bg-gradient-to-r from-indigo-700 to-indigo-500 text-white transition duration-200 px-5 py-2 rounded-lg cursor-not-allowed opacity-50" disabled>Rename</button>
+      <button id="select_host_button" class="bg-gradient-to-r from-indigo-700 mt-4 to-indigo-500 text-white transition duration-200 px-5 py-2 rounded-lg cursor-not-allowed opacity-50" disabled>Select host</button>
+      <button id="delete_profiles_button" class="hidden bg-gradient-to-r mt-4 from-red-500 to-rose-600 text-white transition duration-200 px-5 py-2 rounded-lg hover:scale-[1.01] hover:from-red-500 hover:to-rose-500 hover:shadow-[0_0px_30px_rgba(225,_29,_72,_0.2)] active:scale-[1.03]">Delete</button>
     </div>
   </div>
 
@@ -38,7 +61,7 @@
       <div class="justify-center text-center">
         <button id="clear_history_button" class="bg-gradient-to-r mb-6 from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 opacity-50 cursor-not-allowed" disabled>Clear history<i class="ml-2 fa-solid fa-trash"></i></button>
       </div>
-      <table class="table-auto border-collapse rounded-lg">
+      <table class="table-auto">
         <thead>
           <tr>
             <th class="border px-4 py-2 max-w-150">Links</th>
@@ -55,7 +78,7 @@
 
   <div data-tauri-drag-region class="fixed top-0 left-0 w-full backdrop-blur-lg bg-zinc-800/70 z-50 text-white py-2 px-4 flex justify-between items-center">
     <div class="text-slate-400 ml-5" style="-webkit-app-region: no-drag">
-        <a id="window_title" href="https://spel987.github.io/Automatic-File-Uploader/" target="_blank">Automatic File Uploader</a>
+        <a id="window_title" href="https://spel987.github.io/PolyUploader/" target="_blank">PolyUploader</a>
     </div>
     <div class="space-x-2 mr-2" style="-webkit-app-region: no-drag">
         <button class="text-white transition hover:text-slate-400 scale-[0.9]" id="minimize_button"><i class="fas fa-window-minimize"></i></button>
@@ -64,35 +87,43 @@
     </div>
   </div>  
 
+  <div id="drag_file_withtout_host" class="hidden transform transition-all duration-200 fixed inset-0 flex justify-center items-center bg-gray-800 bg-opacity-50 z-10 position-relative">
+    <div id="popup_container_withtout_host" class="backdrop-blur-lg bg-white/10 p-[250px] rounded-2xl shadow-md text-center overflow-auto transform transition-all duration-200 border-dashed border-slate-300 border-4">
+        <p class="text-xl">Drag the file here. Then select the host.</p>
+    </div>
+    <div class="drag_box_background"></div>
+  </div>
+
   <div>
     <div class="bg-indigo-950 absolute sm:w-[112vh] -z-10 blur-[16vh] h-[30rem] top-[30vh] right-[-32vh]"></div>
     <div class="bg-blue-950 absolute sm:w-[112vh] -z-10 blur-[16vh] h-[30rem] top-[130vh] right-[-32vh]"></div>
     <div class="bg-blue-950 absolute sm:w-[150vh] md:left-[-60vh] left-[-30vh] -z-10 rounded-full blur-[16vh] top-[-1vh] h-[70vh]"></div>
     <div class="bg-indigo-950 absolute sm:w-[150vh] md:left-[-60vh] left-[-50vh] -z-10 rounded-full blur-[16vh] top-[190vh] h-[80vh]"></div>
+    <div class="bg-blue-950 absolute sm:w-[112vh] -z-10 blur-[16vh] h-[30rem] top-[270vh] right-[-32vh]"></div>
   </div>
 
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 font-medium">
-    <h1 class="mt-16 sm:text-4xl mb-8 font-bold text-center">Automatic File Uploader</h1>
+    <h1 class="mt-16 sm:text-4xl mb-8 font-bold text-center">PolyUploader</h1>
 
     <div class="flex justify-center items-center">
       <div class="transition duration-200 hover:scale-105">
         <i class="fa-solid fa-magnifying-glass text-gray-400 mb-5 mr-1"></i>
-        <input type="text" class="text-center mb-5 pt-0.5 pb-0.5 bg-gradient-to-r from-slate-900 to-slate-800 rounded-lg transition duration-200 border-2 border-white-950 hover:border-rose-500 focus:outline-none active:scale-[1.05]" id="search_input" placeholder="Search for a host in the list" autocomplete="off" style="width:400px" spellcheck="false">
+        <input type="text" class="text-center mb-5 pt-0.5 pb-0.5 bg-gradient-to-r from-slate-900 to-slate-800 rounded-lg transition duration-200 border-2 border-white-950 hover:border-rose-500 hover:shadow-[0_0px_30px_rgba(244,_63,_94,_0.2)] focus:outline-none active:scale-[1.05]" id="search_input" placeholder="Search for a host in the list" autocomplete="off" style="width:400px" spellcheck="false">
       </div>
     </div> 
 
     <div class="flex justify-center">
-        <button class="bg-gradient-to-r from-violet-700 to-purple-600 text-white mb-5 mt-3 mr-5 px-4 py-2 rounded-lg transition duration-200 hover:scale-[1.02] hover:from-violet-600 hover:to-purple-500 active:scale-[1.05]" id="toggle_upload_mode">Switch to multiple upload mode</button>
-        <button class="bg-gradient-to-r from-violet-700 to-purple-600 text-white mb-5 mt-3 ml-5 px-4 py-2 rounded-lg transition duration-200 hover:scale-[1.02] hover:from-violet-600 hover:to-purple-500 active:scale-[1.05]" id="button_upload_profile">Upload profiles <i class="ml-1 fa-solid fa-bars" style="color: #ffffff;"></i></button>
+        <button class="bg-gradient-to-r from-indigo-700 to-indigo-500 text-white mb-5 mt-3 mr-5 px-4 py-2 rounded-lg transition duration-200 hover:scale-[1.02] hover:from-indigo-600 hover:to-[#7072ee] hover:shadow-[0_0px_20px_rgba(99,_102,_241,_0.2)] active:scale-[1.03]" id="toggle_upload_mode">Switch to multiple upload mode <i class="fa-solid fa-arrows-turn-right ml-1"></i></button>
+        <button class="bg-gradient-to-r from-indigo-700 to-indigo-500 text-white mb-5 mt-3 ml-5 px-4 py-2 rounded-lg transition duration-200 hover:scale-[1.02] hover:from-indigo-600 hover:to-[#7072ee] hover:shadow-[0_0px_20px_rgba(99,_102,_241,_0.2)] active:scale-[1.05]" id="button_upload_profile">Upload profiles <i class="ml-1 fa-solid fa-bars" style="color: #ffffff;"></i></button>
       </div>
       <button class="hidden bg-gradient-to-r from-red-500 to-rose-600 text-white mt-[-4] mb-4 w-full py-2 rounded-lg transition duration-200 opacity-50 cursor-not-allowed" disabled id="button_multiple_host_popup">Upload</button>
 
-    <table value="host" class="bg-gradient-to-r from-slate-600 to-slate-700 w-full table-auto rounded-lg">
+    <table value="host" class="bg-gradient-to-r from-slate-700 via-slate-600 to-slate-600 w-full table-auto rounded-lg border-separate border-indigo-500 border-2 shadow-[0_5px_30px_rgba(99,_102,_241,_0.3)]">
         <thead>
-            <th class="px-4 py-2 text-left" id="name_header">Name</th>
-            <th class="px-4 py-2 text-left cursor-pointer transition duration-200 hover:text-slate-300" id="max_file_size_header">Max file size <i class="fa-solid fa-arrows-up-down fa-sm" style="color: #ffffff"></i></th>
-            <th class="px-4 py-2 text-left cursor-pointer transition duration-200 hover:text-slate-300" id="expire_header">Expire in <i class="fa-solid fa-arrows-up-down fa-sm" style="color: #ffffff"></i></th>
-            <th id="upload_name" class="px-4 py-2 text-left">Upload</th>
+            <th class="py-2 text-center cursor-pointer transition duration-200 hover:text-slate-300" id="name_header">Name <i class="fa-solid fa-arrow-down-a-z" style="color: #ffffff"></i></th>
+            <th class="pr-4 py-2 text-center cursor-pointer transition duration-200 hover:text-slate-300" id="max_file_size_header">Max file size <i class="fa-solid fa-arrow-down-wide-short" style="color: #ffffff"></i></th>
+            <th class="py-2 text-center cursor-pointer transition duration-200 hover:text-slate-300" id="expire_header">Expire in <i class="fa-solid fa-arrow-down-wide-short" style="color: #ffffff"></i></th>
+            <th id="upload_name" class="pr-1 py-2 text-center">Upload</th>
         </thead>
 
       <tbody>
@@ -103,8 +134,8 @@
           </td>
           <td class="px-4 py-2">infinite</td>
           <td class="px-4 py-2">10 days</td>
-          <td class="px-4 py-2">
-            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 active:scale-110" value="upload_button" id="button_gofile">Upload</button>
+          <td class="px-4 py-2 text-center">
+            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 hover:shadow-[0_0px_30px_rgba(225,_29,_72,_0.2)] active:scale-110" value="upload_button" id="button_gofile">Upload</button>
             <div id="select_box_container" class="hidden inline-flex items-center scale-[1.2]"><label class="relative flex items-center p-3 rounded-full cursor-pointer" for="checkbox" data-ripple-dark="true"><input type="checkbox" value="gofile.io" class="peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border transition-all before:absolute checked:border-rose-600 checked:bg-rose-600" id="select_box"/><div class="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100"><svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 -1 20 20" fill="currentColor" stroke="currentColor" stroke-width="1"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg></div></label></div>
           </td>
         </tr>
@@ -116,8 +147,8 @@
           </td>
           <td class="px-4 py-2">1GB</td>
           <td class="px-4 py-2">24 hours</td>
-          <td class="px-4 py-2">
-            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 active:scale-110" value="upload_button" id="button_litterbox">Upload</button>
+          <td class="px-4 py-2 text-center">
+            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 hover:shadow-[0_0px_30px_rgba(225,_29,_72,_0.2)] active:scale-110" value="upload_button" id="button_litterbox">Upload</button>
             <div id="select_box_container" class="hidden inline-flex items-center scale-[1.2]"><label class="relative flex items-center p-3 rounded-full cursor-pointer" for="checkbox" data-ripple-dark="true"><input type="checkbox" value="litter.catbox.moe" class="peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border transition-all before:absolute checked:border-rose-600 checked:bg-rose-600" id="select_box"/><div class="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100"><svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 -1 20 20" fill="currentColor" stroke="currentColor" stroke-width="1"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg></div></label></div>
           </td>
         </tr>
@@ -129,8 +160,8 @@
           </td>
           <td class="px-4 py-2">2GB</td>
           <td class="px-4 py-2">14 days</td>
-          <td class="px-4 py-2">
-            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 active:scale-110" value="upload_button" id="button_fileio">Upload</button>
+          <td class="px-4 py-2 text-center">
+            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 hover:shadow-[0_0px_30px_rgba(225,_29,_72,_0.2)] active:scale-110" value="upload_button" id="button_fileio">Upload</button>
             <div id="select_box_container" class="hidden inline-flex items-center scale-[1.2]"><label class="relative flex items-center p-3 rounded-full cursor-pointer" for="checkbox" data-ripple-dark="true"><input type="checkbox" value="file.io" class="peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border transition-all before:absolute checked:border-rose-600 checked:bg-rose-600" id="select_box"/><div class="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100"><svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 -1 20 20" fill="currentColor" stroke="currentColor" stroke-width="1"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg></div></label></div>
           </td>
         </tr>
@@ -142,8 +173,8 @@
           </td>
           <td class="px-4 py-2">100MB</td>
           <td class="px-4 py-2">1 hour</td>
-          <td class="px-4 py-2">
-            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 active:scale-110" value="upload_button" id="button_tmpfilesorg">Upload</button>
+          <td class="px-4 py-2 text-center">
+            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 hover:shadow-[0_0px_30px_rgba(225,_29,_72,_0.2)] active:scale-110" value="upload_button" id="button_tmpfilesorg">Upload</button>
             <div id="select_box_container" class="hidden inline-flex items-center scale-[1.2]"><label class="relative flex items-center p-3 rounded-full cursor-pointer" for="checkbox" data-ripple-dark="true"><input type="checkbox" value="tmpfiles.org" class="peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border transition-all before:absolute checked:border-rose-600 checked:bg-rose-600" id="select_box"/><div class="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100"><svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 -1 20 20" fill="currentColor" stroke="currentColor" stroke-width="1"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg></div></label></div>
           </td>
         </tr>
@@ -154,19 +185,19 @@
             0x0.st&nbsp(<a class="text-sky-400" href="https://0x0.st/" target="_blank">https://0x0.st/</a>)
           </td>
           <td class="px-4 py-2">512MB</td>
-          <td class="px-4 py-2">depends on the size of your file
+          <td class="px-4 py-2">depends on the file size
             <div class="inline-block relative group">
                 <i class="fa-solid fa-circle-question" style="color: #ffffff91;"></i>
             
-                <div class="absolute bottom-full mb-2 group-hover:block w-48 hidden">
+                <div class="absolute bottom-full group-hover:block w-48 hidden">
                     <div class="bg-slate-900 text-white text-xs rounded-lg py-1 px-2">
                       The host keeps your files according to their weight. They use different algorithms. For more information, please visit the chosen site.
                     </div>
                 </div>
             </div>
           </td>
-          <td class="px-4 py-2">
-            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 active:scale-110" value="upload_button" id="button_0x0">Upload</button>
+          <td class="px-4 py-2 text-center">
+            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 hover:shadow-[0_0px_30px_rgba(225,_29,_72,_0.2)] active:scale-110" value="upload_button" id="button_0x0">Upload</button>
             <div id="select_box_container" class="hidden inline-flex items-center scale-[1.2]"><label class="relative flex items-center p-3 rounded-full cursor-pointer" for="checkbox" data-ripple-dark="true"><input type="checkbox" value="0x0.st" class="peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border transition-all before:absolute checked:border-rose-600 checked:bg-rose-600" id="select_box"/><div class="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100"><svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 -1 20 20" fill="currentColor" stroke="currentColor" stroke-width="1"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg></div></label></div>
           </td>
         </tr>
@@ -177,19 +208,19 @@
             c-v.sh&nbsp(<a class="text-sky-400" href="https://c-v.sh/" target="_blank">https://c-v.sh/</a>)
           </td>
           <td class="px-4 py-2">4GB</td>
-          <td class="px-4 py-2">depends on the size of your file
+          <td class="px-4 py-2">depends on the file size
             <div class="inline-block relative group">
               <i class="fa-solid fa-circle-question" style="color: #ffffff91;"></i>
           
-              <div class="absolute bottom-full mb-2 group-hover:block w-48 hidden">
+              <div class="absolute bottom-full group-hover:block w-48 hidden">
                   <div class="bg-slate-900 text-white text-xs rounded-lg py-1 px-2">
                     The host keeps your files according to their weight. They use different algorithms. For more information, please visit the chosen site.
                   </div>
               </div>
           </div>
           </td>
-          <td class="px-4 py-2">
-            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 active:scale-110" value="upload_button" id="button_cvsh">Upload</button>
+          <td class="px-4 py-2 text-center">
+            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 hover:shadow-[0_0px_30px_rgba(225,_29,_72,_0.2)] active:scale-110" value="upload_button" id="button_cvsh">Upload</button>
             <div id="select_box_container" class="hidden inline-flex items-center scale-[1.2]"><label class="relative flex items-center p-3 rounded-full cursor-pointer" for="checkbox" data-ripple-dark="true"><input type="checkbox" value="c-v.sh" class="peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border transition-all before:absolute checked:border-rose-600 checked:bg-rose-600" id="select_box"/><div class="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100"><svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 -1 20 20" fill="currentColor" stroke="currentColor" stroke-width="1"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg></div></label></div>
           </td>
         </tr>
@@ -200,19 +231,19 @@
             ki.tc&nbsp(<a class="text-sky-400" href="https://ki.tc/" target="_blank">https://ki.tc/</a>)
           </td>
           <td class="px-4 py-2">400MB</td>
-          <td class="px-4 py-2">depends on the size of your file
+          <td class="px-4 py-2">depends on the file size
             <div class="inline-block relative group">
               <i class="fa-solid fa-circle-question" style="color: #ffffff91;"></i>
           
-              <div class="absolute bottom-full mb-2 group-hover:block w-48 hidden">
+              <div class="absolute bottom-full group-hover:block w-48 hidden">
                   <div class="bg-slate-900 text-white text-xs rounded-lg py-1 px-2">
                     The host keeps your files according to their weight. They use different algorithms. For more information, please visit the chosen site.
                   </div>
               </div>
           </div>
           </td>
-          <td class="px-4 py-2">
-            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 active:scale-110" value="upload_button" id="button_kitc">Upload</button>
+          <td class="px-4 py-2 text-center">
+            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 hover:shadow-[0_0px_30px_rgba(225,_29,_72,_0.2)] active:scale-110" value="upload_button" id="button_kitc">Upload</button>
             <div id="select_box_container" class="hidden inline-flex items-center scale-[1.2]"><label class="relative flex items-center p-3 rounded-full cursor-pointer" for="checkbox" data-ripple-dark="true"><input type="checkbox" value="ki.tc" class="peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border transition-all before:absolute checked:border-rose-600 checked:bg-rose-600" id="select_box"/><div class="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100"><svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 -1 20 20" fill="currentColor" stroke="currentColor" stroke-width="1"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg></div></label></div>
           </td>
         </tr>
@@ -224,8 +255,8 @@
           </td>
           <td class="px-4 py-2">5GB</td>
           <td class="px-4 py-2">2 hours</td>
-          <td class="px-4 py-2">
-            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 active:scale-110" value="upload_button" id="button_oshi">Upload</button>
+          <td class="px-4 py-2 text-center">
+            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 hover:shadow-[0_0px_30px_rgba(225,_29,_72,_0.2)] active:scale-110" value="upload_button" id="button_oshi">Upload</button>
             <div id="select_box_container" class="hidden inline-flex items-center scale-[1.2]"><label class="relative flex items-center p-3 rounded-full cursor-pointer" for="checkbox" data-ripple-dark="true"><input type="checkbox" value="oshi.at" class="peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border transition-all before:absolute checked:border-rose-600 checked:bg-rose-600" id="select_box"/><div class="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100"><svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 -1 20 20" fill="currentColor" stroke="currentColor" stroke-width="1"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg></div></label></div>
           </td>
         </tr>
@@ -237,8 +268,8 @@
           </td>
           <td class="px-4 py-2">infinite</td>
           <td class="px-4 py-2">7 days</td>
-          <td class="px-4 py-2">
-            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 active:scale-110" value="upload_button" id="button_filebin">Upload</button>
+          <td class="px-4 py-2 text-center">
+            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 hover:shadow-[0_0px_30px_rgba(225,_29,_72,_0.2)] active:scale-110" value="upload_button" id="button_filebin">Upload</button>
             <div id="select_box_container" class="hidden inline-flex items-center scale-[1.2]"><label class="relative flex items-center p-3 rounded-full cursor-pointer" for="checkbox" data-ripple-dark="true"><input type="checkbox" value="filebin.net" class="peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border transition-all before:absolute checked:border-rose-600 checked:bg-rose-600" id="select_box"/><div class="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100"><svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 -1 20 20" fill="currentColor" stroke="currentColor" stroke-width="1"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg></div></label></div>
           </td>
         </tr>
@@ -250,8 +281,8 @@
           </td>
           <td class="px-4 py-2">10GB</td>
           <td class="px-4 py-2">14 days</td>
-          <td class="px-4 py-2">
-            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 active:scale-110" value="upload_button" id="button_transfersh">Upload</button>
+          <td class="px-4 py-2 text-center">
+            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 hover:shadow-[0_0px_30px_rgba(225,_29,_72,_0.2)] active:scale-110" value="upload_button" id="button_transfersh">Upload</button>
             <div id="select_box_container" class="hidden inline-flex items-center scale-[1.2]"><label class="relative flex items-center p-3 rounded-full cursor-pointer" for="checkbox" data-ripple-dark="true"><input type="checkbox" value="transfer.sh" class="peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border transition-all before:absolute checked:border-rose-600 checked:bg-rose-600" id="select_box"/><div class="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100"><svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 -1 20 20" fill="currentColor" stroke="currentColor" stroke-width="1"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg></div></label></div>
           </td>
         </tr>
@@ -263,8 +294,8 @@
           </td>
           <td class="px-4 py-2">50GB</td>
           <td class="px-4 py-2">3 days</td>
-          <td class="px-4 py-2">
-            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 active:scale-110" value="upload_button" id="button_bashupload">Upload</button>
+          <td class="px-4 py-2 text-center">
+            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 hover:shadow-[0_0px_30px_rgba(225,_29,_72,_0.2)] active:scale-110" value="upload_button" id="button_bashupload">Upload</button>
             <div id="select_box_container" class="hidden inline-flex items-center scale-[1.2]"><label class="relative flex items-center p-3 rounded-full cursor-pointer" for="checkbox" data-ripple-dark="true"><input type="checkbox" value="bashupload.com" class="peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border transition-all before:absolute checked:border-rose-600 checked:bg-rose-600" id="select_box"/><div class="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100"><svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 -1 20 20" fill="currentColor" stroke="currentColor" stroke-width="1"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg></div></label></div>
           </td>
         </tr>
@@ -276,8 +307,8 @@
           </td>
           <td class="px-4 py-2">32MB</td>
           <td class="px-4 py-2">30 days</td>
-          <td class="px-4 py-2">
-            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 active:scale-110" value="upload_button" id="button_curlby">Upload</button>
+          <td class="px-4 py-2 text-center">
+            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 hover:shadow-[0_0px_30px_rgba(225,_29,_72,_0.2)] active:scale-110" value="upload_button" id="button_curlby">Upload</button>
             <div id="select_box_container" class="hidden inline-flex items-center scale-[1.2]"><label class="relative flex items-center p-3 rounded-full cursor-pointer" for="checkbox" data-ripple-dark="true"><input type="checkbox" value="curl.by" class="peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border transition-all before:absolute checked:border-rose-600 checked:bg-rose-600" id="select_box"/><div class="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100"><svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 -1 20 20" fill="currentColor" stroke="currentColor" stroke-width="1"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg></div></label></div>
           </td>
         </tr>
@@ -288,19 +319,19 @@
             x0.at&nbsp(<a class="text-sky-400" href="https://x0.at/" target="_blank">https://x0.at/</a>)
           </td>
           <td class="px-4 py-2">50MB</td>
-          <td class="px-4 py-2">depends on the size of your file
+          <td class="px-4 py-2">depends on the file size
             <div class="inline-block relative group">
               <i class="fa-solid fa-circle-question" style="color: #ffffff91;"></i>
           
-              <div class="absolute bottom-full mb-2 group-hover:block w-48 hidden">
+              <div class="absolute bottom-full group-hover:block w-48 hidden">
                   <div class="bg-slate-900 text-white text-xs rounded-lg py-1 px-2">
                     The host keeps your files according to their weight. They use different algorithms. For more information, please visit the chosen site.
                   </div>
               </div>
           </div>
           </td>
-          <td class="px-4 py-2">
-            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 active:scale-110" value="upload_button" id="button_x0at">Upload</button>
+          <td class="px-4 py-2 text-center">
+            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 hover:shadow-[0_0px_30px_rgba(225,_29,_72,_0.2)] active:scale-110" value="upload_button" id="button_x0at">Upload</button>
             <div id="select_box_container" class="hidden inline-flex items-center scale-[1.2]"><label class="relative flex items-center p-3 rounded-full cursor-pointer" for="checkbox" data-ripple-dark="true"><input type="checkbox" value="x0.at" class="peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border transition-all before:absolute checked:border-rose-600 checked:bg-rose-600" id="select_box"/><div class="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100"><svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 -1 20 20" fill="currentColor" stroke="currentColor" stroke-width="1"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg></div></label></div>
           </td>
         </tr>
@@ -312,8 +343,8 @@
           </td>
           <td class="px-4 py-2">1GB</td>
           <td class="px-4 py-2">2 days</td>
-          <td class="px-4 py-2">
-            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 active:scale-110" value="upload_button" id="button_uplooad">Upload</button>
+          <td class="px-4 py-2 text-center">
+            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 hover:shadow-[0_0px_30px_rgba(225,_29,_72,_0.2)] active:scale-110" value="upload_button" id="button_uplooad">Upload</button>
             <div id="select_box_container" class="hidden inline-flex items-center scale-[1.2]"><label class="relative flex items-center p-3 rounded-full cursor-pointer" for="checkbox" data-ripple-dark="true"><input type="checkbox" value="uplooad.net" class="peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border transition-all before:absolute checked:border-rose-600 checked:bg-rose-600" id="select_box"/><div class="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100"><svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 -1 20 20" fill="currentColor" stroke="currentColor" stroke-width="1"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg></div></label></div>
           </td>
         </tr>
@@ -325,8 +356,8 @@
           </td>
           <td class="px-4 py-2">4GB</td>
           <td class="px-4 py-2">30 days</td>
-          <td class="px-4 py-2">
-            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 active:scale-110" value="upload_button" id="button_tommoteam">Upload</button>
+          <td class="px-4 py-2 text-center">
+            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 hover:shadow-[0_0px_30px_rgba(225,_29,_72,_0.2)] active:scale-110" value="upload_button" id="button_tommoteam">Upload</button>
             <div id="select_box_container" class="hidden inline-flex items-center scale-[1.2]"><label class="relative flex items-center p-3 rounded-full cursor-pointer" for="checkbox" data-ripple-dark="true"><input type="checkbox" value="a.tommo.team" class="peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border transition-all before:absolute checked:border-rose-600 checked:bg-rose-600" id="select_box"/><div class="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100"><svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 -1 20 20" fill="currentColor" stroke="currentColor" stroke-width="1"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg></div></label></div>
           </td>
         </tr>
@@ -339,8 +370,8 @@
           </td>
           <td class="px-4 py-2">100MB</td>
           <td class="px-4 py-2">24 hours</td>
-          <td class="px-4 py-2">
-            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 active:scale-110" value="upload_button" id="button_tempfilesninja">Upload</button>
+          <td class="px-4 py-2 text-center">
+            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 hover:shadow-[0_0px_30px_rgba(225,_29,_72,_0.2)] active:scale-110" value="upload_button" id="button_tempfilesninja">Upload</button>
             <div id="select_box_container" class="hidden inline-flex items-center scale-[1.2]"><label class="relative flex items-center p-3 rounded-full cursor-pointer" for="checkbox" data-ripple-dark="true"><input type="checkbox" value="tempfiles.ninja" class="peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border transition-all before:absolute checked:border-rose-600 checked:bg-rose-600" id="select_box"/><div class="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100"><svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 -1 20 20" fill="currentColor" stroke="currentColor" stroke-width="1"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg></div></label></div>
           </td>
         </tr>
@@ -352,8 +383,8 @@
           </td>
           <td class="px-4 py-2">20GB</td>
           <td class="px-4 py-2">90 days</td>
-          <td class="px-4 py-2">
-            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 active:scale-110" value="upload_button" id="button_pixeldrain">Upload</button>
+          <td class="px-4 py-2 text-center">
+            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 hover:shadow-[0_0px_30px_rgba(225,_29,_72,_0.2)] active:scale-110" value="upload_button" id="button_pixeldrain">Upload</button>
             <div id="select_box_container" class="hidden inline-flex items-center scale-[1.2]"><label class="relative flex items-center p-3 rounded-full cursor-pointer" for="checkbox" data-ripple-dark="true"><input type="checkbox" value="pixeldrain.com" class="peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border transition-all before:absolute checked:border-rose-600 checked:bg-rose-600" id="select_box"/><div class="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100"><svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 -1 20 20" fill="currentColor" stroke="currentColor" stroke-width="1"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg></div></label></div>
           </td>
         </tr>
@@ -365,8 +396,8 @@
           </td>
           <td class="px-4 py-2">5GB</td>
           <td class="px-4 py-2">30 days</td>
-          <td class="px-4 py-2">
-            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 active:scale-110" value="upload_button" id="button_1cloudfile">Upload</button>
+          <td class="px-4 py-2 text-center">
+            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 hover:shadow-[0_0px_30px_rgba(225,_29,_72,_0.2)] active:scale-110" value="upload_button" id="button_1cloudfile">Upload</button>
             <div id="select_box_container" class="hidden inline-flex items-center scale-[1.2]"><label class="relative flex items-center p-3 rounded-full cursor-pointer" for="checkbox" data-ripple-dark="true"><input type="checkbox" value="1cloudfile.com" class="peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border transition-all before:absolute checked:border-rose-600 checked:bg-rose-600" id="select_box"/><div class="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100"><svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 -1 20 20" fill="currentColor" stroke="currentColor" stroke-width="1"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg></div></label></div>
           </td>
         </tr>
@@ -376,10 +407,10 @@
             <img src="images\bowfile.png" alt="Bowfile Logo" class="h-6 ml-1 mr-2">
             Bowfile&nbsp(<a class="text-sky-400" href="https://bowfile.com/" target="_blank">https://bowfile.com/</a>)
           </td>
-          <td class="px-4 py-2">5GB</td>
+          <td class="px-4 py-2">20GB</td>
           <td class="px-4 py-2">30 days</td>
-          <td class="px-4 py-2">
-            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 active:scale-110" value="upload_button" id="button_bowfile">Upload</button>
+          <td class="px-4 py-2 text-center">
+            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 hover:shadow-[0_0px_30px_rgba(225,_29,_72,_0.2)] active:scale-110" value="upload_button" id="button_bowfile">Upload</button>
             <div id="select_box_container" class="hidden inline-flex items-center scale-[1.2]"><label class="relative flex items-center p-3 rounded-full cursor-pointer" for="checkbox" data-ripple-dark="true"><input type="checkbox" value="bowfile.com" class="peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border transition-all before:absolute checked:border-rose-600 checked:bg-rose-600" id="select_box"/><div class="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100"><svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 -1 20 20" fill="currentColor" stroke="currentColor" stroke-width="1"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg></div></label></div>
           </td>
         </tr>
@@ -391,8 +422,8 @@
           </td>
           <td class="px-4 py-2">2GB</td>
           <td class="px-4 py-2">infinite</td>
-          <td class="px-4 py-2">
-            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 active:scale-110" value="upload_button" id="button_uploadify">Upload</button>
+          <td class="px-4 py-2 text-center">
+            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 hover:shadow-[0_0px_30px_rgba(225,_29,_72,_0.2)] active:scale-110" value="upload_button" id="button_uploadify">Upload</button>
             <div id="select_box_container" class="hidden inline-flex items-center scale-[1.2]"><label class="relative flex items-center p-3 rounded-full cursor-pointer" for="checkbox" data-ripple-dark="true"><input type="checkbox" value="uploadify.net" class="peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border transition-all before:absolute checked:border-rose-600 checked:bg-rose-600" id="select_box"/><div class="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100"><svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 -1 20 20" fill="currentColor" stroke="currentColor" stroke-width="1"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg></div></label></div>
           </td>
         </tr>
@@ -404,8 +435,8 @@
           </td>
           <td class="px-4 py-2">1GB</td>
           <td class="px-4 py-2">30 days</td>
-          <td class="px-4 py-2">
-            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 active:scale-110" value="upload_button" id="button_anontransfer">Upload</button>
+          <td class="px-4 py-2 text-center">
+            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 hover:shadow-[0_0px_30px_rgba(225,_29,_72,_0.2)] active:scale-110" value="upload_button" id="button_anontransfer">Upload</button>
             <div id="select_box_container" class="hidden inline-flex items-center scale-[1.2]"><label class="relative flex items-center p-3 rounded-full cursor-pointer" for="checkbox" data-ripple-dark="true"><input type="checkbox" value="anontransfer.com" class="peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border transition-all before:absolute checked:border-rose-600 checked:bg-rose-600" id="select_box"/><div class="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100"><svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 -1 20 20" fill="currentColor" stroke="currentColor" stroke-width="1"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg></div></label></div>
           </td>
         </tr>
@@ -417,8 +448,8 @@
           </td>
           <td class="px-4 py-2">1GB</td>
           <td class="px-4 py-2">180 days</td>
-          <td class="px-4 py-2">
-            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 active:scale-110" value="upload_button" id="button_anonsharing">Upload</button>
+          <td class="px-4 py-2 text-center">
+            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 hover:shadow-[0_0px_30px_rgba(225,_29,_72,_0.2)] active:scale-110" value="upload_button" id="button_anonsharing">Upload</button>
             <div id="select_box_container" class="hidden inline-flex items-center scale-[1.2]"><label class="relative flex items-center p-3 rounded-full cursor-pointer" for="checkbox" data-ripple-dark="true"><input type="checkbox" value="anonsharing.com" class="peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border transition-all before:absolute checked:border-rose-600 checked:bg-rose-600" id="select_box"/><div class="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100"><svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 -1 20 20" fill="currentColor" stroke="currentColor" stroke-width="1"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg></div></label></div>
           </td>
         </tr>
@@ -430,8 +461,8 @@
           </td>
           <td class="px-4 py-2">4GB</td>
           <td class="px-4 py-2">3 days</td>
-          <td class="px-4 py-2">
-            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 active:scale-110" value="upload_button" id="button_tempsh">Upload</button>
+          <td class="px-4 py-2 text-center">
+            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 hover:shadow-[0_0px_30px_rgba(225,_29,_72,_0.2)] active:scale-110" value="upload_button" id="button_tempsh">Upload</button>
             <div id="select_box_container" class="hidden inline-flex items-center scale-[1.2]"><label class="relative flex items-center p-3 rounded-full cursor-pointer" for="checkbox" data-ripple-dark="true"><input type="checkbox" value="temp.sh" class="peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border transition-all before:absolute checked:border-rose-600 checked:bg-rose-600" id="select_box"/><div class="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100"><svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 -1 20 20" fill="currentColor" stroke="currentColor" stroke-width="1"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg></div></label></div>
           </td>
         </tr>
@@ -443,8 +474,8 @@
           </td>
           <td class="px-4 py-2">32MB</td>
           <td class="px-4 py-2">3 hours</td>
-          <td class="px-4 py-2">
-            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 active:scale-110" value="upload_button" id="button_uguuse">Upload</button>
+          <td class="px-4 py-2 text-center">
+            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 hover:shadow-[0_0px_30px_rgba(225,_29,_72,_0.2)] active:scale-110" value="upload_button" id="button_uguuse">Upload</button>
             <div id="select_box_container" class="hidden inline-flex items-center scale-[1.2]"><label class="relative flex items-center p-3 rounded-full cursor-pointer" for="checkbox" data-ripple-dark="true"><input type="checkbox" value="a.uguu.se" class="peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border transition-all before:absolute checked:border-rose-600 checked:bg-rose-600" id="select_box"/><div class="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100"><svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 -1 20 20" fill="currentColor" stroke="currentColor" stroke-width="1"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg></div></label></div>
           </td>
         </tr>
@@ -456,8 +487,8 @@
           </td>
           <td class="px-4 py-2">2GB</td>
           <td class="px-4 py-2">21 days</td>
-          <td class="px-4 py-2">
-            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 active:scale-110" value="upload_button" id="button_nopaste">Upload</button>
+          <td class="px-4 py-2 text-center">
+            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 hover:shadow-[0_0px_30px_rgba(225,_29,_72,_0.2)] active:scale-110" value="upload_button" id="button_nopaste">Upload</button>
             <div id="select_box_container" class="hidden inline-flex items-center scale-[1.2]"><label class="relative flex items-center p-3 rounded-full cursor-pointer" for="checkbox" data-ripple-dark="true"><input type="checkbox" value="nopaste.net" class="peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border transition-all before:absolute checked:border-rose-600 checked:bg-rose-600" id="select_box"/><div class="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100"><svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 -1 20 20" fill="currentColor" stroke="currentColor" stroke-width="1"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg></div></label></div>
           </td>
         </tr>
@@ -469,8 +500,8 @@
           </td>
           <td class="px-4 py-2">10GB</td>
           <td class="px-4 py-2">infinite</td>
-          <td class="px-4 py-2">
-            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 active:scale-110" value="upload_button" id="button_udrop">Upload</button>
+          <td class="px-4 py-2 text-center">
+            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 hover:shadow-[0_0px_30px_rgba(225,_29,_72,_0.2)] active:scale-110" value="upload_button" id="button_udrop">Upload</button>
             <div id="select_box_container" class="hidden inline-flex items-center scale-[1.2]"><label class="relative flex items-center p-3 rounded-full cursor-pointer" for="checkbox" data-ripple-dark="true"><input type="checkbox" value="www.udrop.com" class="peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border transition-all before:absolute checked:border-rose-600 checked:bg-rose-600" id="select_box"/><div class="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100"><svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 -1 20 20" fill="currentColor" stroke="currentColor" stroke-width="1"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg></div></label></div>
           </td>
         </tr>
@@ -482,8 +513,8 @@
           </td>
           <td class="px-4 py-2">2GB</td>
           <td class="px-4 py-2">7 days</td>
-          <td class="px-4 py-2">
-            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 active:scale-110" value="upload_button" id="button_tempsend">Upload</button>
+          <td class="px-4 py-2 text-center">
+            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 hover:shadow-[0_0px_30px_rgba(225,_29,_72,_0.2)] active:scale-110" value="upload_button" id="button_tempsend">Upload</button>
             <div id="select_box_container" class="hidden inline-flex items-center scale-[1.2]"><label class="relative flex items-center p-3 rounded-full cursor-pointer" for="checkbox" data-ripple-dark="true"><input type="checkbox" value="tempsend.com" class="peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border transition-all before:absolute checked:border-rose-600 checked:bg-rose-600" id="select_box"/><div class="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100"><svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 -1 20 20" fill="currentColor" stroke="currentColor" stroke-width="1"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg></div></label></div>
           </td>
         </tr>
@@ -495,8 +526,8 @@
           </td>
           <td class="px-4 py-2">infinite</td>
           <td class="px-4 py-2">infinite</td>
-          <td class="px-4 py-2">
-            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 active:scale-110" value="upload_button" id="button_1fichier">Upload</button>
+          <td class="px-4 py-2 text-center">
+            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 hover:shadow-[0_0px_30px_rgba(225,_29,_72,_0.2)] active:scale-110" value="upload_button" id="button_1fichier">Upload</button>
             <div id="select_box_container" class="hidden inline-flex items-center scale-[1.2]"><label class="relative flex items-center p-3 rounded-full cursor-pointer" for="checkbox" data-ripple-dark="true"><input type="checkbox" value="1fichier.com" class="peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border transition-all before:absolute checked:border-rose-600 checked:bg-rose-600" id="select_box"/><div class="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100"><svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 -1 20 20" fill="currentColor" stroke="currentColor" stroke-width="1"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg></div></label></div>
           </td>
         </tr>
@@ -508,8 +539,8 @@
           </td>
           <td class="px-4 py-2">200MB</td>
           <td class="px-4 py-2">infinite</td>
-          <td class="px-4 py-2">
-            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 active:scale-110" value="upload_button" id="button_turbobit">Upload</button>
+          <td class="px-4 py-2 text-center">
+            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 hover:shadow-[0_0px_30px_rgba(225,_29,_72,_0.2)] active:scale-110" value="upload_button" id="button_turbobit">Upload</button>
             <div id="select_box_container" class="hidden inline-flex items-center scale-[1.2]"><label class="relative flex items-center p-3 rounded-full cursor-pointer" for="checkbox" data-ripple-dark="true"><input type="checkbox" value="turbobit.net" class="peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border transition-all before:absolute checked:border-rose-600 checked:bg-rose-600" id="select_box"/><div class="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100"><svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 -1 20 20" fill="currentColor" stroke="currentColor" stroke-width="1"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg></div></label></div>
           </td>
         </tr>
@@ -521,8 +552,8 @@
           </td>
           <td class="px-4 py-2">100GB</td>
           <td class="px-4 py-2">30 days</td>
-          <td class="px-4 py-2">
-            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 active:scale-110" value="upload_button" id="button_hitfile">Upload</button>
+          <td class="px-4 py-2 text-center">
+            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 hover:shadow-[0_0px_30px_rgba(225,_29,_72,_0.2)] active:scale-110" value="upload_button" id="button_hitfile">Upload</button>
             <div id="select_box_container" class="hidden inline-flex items-center scale-[1.2]"><label class="relative flex items-center p-3 rounded-full cursor-pointer" for="checkbox" data-ripple-dark="true"><input type="checkbox" value="hitfile.net" class="peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border transition-all before:absolute checked:border-rose-600 checked:bg-rose-600" id="select_box"/><div class="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100"><svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 -1 20 20" fill="currentColor" stroke="currentColor" stroke-width="1"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg></div></label></div>
           </td>
         </tr>
@@ -534,8 +565,8 @@
           </td>
           <td class="px-4 py-2">200MB</td>
           <td class="px-4 py-2">60 days</td>
-          <td class="px-4 py-2">
-            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 active:scale-110" value="upload_button" id="button_fileupload">Upload</button>
+          <td class="px-4 py-2 text-center">
+            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 hover:shadow-[0_0px_30px_rgba(225,_29,_72,_0.2)] active:scale-110" value="upload_button" id="button_fileupload">Upload</button>
             <div id="select_box_container" class="hidden inline-flex items-center scale-[1.2]"><label class="relative flex items-center p-3 rounded-full cursor-pointer" for="checkbox" data-ripple-dark="true"><input type="checkbox" value="file-upload.org" class="peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border transition-all before:absolute checked:border-rose-600 checked:bg-rose-600" id="select_box"/><div class="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100"><svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 -1 20 20" fill="currentColor" stroke="currentColor" stroke-width="1"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg></div></label></div>
           </td>
         </tr>
@@ -547,8 +578,8 @@
           </td>
           <td class="px-4 py-2">2GB</td>
           <td class="px-4 py-2">60 days</td>
-          <td class="px-4 py-2">
-            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 active:scale-110" value="upload_button" id="button_hexupload">Upload</button>
+          <td class="px-4 py-2 text-center">
+            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 hover:shadow-[0_0px_30px_rgba(225,_29,_72,_0.2)] active:scale-110" value="upload_button" id="button_hexupload">Upload</button>
             <div id="select_box_container" class="hidden inline-flex items-center scale-[1.2]"><label class="relative flex items-center p-3 rounded-full cursor-pointer" for="checkbox" data-ripple-dark="true"><input type="checkbox" value="hexload.com" class="peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border transition-all before:absolute checked:border-rose-600 checked:bg-rose-600" id="select_box"/><div class="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100"><svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 -1 20 20" fill="currentColor" stroke="currentColor" stroke-width="1"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg></div></label></div>
           </td>
         </tr>
@@ -560,8 +591,8 @@
           </td>
           <td class="px-4 py-2">500MB</td>
           <td class="px-4 py-2">60 days</td>
-          <td class="px-4 py-2">
-            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 active:scale-110" value="upload_button" id="button_mexash">Upload</button>
+          <td class="px-4 py-2 text-center">
+            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 hover:shadow-[0_0px_30px_rgba(225,_29,_72,_0.2)] active:scale-110" value="upload_button" id="button_mexash">Upload</button>
             <div id="select_box_container" class="hidden inline-flex items-center scale-[1.2]"><label class="relative flex items-center p-3 rounded-full cursor-pointer" for="checkbox" data-ripple-dark="true"><input type="checkbox" value="mexa.sh" class="peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border transition-all before:absolute checked:border-rose-600 checked:bg-rose-600" id="select_box"/><div class="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100"><svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 -1 20 20" fill="currentColor" stroke="currentColor" stroke-width="1"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg></div></label></div>
           </td>
         </tr>
@@ -573,8 +604,8 @@
           </td>
           <td class="px-4 py-2">512MB</td>
           <td class="px-4 py-2">5 days</td>
-          <td class="px-4 py-2">
-            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 active:scale-110" value="upload_button" id="button_rapidfileshare">Upload</button>
+          <td class="px-4 py-2 text-center">
+            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 hover:shadow-[0_0px_30px_rgba(225,_29,_72,_0.2)] active:scale-110" value="upload_button" id="button_rapidfileshare">Upload</button>
             <div id="select_box_container" class="hidden inline-flex items-center scale-[1.2]"><label class="relative flex items-center p-3 rounded-full cursor-pointer" for="checkbox" data-ripple-dark="true"><input type="checkbox" value="www.rapidfileshare.net" class="peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border transition-all before:absolute checked:border-rose-600 checked:bg-rose-600" id="select_box"/><div class="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100"><svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 -1 20 20" fill="currentColor" stroke="currentColor" stroke-width="1"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg></div></label></div>
           </td>
         </tr>
@@ -586,34 +617,21 @@
           </td>
           <td class="px-4 py-2">100GB</td>
           <td class="px-4 py-2">15 days</td>
-          <td class="px-4 py-2">
-            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 active:scale-110" value="upload_button" id="button_sendcm">Upload</button>
+          <td class="px-4 py-2 text-center">
+            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 hover:shadow-[0_0px_30px_rgba(225,_29,_72,_0.2)] active:scale-110" value="upload_button" id="button_sendcm">Upload</button>
             <div id="select_box_container" class="hidden inline-flex items-center scale-[1.2]"><label class="relative flex items-center p-3 rounded-full cursor-pointer" for="checkbox" data-ripple-dark="true"><input type="checkbox" value="send.cm" class="peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border transition-all before:absolute checked:border-rose-600 checked:bg-rose-600" id="select_box"/><div class="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100"><svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 -1 20 20" fill="currentColor" stroke="currentColor" stroke-width="1"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg></div></label></div>
           </td>
         </tr>
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\no_logo.png" alt="up-load.io Logo" class="h-6 ml-1 mr-2">
-            up-load.io&nbsp(<a class="text-sky-400" href="https://up-load.io/" target="_blank">https://up-load.io/</a>)
-          </td>
-          <td class="px-4 py-2">100MB</td>
-          <td class="px-4 py-2">infinite</td>
-          <td class="px-4 py-2">
-            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 active:scale-110" value="upload_button" id="button_uploadio">Upload</button>
-            <div id="select_box_container" class="hidden inline-flex items-center scale-[1.2]"><label class="relative flex items-center p-3 rounded-full cursor-pointer" for="checkbox" data-ripple-dark="true"><input type="checkbox" value="up-load.io" class="peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border transition-all before:absolute checked:border-rose-600 checked:bg-rose-600" id="select_box"/><div class="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100"><svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 -1 20 20" fill="currentColor" stroke="currentColor" stroke-width="1"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg></div></label></div>
-          </td>
-        </tr>
-
-        <tr class="alternate-row search-result">
-          <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\usercloud.png" alt="Userscloud Logo" class="h-6 ml-1 mr-2">
+            <img src="images\userscloud.png" alt="Userscloud Logo" class="h-6 ml-1 mr-2">
             Userscloud&nbsp(<a class="text-sky-400" href="https://userscloud.com/" target="_blank">https://userscloud.com/</a>)
           </td>
           <td class="px-4 py-2">5GB</td>
           <td class="px-4 py-2">infinite</td>
-          <td class="px-4 py-2">
-            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 active:scale-110" value="upload_button" id="button_usercloud">Upload</button>
+          <td class="px-4 py-2 text-center">
+            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 hover:shadow-[0_0px_30px_rgba(225,_29,_72,_0.2)] active:scale-110" value="upload_button" id="button_userscloud">Upload</button>
             <div id="select_box_container" class="hidden inline-flex items-center scale-[1.2]"><label class="relative flex items-center p-3 rounded-full cursor-pointer" for="checkbox" data-ripple-dark="true"><input type="checkbox" value="userscloud.com" class="peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border transition-all before:absolute checked:border-rose-600 checked:bg-rose-600" id="select_box"/><div class="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100"><svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 -1 20 20" fill="currentColor" stroke="currentColor" stroke-width="1"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg></div></label></div>
           </td>
         </tr>
@@ -625,8 +643,8 @@
           </td>
           <td class="px-4 py-2">300MB</td>
           <td class="px-4 py-2">infinite</td>
-          <td class="px-4 py-2">
-            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 active:scale-110" value="upload_button" id="button_filetmp">Upload</button>
+          <td class="px-4 py-2 text-center">
+            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 hover:shadow-[0_0px_30px_rgba(225,_29,_72,_0.2)] active:scale-110" value="upload_button" id="button_filetmp">Upload</button>
             <div id="select_box_container" class="hidden inline-flex items-center scale-[1.2]"><label class="relative flex items-center p-3 rounded-full cursor-pointer" for="checkbox" data-ripple-dark="true"><input type="checkbox" value="filetmp.com" class="peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border transition-all before:absolute checked:border-rose-600 checked:bg-rose-600" id="select_box"/><div class="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100"><svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 -1 20 20" fill="currentColor" stroke="currentColor" stroke-width="1"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg></div></label></div>
           </td>
         </tr>
@@ -638,8 +656,8 @@
           </td>
           <td class="px-4 py-2">2.25GB</td>
           <td class="px-4 py-2">10 days</td>
-          <td class="px-4 py-2">
-            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 active:scale-110" value="upload_button" id="button_usersdrive">Upload</button>
+          <td class="px-4 py-2 text-center">
+            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 hover:shadow-[0_0px_30px_rgba(225,_29,_72,_0.2)] active:scale-110" value="upload_button" id="button_usersdrive">Upload</button>
             <div id="select_box_container" class="hidden inline-flex items-center scale-[1.2]"><label class="relative flex items-center p-3 rounded-full cursor-pointer" for="checkbox" data-ripple-dark="true"><input type="checkbox" value="usersdrive.com" class="peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border transition-all before:absolute checked:border-rose-600 checked:bg-rose-600" id="select_box"/><div class="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100"><svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 -1 20 20" fill="currentColor" stroke="currentColor" stroke-width="1"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg></div></label></div>
           </td>
         </tr>
@@ -651,8 +669,8 @@
           </td>
           <td class="px-4 py-2">25GB</td>
           <td class="px-4 py-2">infinite</td>
-          <td class="px-4 py-2">
-            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 active:scale-110" value="upload_button" id="button_downloadgg">Upload</button>
+          <td class="px-4 py-2 text-center">
+            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 hover:shadow-[0_0px_30px_rgba(225,_29,_72,_0.2)] active:scale-110" value="upload_button" id="button_downloadgg">Upload</button>
             <div id="select_box_container" class="hidden inline-flex items-center scale-[1.2]"><label class="relative flex items-center p-3 rounded-full cursor-pointer" for="checkbox" data-ripple-dark="true"><input type="checkbox" value="download.gg" class="peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border transition-all before:absolute checked:border-rose-600 checked:bg-rose-600" id="select_box"/><div class="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100"><svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 -1 20 20" fill="currentColor" stroke="currentColor" stroke-width="1"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg></div></label></div>
           </td>
         </tr>
@@ -664,8 +682,8 @@
           </td>
           <td class="px-4 py-2">5GB</td>
           <td class="px-4 py-2">60 days</td>
-          <td class="px-4 py-2">
-            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 active:scale-110" value="upload_button" id="button_megaup">Upload</button>
+          <td class="px-4 py-2 text-center">
+            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 hover:shadow-[0_0px_30px_rgba(225,_29,_72,_0.2)] active:scale-110" value="upload_button" id="button_megaup">Upload</button>
             <div id="select_box_container" class="hidden inline-flex items-center scale-[1.2]"><label class="relative flex items-center p-3 rounded-full cursor-pointer" for="checkbox" data-ripple-dark="true"><input type="checkbox" value="megaup.net" class="peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border transition-all before:absolute checked:border-rose-600 checked:bg-rose-600" id="select_box"/><div class="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100"><svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 -1 20 20" fill="currentColor" stroke="currentColor" stroke-width="1"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg></div></label></div>
           </td>
         </tr>
@@ -677,8 +695,8 @@
           </td>
           <td class="px-4 py-2">1GB</td>
           <td class="px-4 py-2">30 days</td>
-          <td class="px-4 py-2">
-            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 active:scale-110" value="upload_button" id="button_krakenfiles">Upload</button>
+          <td class="px-4 py-2 text-center">
+            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 hover:shadow-[0_0px_30px_rgba(225,_29,_72,_0.2)] active:scale-110" value="upload_button" id="button_krakenfiles">Upload</button>
             <div id="select_box_container" class="hidden inline-flex items-center scale-[1.2]"><label class="relative flex items-center p-3 rounded-full cursor-pointer" for="checkbox" data-ripple-dark="true"><input type="checkbox" value="krakenfiles.com" class="peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border transition-all before:absolute checked:border-rose-600 checked:bg-rose-600" id="select_box"/><div class="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100"><svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 -1 20 20" fill="currentColor" stroke="currentColor" stroke-width="1"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg></div></label></div>
           </td>
         </tr>
@@ -690,8 +708,8 @@
           </td>
           <td class="px-4 py-2">2GB</td>
           <td class="px-4 py-2">7 days</td>
-          <td class="px-4 py-2">
-            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 active:scale-110" value="upload_button" id="button_clicknupload">Upload</button>
+          <td class="px-4 py-2 text-center">
+            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 hover:shadow-[0_0px_30px_rgba(225,_29,_72,_0.2)] active:scale-110" value="upload_button" id="button_clicknupload">Upload</button>
             <div id="select_box_container" class="hidden inline-flex items-center scale-[1.2]"><label class="relative flex items-center p-3 rounded-full cursor-pointer" for="checkbox" data-ripple-dark="true"><input type="checkbox" value="clicknupload.click" class="peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border transition-all before:absolute checked:border-rose-600 checked:bg-rose-600" id="select_box"/><div class="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100"><svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 -1 20 20" fill="currentColor" stroke="currentColor" stroke-width="1"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg></div></label></div>
           </td>
         </tr>
@@ -703,8 +721,8 @@
           </td>
           <td class="px-4 py-2">4GB</td>
           <td class="px-4 py-2">10 days</td>
-          <td class="px-4 py-2">
-            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 active:scale-110" value="upload_button" id="button_dailyuploads">Upload</button>
+          <td class="px-4 py-2 text-center">
+            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 hover:shadow-[0_0px_30px_rgba(225,_29,_72,_0.2)] active:scale-110" value="upload_button" id="button_dailyuploads">Upload</button>
             <div id="select_box_container" class="hidden inline-flex items-center scale-[1.2]"><label class="relative flex items-center p-3 rounded-full cursor-pointer" for="checkbox" data-ripple-dark="true"><input type="checkbox" value="dailyuploads.net" class="peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border transition-all before:absolute checked:border-rose-600 checked:bg-rose-600" id="select_box"/><div class="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100"><svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 -1 20 20" fill="currentColor" stroke="currentColor" stroke-width="1"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg></div></label></div>
           </td>
         </tr>
@@ -716,51 +734,155 @@
           </td>
           <td class="px-4 py-2">100MB</td>
           <td class="px-4 py-2">50 days</td>
-          <td class="px-4 py-2">
-            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 active:scale-110" value="upload_button" id="button_uploadee">Upload</button>
+          <td class="px-4 py-2 text-center">
+            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 hover:shadow-[0_0px_30px_rgba(225,_29,_72,_0.2)] active:scale-110" value="upload_button" id="button_uploadee">Upload</button>
             <div id="select_box_container" class="hidden inline-flex items-center scale-[1.2]"><label class="relative flex items-center p-3 rounded-full cursor-pointer" for="checkbox" data-ripple-dark="true"><input type="checkbox" value="www.upload.ee" class="peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border transition-all before:absolute checked:border-rose-600 checked:bg-rose-600" id="select_box"/><div class="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100"><svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 -1 20 20" fill="currentColor" stroke="currentColor" stroke-width="1"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg></div></label></div>
+          </td>
+        </tr>
+
+        <tr class="alternate-row search-result">
+          <td class="px-4 py-2 flex items-center mt-1.5">
+            <img src="images\ccuto.png" alt="CCU.to Logo" class="h-6 mr-1">
+            CCU.to&nbsp(<a class="text-sky-400" href="https://ccu.to/" target="_blank">https://ccu.to/</a>)
+          </td>
+          <td class="px-4 py-2">5GB</td>
+          <td class="px-4 py-2">3 days</td>
+          <td class="px-4 py-2 text-center">
+            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 hover:shadow-[0_0px_30px_rgba(225,_29,_72,_0.2)] active:scale-110" value="upload_button" id="button_ccuto">Upload</button>
+            <div id="select_box_container" class="hidden inline-flex items-center scale-[1.2]"><label class="relative flex items-center p-3 rounded-full cursor-pointer" for="checkbox" data-ripple-dark="true"><input type="checkbox" value="ccu.to" class="peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border transition-all before:absolute checked:border-rose-600 checked:bg-rose-600" id="select_box"/><div class="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100"><svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 -1 20 20" fill="currentColor" stroke="currentColor" stroke-width="1"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg></div></label></div>
+          </td>
+        </tr>
+
+        <tr class="alternate-row search-result">
+          <td class="px-4 py-2 flex items-center mt-1.5">
+            <img src="images\filespacecom.png" alt="Filespace Logo" class="h-5 mr-1">
+            Filespace&nbsp(<a class="text-sky-400" href="https://filespace.com/" target="_blank">https://filespace.com/</a>)
+          </td>
+          <td class="px-4 py-2">150MB</td>
+          <td class="px-4 py-2">10 days</td>
+          <td class="px-4 py-2 text-center">
+            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 hover:shadow-[0_0px_30px_rgba(225,_29,_72,_0.2)] active:scale-110" value="upload_button" id="button_filespacecom">Upload</button>
+            <div id="select_box_container" class="hidden inline-flex items-center scale-[1.2]"><label class="relative flex items-center p-3 rounded-full cursor-pointer" for="checkbox" data-ripple-dark="true"><input type="checkbox" value="filespace.com" class="peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border transition-all before:absolute checked:border-rose-600 checked:bg-rose-600" id="select_box"/><div class="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100"><svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 -1 20 20" fill="currentColor" stroke="currentColor" stroke-width="1"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg></div></label></div>
+          </td>
+        </tr>
+
+        <tr class="alternate-row search-result">
+          <td class="px-4 py-2 flex items-center mt-1.5">
+            <img src="images\gulfup.png" alt="Gulfup Logo" class="h-6 mr-1">
+            Gulfup&nbsp(<a class="text-sky-400" href="https://www.gulf-up.com" target="_blank">https://www.gulf-up.com/</a>)
+          </td>
+          <td class="px-4 py-2">200MB</td>
+          <td class="px-4 py-2">10 days</td>
+          <td class="px-4 py-2 text-center">
+            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 hover:shadow-[0_0px_30px_rgba(225,_29,_72,_0.2)] active:scale-110" value="upload_button" id="button_gulfup">Upload</button>
+            <div id="select_box_container" class="hidden inline-flex items-center scale-[1.2]"><label class="relative flex items-center p-3 rounded-full cursor-pointer" for="checkbox" data-ripple-dark="true"><input type="checkbox" value="www.gulf-up.com" class="peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border transition-all before:absolute checked:border-rose-600 checked:bg-rose-600" id="select_box"/><div class="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100"><svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 -1 20 20" fill="currentColor" stroke="currentColor" stroke-width="1"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg></div></label></div>
+          </td>
+        </tr>
+
+        <tr class="alternate-row search-result">
+          <td class="px-4 py-2 flex items-center mt-1.5">
+            <img src="images\cyberfile.png" alt="CyberFile Logo" class="h-7 mr-1">
+            CyberFile&nbsp(<a class="text-sky-400" href="https://cyberfile.me/" target="_blank">https://cyberfile.me/</a>)
+          </td>
+          <td class="px-4 py-2">10GB</td>
+          <td class="px-4 py-2">5 days</td>
+          <td class="px-4 py-2 text-center">
+            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 hover:shadow-[0_0px_30px_rgba(225,_29,_72,_0.2)] active:scale-110" value="upload_button" id="button_cyberfile">Upload</button>
+            <div id="select_box_container" class="hidden inline-flex items-center scale-[1.2]"><label class="relative flex items-center p-3 rounded-full cursor-pointer" for="checkbox" data-ripple-dark="true"><input type="checkbox" value="cyberfile.me" class="peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border transition-all before:absolute checked:border-rose-600 checked:bg-rose-600" id="select_box"/><div class="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100"><svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 -1 20 20" fill="currentColor" stroke="currentColor" stroke-width="1"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg></div></label></div>
+          </td>
+        </tr>
+
+        <tr class="alternate-row search-result">
+          <td class="px-4 py-2 flex items-center mt-1.5">
+            <img src="images\uppit.png" alt="UppIT Logo" class="h-6 ml-1 mr-1">
+            UppIT&nbsp(<a class="text-sky-400" href="http://uppit.com/" target="_blank">http://uppit.com/</a>)
+          </td>
+          <td class="px-4 py-2">1GB</td>
+          <td class="px-4 py-2">10 days</td>
+          <td class="px-4 py-2 text-center">
+            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 hover:shadow-[0_0px_30px_rgba(225,_29,_72,_0.2)] active:scale-110" value="upload_button" id="button_uppit">Upload</button>
+            <div id="select_box_container" class="hidden inline-flex items-center scale-[1.2]"><label class="relative flex items-center p-3 rounded-full cursor-pointer" for="checkbox" data-ripple-dark="true"><input type="checkbox" value="uppit.com" class="peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border transition-all before:absolute checked:border-rose-600 checked:bg-rose-600" id="select_box"/><div class="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100"><svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 -1 20 20" fill="currentColor" stroke="currentColor" stroke-width="1"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg></div></label></div>
+          </td>
+        </tr>
+
+        <tr class="alternate-row search-result">
+          <td class="px-4 py-2 flex items-center mt-1.5">
+            <img src="images\freefr.png" alt="UppIT Logo" class="h-6 ml-1 mr-1">
+            Free.fr&nbsp(<a class="text-sky-400" href="https://transfert.free.fr/" target="_blank">https://transfert.free.free/</a>)
+          </td>
+          <td class="px-4 py-2">10GB</td>
+          <td class="px-4 py-2">7 days</td>
+          <td class="px-4 py-2 text-center">
+            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 hover:shadow-[0_0px_30px_rgba(225,_29,_72,_0.2)] active:scale-110" value="upload_button" id="button_freefr">Upload</button>
+            <div id="select_box_container" class="hidden inline-flex items-center scale-[1.2]"><label class="relative flex items-center p-3 rounded-full cursor-pointer" for="checkbox" data-ripple-dark="true"><input type="checkbox" value="transfert.free.fr" class="peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border transition-all before:absolute checked:border-rose-600 checked:bg-rose-600" id="select_box"/><div class="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100"><svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 -1 20 20" fill="currentColor" stroke="currentColor" stroke-width="1"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg></div></label></div>
+          </td>
+        </tr>
+
+        <tr class="alternate-row search-result">
+          <td class="px-4 py-2 flex items-center mt-1.5">
+            <img src="images\depositfiles.png" alt="DepositFiles Logo" class="h-6 ml-1 mr-1">
+            DepositFiles&nbsp(<a class="text-sky-400" href="https://dfiles.eu/" target="_blank">https://dfiles.eu/</a>)
+          </td>
+          <td class="px-4 py-2">10GB</td>
+          <td class="px-4 py-2">90 days</td>
+          <td class="px-4 py-2 text-center">
+            <button class="bg-gradient-to-r from-red-500 to-rose-600 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-red-500 hover:to-rose-500 hover:shadow-[0_0px_30px_rgba(225,_29,_72,_0.2)] active:scale-110" value="upload_button" id="button_depositfiles">Upload</button>
+            <div id="select_box_container" class="hidden inline-flex items-center scale-[1.2]"><label class="relative flex items-center p-3 rounded-full cursor-pointer" for="checkbox" data-ripple-dark="true"><input type="checkbox" value="dfiles.eu" class="peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border transition-all before:absolute checked:border-rose-600 checked:bg-rose-600" id="select_box"/><div class="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100"><svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 -1 20 20" fill="currentColor" stroke="currentColor" stroke-width="1"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg></div></label></div>
           </td>
         </tr>
 
       </tbody>
     </table>
     <div class="flex justify-end">
-      <button class="hidden bg-gradient-to-r from-violet-700 to-purple-600 text-white mt-4 mr-2 w-full py-2 rounded-lg transition duration-200 hover:scale-[1.01] hover:from-violet-600 hover:to-purple-500 active:scale-[1.03]" id="button_save_selected_host">Save <i class="fa-solid fa-floppy-disk" style="color: #ffffff;"></i></button>
+      <button class="hidden bg-gradient-to-r from-indigo-700 to-indigo-500 text-white mt-4 mr-2 w-full py-2 rounded-lg transition duration-200 hover:scale-[1.01] hover:from-indigo-600 hover:to-[#7072ee] hover:shadow-[0_0px_20px_rgba(99,_102,_241,_0.2)] active:scale-[1.03]" id="button_save_selected_host">Save <i class="fa-solid fa-floppy-disk" style="color: #ffffff;"></i></button>
       <button class="hidden bg-gradient-to-r from-red-500 to-rose-600 text-white mt-4 ml-2 w-full py-2 rounded-lg transition duration-200 hover:scale-[1.01] hover:from-red-500 hover:to-rose-500 active:scale-[1.03]" id="button_cancel_selected_host">Cancel <i class="fa-solid fa-ban" style="color: #ffffff;"></i></button>
     </div>
   </div>
 
   <div id="upload_popup" class="hidden fixed inset-0 flex justify-center items-center bg-gray-800 bg-opacity-50 z-0">
-    <div id="popup_container" class="backdrop-blur-lg bg-white/10 p-10 rounded-2xl shadow-md text-center max-w-3xl max-h-96 overflow-auto transform transition-all duration-200 border-dashed border-slate-300">
-      
-      <div class="mt-[-15px] hidden" id="profile_selector">
+    <div id="popup_container" class="backdrop-blur-lg bg-white/10 p-10 rounded-2xl shadow-md text-center max-h-[453px] max-w-3xl overflow-auto transform transition-all duration-200 border-dashed border-slate-300">
+
+      <div class="flex justify-center items-center mb-6">
+        <p id="upload_local_file_button" class="mr-2 text-sm bg-transparent text-indigo-300 py-1.5 px-2.5 border border-indigo-500 rounded-lg cursor-not-allowed transition duration-200">Upload local file</p>
+        <p id="upload_from_url_button" class="ml-2 text-sm bg-transparent text-slate-200 py-1.5 px-2.5 transition duration-200 border border-slate-400 rounded-lg hover:border-indigo-300 hover:text-indigo-200 cursor-pointer hover:scale-[1.02] hover:shadow-[0_0px_20px_rgba(123,_142,_247,_0.2)] active:scale-[1.03]">Upload from URL</p>
+      </div>
+
+      <div class="hidden" id="profile_selector">
         <label for="profile_select">Select a profile : </label>
-        <select id="profile_select" class="mt-3 mb-5 border-2 border-white-950 text-sm rounded-lg transition duration-200 border-2 border-white-950 hover:border-rose-500 focus:outline-none active:scale-[1.05] block w-full p-2.5 bg-gray-700 text-white">
+        <select id="profile_select" class="mt-3 mb-5 border-2 border-white-950 text-sm rounded-lg transition duration-200 border-2 border-white-950 hover:border-rose-500 hover:shadow-[0_0px_30px_rgba(244,_63,_94,_0.2)] focus:outline-none active:scale-[1.05] block w-full p-2.5 bg-gray-700 text-white">
           <option id="default_option" value="default" disabled selected>Select a profile</option>
         </select>
       </div>
 
-      <input type="file" id="popup_file_input" class="mb-4 hidden">
-      <button id="delete_file_input_button" class="mr-2 hidden transition active:scale-125" alt="Delete file input"><i class="fa-solid fa-trash"></i></button>
-      <button id="popup_browse_button" class="bg-gradient-to-r mt-1 from-sky-500 to-indigo-500 text-white px-5 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-sky-500 hover:to-indigo-400 active:scale-110">Browse</button>
-      <button id="popup_upload_button" class="bg-gradient-to-r from-red-500 to-rose-600 text-white transition duration-200 px-5 py-2 rounded-lg ml-5 opacity-50 cursor-not-allowed active:scale-105">Upload</button>
+      <div id="local_upload_file" class="">
+        <input type="file" id="popup_file_input" class="mb-4 hidden">
+        <button id="delete_file_input_button" class="mr-2 hidden transition active:scale-125" alt="Delete file input"><i class="fa-solid fa-trash"></i></button>
+        <button id="popup_browse_button" class="bg-gradient-to-r mt-1 from-indigo-600 to-indigo-500 text-white px-5 py-2 rounded-lg transition duration-200 hover:scale-105 hover:from-indigo-500 hover:to-[#7072ee] hover:shadow-[0_0px_20px_rgba(99,_102,_241,_0.3)] active:scale-110">Browse</button>
+        <button id="popup_upload_button_local" class="bg-gradient-to-r from-red-500 to-rose-600 text-white transition duration-200 px-5 py-2 rounded-lg ml-5 opacity-50 cursor-not-allowed active:scale-105">Upload</button>
+      </div>
+
+      <div id="url_upload_file" class="hidden">
+        <input type="text" class="text-center pt-0.5 pb-0.5 pl-2 bg-transparent rounded-lg transition duration-200 border-2 border-white-950 hover:border-rose-500 hover:shadow-[0_0px_30px_rgba(244,_63,_94,_0.2)] focus:outline-none active:scale-[1.05]" id="url_upload_input" placeholder="Enter direct file link" autocomplete="off" style="width:300px" spellcheck="false">
+        <button id="popup_upload_button_url" class="bg-gradient-to-r from-red-500 to-rose-600 text-white transition duration-200 px-5 py-2 rounded-lg ml-1 opacity-50 cursor-not-allowed active:scale-105">Upload</button>
+      </div>
 
       <p id="p-for-margin" class="text-white-950 text-center mt-6 mb-3">
-        <a class="text-white-950" id="final_upload_url" href="" target="_blank">
+        <div class="text-white-950 mb-3" id="final_upload_url">
           <button id="copy_button" class="ml-2 hidden transition active:scale-125" alt="Copy link"><i class="far fa-copy"></i></button>
-        </a>
+        </div>
       </p>
-      <button id="popup_new_profile_button" class="hidden bg-gradient-to-r from-violet-700 mt-4 to-purple-600 text-white transition duration-200 scale-[0.8] px-5 py-2 rounded-lg hover:scale-[0.85] hover:from-violet-600 hover:to-purple-500 active:scale-[0.90]">Create a new profile</button>
+      <button id="popup_new_profile_button" class="hidden bg-gradient-to-r from-indigo-700 mt-4 to-indigo-500 text-white transition duration-200 scale-[0.8] px-5 py-2 rounded-lg hover:scale-[0.83] hover:shadow-[0_0px_20px_rgba(99,_102,_241,_0.2)] hover:from-indigo-600 hover:to-[#7072ee] active:scale-[0.86]">Create a new profile</button>
       <a class="text-sky-400 text-sm" id="conditions_of_use_link" href="#" target="_blank">See conditions of use</a>
     </div>
   </div>
   
   <div class="flex justify-center">
-    <button id="upload_history_button" class="bg-gradient-to-r mt-6 from-sky-500 to-blue-500 text-white transition duration-200 px-5 py-2 mr-5 rounded-lg hover:scale-[1.02] hover:from-sky-500 hover:to-blue-400 active:scale-[1.05]">Upload history <i class="ml-1 fa-solid fa-clock-rotate-left" style="color: #ffffff;"></i></button>
-    <button id="check_status_button" class="bg-gradient-to-r mt-6 from-sky-500 to-blue-500 text-white transition duration-200 px-5 py-2 ml-l rounded-lg hover:scale-[1.02] hover:from-sky-500 hover:to-blue-400 active:scale-[1.05]">Check host status <i class="fa-solid fa-arrows-rotate" style="color: #fefefe;"></i></button>
+    <button id="upload_history_button" class="bg-gradient-to-r mt-6 from-indigo-700 to-indigo-500 text-white transition duration-200 px-5 py-2 mr-5 rounded-lg hover:scale-[1.02] hover:from-indigo-500 hover:to-[#7072ee] hover:shadow-[0_0px_20px_rgba(99,_102,_241,_0.2)] active:scale-[1.05]">Upload history <i class="ml-1 fa-solid fa-clock-rotate-left" style="color: #ffffff;"></i></button>
+    <button id="check_status_button" class="bg-gradient-to-r mt-6 from-indigo-700 to-indigo-500 text-white transition duration-200 px-5 py-2 ml-l rounded-lg hover:scale-[1.02] hover:from-indigo-500 hover:to-[#7072ee] hover:shadow-[0_0px_20px_rgba(99,_102,_241,_0.2)] active:scale-[1.05]">Check host status <i class="fa-solid fa-arrows-rotate" style="color: #fefefe;"></i></button>
   </div>
-  <p class="text-base mt-12 text-slate-400 text-center">Project created by Spel987 (<a class="text-sky-400" href="https://github.com/spel987" target="_blank">https://github.com/spel987</a>).</p>
-  <p class="text-base mt-2 mb-14 text-slate-400 text-center">For more information, see the <a class="text-sky-400" href="https://spel987.github.io/Automatic-File-Uploader/" target="_blank">official website</a> or <a class="text-sky-400" href="https://github.com/spel987/Automatic-File-Uploader" target="_blank">GitHub repository</a>.</p>
+  <p class="text-base mt-12 text-slate-400 text-center">For more information, see the <a class="text-sky-400" href="https://spel987.github.io/PolyUploader/" target="_blank">official website</a> or <a class="text-sky-400" href="https://github.com/spel987/PolyUploader" target="_blank">GitHub repository</a>.</p>
+  <p class="text-sm mt-2 text-slate-400 text-center">Project created by Spel987 (<a class="text-sky-400" href="https://github.com/spel987" target="_blank">https://github.com/spel987</a>)</p>
+  <p id="footer_text" class="text-sm mt-2 mb-14 text-slate-400 text-center">PolyUploader + version</p>
 </body>
 </html>
 <script src="script.js"></script>

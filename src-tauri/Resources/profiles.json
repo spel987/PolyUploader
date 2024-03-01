@@ -5,18 +5,21 @@
     "transfer.sh",
     "bashupload.com",
     "pixeldrain.com",
+    "bowfile.com",
     "www.udrop.com",
     "1fichier.com",
     "hitfile.net",
     "send.cm",
-    "download.gg"
+    "download.gg",
+    "cyberfile.me",
+    "transfert.free.fr",
+    "dfiles.eu"
   ],
   "No retention period": [
     "uploadify.net",
     "www.udrop.com",
     "1fichier.com",
     "turbobit.net",
-    "up-load.io",
     "userscloud.com",
     "filetmp.com",
     "download.gg"
@@ -44,13 +47,15 @@
     "hexload.com",
     "mexa.sh",
     "www.rapidfileshare.net",
-    "up-load.io",
     "userscloud.com",
     "usersdrive.com",
     "download.gg",
     "megaup.net",
     "clicknupload.click",
     "dailyuploads.net",
-    "www.upload.ee"
+    "www.upload.ee",
+    "www.gulf-up.com",
+    "cyberfile.me",
+    "transfert.free.fr"
   ]
 }
