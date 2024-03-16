@@ -8,7 +8,7 @@ This project lets you upload your files remotely to different hosting sites.
 <a href="#"><img src="https://i.imgur.com/CYPui1e.png"></a>
 </h1>
 
-## [The official website with documentation and code details](https://spel987.github.io/PolyUploader/)
+## [The official website with documentation and code details](https://polyuploader.vercel.app/)
 
 # Installation
 
