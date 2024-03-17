@@ -365,6 +365,10 @@ document.addEventListener("DOMContentLoaded", function () {
   let is_drag_file = false
   let link_receive = 0;
 
+  let file_to_upload = "";
+  let file_to_upload_name = "";
+  let file_to_upload_size = "";
+
   function get_value_from_path(path, json_data) {
     return path.reduce((current, key) => current?.[key], json_data);
   }
@@ -772,24 +776,21 @@ document.addEventListener("DOMContentLoaded", function () {
           if (share_link_created == 0) {
             const upload_date = new Date().toLocaleString("en-US", {month: "2-digit", day: "2-digit", year: "numeric", hour: "numeric", minute: "numeric", hour12: true}).replace(",", "");
             
-            fetch("https://sourceb.in/api/bins", {
+            fetch(url_for_bypass_cors + "https://p-u.vercel.app/api", {
               method: "POST",
               headers: {
                 "Content-Type": "application/json"
               },
               body: JSON.stringify({
-                title: "Links - PolyUploader",
-                description: "These links were created automatically by PolyUploader. For more information: https://github.com/spel987/PolyUploader",
-                files: [{
-                  content: "Links created on " + upload_date + "\n\n------------------------------\n" + all_links_copy + "\n------------------------------\n\nCreated with PolyUploader",
-                  languageId: 372
-                }]
+                action: "upload_bin",
+                title: file_to_upload_name,
+                content: "Links created on " + upload_date + " for \"" + file_to_upload_name + "\"" + "\n\n------------------------------\n" + all_links_copy + "\n------------------------------\n\nCreated with PolyUploader"
               })
             })
             .then(response => response.json())
             .then((data) => {
-              sourcebin_id = data.key;
-              copy_to_clipboard("https://sourceb.in/" + sourcebin_id);
+              share_link = data.url;
+              copy_to_clipboard(share_link);
               share_link_created = 1;
               document.getElementById("share_link_button").innerHTML = `<button id="share_link_button" class="underline transition duration-200 hover:scale-[1.02] active:scale-[1.05]">Copy a single share link <i class="fa-solid fa-check"></i></button>`;
               setTimeout(function() {
@@ -797,7 +798,7 @@ document.addEventListener("DOMContentLoaded", function () {
               }, 1500);
             })
           } else {
-            copy_to_clipboard("https://sourceb.in/" + sourcebin_id);
+            copy_to_clipboard(share_link);
             document.getElementById("share_link_button").innerHTML = `<button id="share_link_button" class="underline transition duration-200 hover:scale-[1.02] active:scale-[1.05]">Copy a single share link <i class="fa-solid fa-check"></i></button>`;
             setTimeout(function() {
               document.getElementById("share_link_button").innerHTML = `<button id="share_link_button" class="underline transition duration-200 hover:scale-[1.02] active:scale-[1.05]">Copy a single share link <i class="fa-solid fa-up-right-from-square"></i></button>`;
@@ -1533,10 +1534,6 @@ document.addEventListener("DOMContentLoaded", function () {
   function start_upload(event) {
     event.preventDefault();
     disabled_upload_button();
-
-    let file_to_upload = "";
-    let file_to_upload_name = "";
-    let file_to_upload_size = "";
 
     if (upload_mode == "local") {
       popup_upload_button_local.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Uploading...';
