@@ -1,6 +1,6 @@
 [package]
 name = "PolyUploader"
-version = "1.5.0"
+version = "1.6.0"
 description = "PolyUploader"
 authors = ["spel987"]
 license = ""
@@ -15,7 +15,8 @@ tauri-build = { version = "1.5", features = [] }
 [dependencies]
 serde = { version = "1.0.190", features = ["derive"] }
 serde_json = { version = "1.0.108", features = ["preserve_order"] }
-tauri = { version = "1.5", features = [ "window-unmaximize", "window-maximize", "fs-read-file", "shell-open", "fs-read-dir", "protocol-asset", "path-all", "window-start-dragging", "window-close", "window-minimize"] }
+zip = { version = "0.5" }
+tauri = { version = "1.5", features = [ "dialog-open", "dialog-save", "fs-all", "updater", "window-unmaximize", "window-maximize", "shell-open", "protocol-asset", "path-all", "window-start-dragging", "window-close", "window-minimize"] }
 
 [features]
 # this feature is used for production builds or when `devPath` points to the filesystem

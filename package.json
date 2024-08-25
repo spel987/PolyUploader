@@ -1,9 +1,15 @@
 {
   "name": "PolyUploader",
   "private": true,
-  "version": "1.5.0",
+  "version": "1.6.0",
   "type": "module",
+  "scripts": {
+    "tailwind": "tailwindcss -i ./src/input_tailwind.css -o ./src/styles.css --watch"
+  },
   "devDependencies": {
-    "@tauri-apps/cli": "^1.5.0"
+    "@tauri-apps/cli": "^1.6.0"
+  },
+  "dependencies": {
+    "tailwindcss": "^3.4.10"
   }
 }

@@ -8,7 +8,7 @@
   },
   "package": {
     "productName": "PolyUploader",
-    "version": "1.5.0"
+    "version": "1.6.0"
   },
   "tauri": {
     "allowlist": {
@@ -27,6 +27,7 @@
         "all": true
       },
       "fs": {
+        "all": true,
         "readFile": true,
         "readDir": true,
         "scope": ["**"]
@@ -34,11 +35,16 @@
       "protocol": {
         "asset": true,
         "assetScope": ["**"]
+      },
+      "dialog": {
+        "all": false,
+        "open": true,
+        "save": true
       }
     },
     "bundle": {
       "active": true,
-      "targets": "all",
+      "targets": ["deb", "nsis", "msi", "app", "dmg", "updater"],
       "identifier": "PolyUploader",
       "icon": [
         "icons/32x32.png",
@@ -59,6 +65,14 @@
     },
     "security": {
       "csp": null
+    },
+    "updater": {
+      "active": true,
+      "endpoints": [
+        "https://p-u.vercel.app/update-config"
+      ],
+      "dialog": false,
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IEUxRUE3MUE0NzIwRjcwNTMKUldSVGNBOXlwSEhxNFVsYytuZytjeWJHY0p6UGNDbytTUnZCZExyVHlhMXQvdzNLVGFFQVp3OG4K"
     },
     "windows": [
       {
