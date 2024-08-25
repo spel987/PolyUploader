@@ -240,9 +240,9 @@ else if (current_host === "oshi.at") {
 
 ### Developer:
 
-- spel987
-    Email: `spel987@pm.me`
-    GitHub: https://github.com/spel987
+- spel987<br>
+    Email: `spel987@pm.me`<br>
+    GitHub: https://github.com/spel987<br>
 ### Backend
 
 - Rust: https://www.rust-lang.org
