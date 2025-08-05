@@ -398,6 +398,10 @@ If you’d like to learn more, feel free to explore the repositories:
 - spel987<br>
     Email: `spel987@pm.me`<br>
     GitHub: https://github.com/spel987<br>
+
+### Contributors:
+
+- Tux 528 ([GitHub](https://github.com/Tux528)): valuable feedback, testing, and ideas for improvement.
     
 ### Backend:
 
