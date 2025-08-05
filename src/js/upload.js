@@ -687,7 +687,7 @@ export async function start_upload(event) {
                   const data = await res.text();
                   const tmpfiles_token = data.match(/<input type="hidden" name="_token" value="([a-zA-Z0-9]+)">/)[1];
 
-                  get_cookie_from_url("https://tmpfiles.org/");
+                  await get_cookie_from_url("https://tmpfiles.org/");
 
                   sent_data_form.append("file", STATE.file_to_upload);
                   sent_data_form.append("_token", tmpfiles_token);
@@ -783,7 +783,7 @@ export async function start_upload(event) {
 
             case "anontransfer.com":
               (async () => {
-                get_cookie_from_url("https://anontransfer.com/");
+                await get_cookie_from_url("https://anontransfer.com/");
                 const dzuuid = generate_uuid_v4();
                 const groupid = generate_uuid_v4();
 
