@@ -2,91 +2,74 @@
   "build": {
     "beforeDevCommand": "",
     "beforeBuildCommand": "",
-    "devPath": "../src",
-    "distDir": "../src",
-    "withGlobalTauri": true
+    "frontendDist": "../src"
   },
-  "package": {
-    "productName": "PolyUploader",
-    "version": "1.6.0"
-  },
-  "tauri": {
-    "allowlist": {
-      "all": false,
-      "shell": {
-        "open": true
-      },
-      "window": {
-        "close": true,
-        "minimize": true,
-        "unmaximize": true,
-        "maximize": true,
-        "startDragging": true
-      },
-      "path": {
-        "all": true
-      },
-      "fs": {
-        "all": true,
-        "readFile": true,
-        "readDir": true,
-        "scope": ["**"]
-      },
-      "protocol": {
-        "asset": true,
-        "assetScope": ["**"]
-      },
-      "dialog": {
-        "all": false,
-        "open": true,
-        "save": true
+  "bundle": {
+    "active": true,
+    "targets": [
+      "nsis"
+    ],
+    "windows": {
+      "nsis": {
+        "sidebarImage": "icons/sidebar.bmp",
+        "installerIcon": "icons/setup_icon.ico",
+        "installerHooks": "./windows/hooks.nsh",
+        "installMode": "perMachine"
       }
     },
-    "bundle": {
-      "active": true,
-      "targets": ["deb", "nsis", "msi", "app", "dmg", "updater"],
-      "identifier": "PolyUploader",
-      "icon": [
-        "icons/32x32.png",
-        "icons/128x128.png",
-        "icons/128x128@2x.png",
-        "icons/icon.ico"
-      ],
-      "resources": [
-        "Resources/*"
-      ],
-      "windows": {
-        "nsis": {
-          "license": "../LICENSE",
-          "installerIcon": "icons/setup_icon.ico",
-          "sidebarImage": "icons/sidebar.bmp"
-        }
-      }
-    },
-    "security": {
-      "csp": null
-    },
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.ico",
+      "icon.icns",
+      "icon.png"
+    ],
+    "resources": [
+      "Resources/*"
+    ],
+    "licenseFile": "../LICENSE",
+    "createUpdaterArtifacts": true
+  },
+  "productName": "PolyUploader",
+  "mainBinaryName": "PolyUploader",
+  "version": "1.7.0",
+  "identifier": "PolyUploader",
+  "plugins": {
     "updater": {
-      "active": true,
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IEUxRUE3MUE0NzIwRjcwNTMKUldSVGNBOXlwSEhxNFVsYytuZytjeWJHY0p6UGNDbytTUnZCZExyVHlhMXQvdzNLVGFFQVp3OG4K",
       "endpoints": [
         "https://p-u.vercel.app/update-config"
       ],
-      "dialog": false,
-      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IEUxRUE3MUE0NzIwRjcwNTMKUldSVGNBOXlwSEhxNFVsYytuZytjeWJHY0p6UGNDbytTUnZCZExyVHlhMXQvdzNLVGFFQVp3OG4K"
-    },
+      "windows": {
+        "installMode": "quiet"
+      }
+    }
+  },
+  "app": {
+    "withGlobalTauri": true,
     "windows": [
       {
         "fullscreen": false,
         "resizable": true,
         "title": "PolyUploader",
-        "width": 1100,
-        "height": 700,
-        "minWidth": 1100,
-        "minHeight": 700,
+        "width": 1140,
+        "height": 730,
+        "minWidth": 1140,
+        "minHeight": 730,
         "decorations": false,
-        "fileDropEnabled": false,
-        "transparent": true
+        "transparent": false,
+        "dragDropEnabled": false
       }
-    ]
+    ],
+    "security": {
+      "assetProtocol": {
+        "scope": [
+          "**"
+        ],
+        "enable": true
+      },
+      "csp": null
+    }
   }
 }

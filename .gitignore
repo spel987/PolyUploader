@@ -1,3 +1,5 @@
 src-tauri/Resources/history.json
+src-tauri/Resources/api_key.json
 package-lock.json
 node_modules
+.obsidian

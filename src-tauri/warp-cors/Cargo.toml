@@ -1,0 +1,31 @@
+[package]
+name = "warp-cors"
+version = "0.3.0"
+authors = ["Jason Liquorish"]
+description = "warp-cors is a proxy server which enables CORS for the proxied request"
+documentation = "https://github.com/Bassetts/warp-cors"
+homepage = "https://github.com/Bassetts/warp-cors"
+repository = "https://github.com/Bassetts/warp-cors"
+readme = "README.md"
+keywords = ["cors", "proxy"]
+categories = ["command-line-utilities", "web-programming"]
+license  = "MIT"
+edition = "2021"
+
+[dependencies]
+clap = { version = "2.34", default-features = false }
+futures-util = "0.3"
+hyper-rustls = "0.23"
+log = "0.4"
+pretty_env_logger = "0.4"
+reqwest = { version = "0.11", default-features = false, features = ["rustls-tls", "stream", "cookies"] }
+serde = { version = "1.0", features = ["derive"] }
+tokio = { version = "1.15", features = ["macros", "rt-multi-thread", "signal"] }
+url = "2.2"
+warp = "0.3"
+
+[profile.release]
+strip = true
+
+[lib]
+path = "src/lib.rs"

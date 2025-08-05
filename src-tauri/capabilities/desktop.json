@@ -1,0 +1,7 @@
+{
+  "identifier": "desktop-capability",
+  "platforms": [
+    "windows"
+  ],
+  "permissions": []
+}
