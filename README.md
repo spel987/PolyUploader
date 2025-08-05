@@ -24,7 +24,7 @@
 </div>
 
 <h1 align="center">
-  <img src="https://github.com/user-attachments/assets/9ab44c18-c7c4-49c6-8e2f-c7ce723b5ad6">
+  <img src="https://i.imgur.com/ru5jvSs.png">
 </h1>
 
 <div align="center">
@@ -260,18 +260,18 @@ npm run tailwind
 If you know of a host that I can add, please open an [issue](https://github.com/spel987/PolyUploader/issues).
 
 <h1 align="center">
-<img src="https://github.com/user-attachments/assets/c57151f4-39d1-4b50-9c87-098cbca21c3d">
+<img src="https://i.imgur.com/I7a1Tkb.jpeg">
 </h1>
 
 <details>
 <summary>🖼️ See screenshots of the application</summary>
 
-<img width="1140" height="730" alt="single_upload" src="https://github.com/user-attachments/assets/e53da5c3-606f-41d3-ada8-5d7d05669e19" />
-<img width="1140" height="730" alt="multiple_upload" src="https://github.com/user-attachments/assets/8e50673f-f6f3-41a0-a304-7b62a93091ae" />
-<img width="1140" height="730" alt="history" src="https://github.com/user-attachments/assets/58a2d463-f23e-436f-a1a7-8de6b47534fe" />
-<img width="1140" height="730" alt="api_keys" src="https://github.com/user-attachments/assets/dc200ac3-508b-49ef-9433-b35561a01591" />
-<img width="1140" height="730" alt="profiles" src="https://github.com/user-attachments/assets/24b51c44-257b-456e-87a5-9fa75dd8e1d0" />
-<img width="1140" height="730" alt="settings_windows_context_menu" src="https://github.com/user-attachments/assets/cc88235b-2ddd-48a7-b7ae-c7c523a2c827" />
+<img width="1140" height="730" alt="single_upload" src="https://i.imgur.com/y5z0g75.png" />
+<img width="1140" height="730" alt="multiple_upload" src="https://i.imgur.com/jA4fVqw.png" />
+<img width="1140" height="730" alt="history" src="https://i.imgur.com/rQZDzXI.png" />
+<img width="1140" height="730" alt="api_keys" src="https://i.imgur.com/80laTjF.png" />
+<img width="1140" height="730" alt="profiles" src="https://i.imgur.com/pswgfJq.png" />
+<img width="1140" height="730" alt="settings_windows_context_menu" src="https://i.imgur.com/RuUJSrw.jpeg" />
 
 </details>
 
