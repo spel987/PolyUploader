@@ -28,9 +28,9 @@
 </h1>
 
 <div align="center">
-  <a href="https://ko-fi.com/spel987" target="_blank">
-    <img src="https://ko-fi.com/img/githubbutton_sm.svg" alt="ko-fi">
-  </a>
+  <br>
+    <a href="https://www.producthunt.com/products/polyuploader?embed=true&utm_source=badge-featured&utm_medium=badge&utm_source=badge-polyuploader" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1002185&theme=light&t=1754471623485" alt="PolyUploader - Upload&#0032;files&#0032;to&#0032;130&#0043;&#0032;hosts&#0032;simultaneously | Product Hunt" style="width: 185.2px; height: 40px;" width="185.2" height="40" /></a>
+    <a href='https://ko-fi.com/I2I7ZG8O5' target='_blank'><img height='36' style='border:0px;height:40px;' src='https://storage.ko-fi.com/cdn/kofi6.png?v=6' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
 </div>
 
 # Quick overview:
@@ -401,7 +401,7 @@ If you’d like to learn more, feel free to explore the repositories:
 
 ### Contributors:
 
-- Tux 528 ([GitHub](https://github.com/Tux528)): valuable feedback, testing, and ideas for improvement.
+- Tux 528 ([GitHub](https://github.com/Tux528)): UX design, UI polishing, valuable feedback, testing, and ideas for improvement.
     
 ### Backend:
 
