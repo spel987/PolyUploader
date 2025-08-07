@@ -29,8 +29,10 @@
 
 <div align="center">
   <br>
-    <a href="https://www.producthunt.com/products/polyuploader?embed=true&utm_source=badge-featured&utm_medium=badge&utm_source=badge-polyuploader" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1002185&theme=light&t=1754471623485" alt="PolyUploader - Upload&#0032;files&#0032;to&#0032;130&#0043;&#0032;hosts&#0032;simultaneously | Product Hunt" style="width: 185.2px; height: 40px;" width="185.2" height="40" /></a>
-    <a href='https://ko-fi.com/I2I7ZG8O5' target='_blank'><img height='36' style='border:0px;height:40px;' src='https://storage.ko-fi.com/cdn/kofi6.png?v=6' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
+    <a href="https://www.producthunt.com/products/polyuploader?embed=true&utm_source=badge-featured&utm_medium=badge&utm_source=badge-polyuploader" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1002185&theme=light&t=1754471623485" alt="PolyUploader - Upload&#0032;files&#0032;to&#0032;130&#0043;&#0032;hosts&#0032;simultaneously | Product Hunt" style="width: 139px; height: 30px;" width="139" height="30" /></a>
+    <a href="https://sourceforge.net/projects/polyuploader/files/latest/download"><img alt="Download PolyUploader" src="https://a.fsdn.com/con/app/sf-download-button" width=175 height=30 srcset="https://a.fsdn.com/con/app/sf-download-button?button_size=2x 2x"></a>
+    <a href="https://alternativeto.net/software/polyuploader/about/" target="_blank"><img style='border-radius: 30px; height:30px;' src="https://i.imgur.com/H9JRjL5.png"/></a>
+    <a href='https://ko-fi.com/I2I7ZG8O5' target='_blank'><img height='36' style='border:0px;height:30px;' src='https://storage.ko-fi.com/cdn/kofi6.png?v=6' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
 </div>
 
 # Quick overview:
