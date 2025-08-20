@@ -37,7 +37,7 @@
 
 # Quick overview:
 
-- Upload from local storage or via URL to 130 hosts at once
+- Upload from local storage or via URL to 133 hosts at once
 - Link your own API keys for compatible hosts
 - View a detailed history of your uploads with expiration status and delete buttons
 - Create and manage upload profiles to automate frequent tasks
@@ -142,6 +142,7 @@ npm run tailwind
 | UploadHive                                                                 | https://uploadhive.com       |        infinite        |           30 days            |                 -                 |         -          |
 | <img src="./src/images/dfiles.eu.png" width="16"/> DepositFiles            | https://dfiles.eu            |         10 GB          |           90 days            |                 -                 |         -          |
 | <img src="./src/images/download.gg.png" width="16"/> Download.gg           | https://download.gg          |         25 GB          |           infinite           |                ✔️                 |         -          |
+| <img src="./src/images/ranoz.gg.png" width="16"/> Ranoz                    | https://ranoz.gg             |          5 GB          |            30 GB             |                 -                 |         -          |
 | <img src="./src/images/sendvid.com.png" width="16"/> Sendvid 🎞️           | https://sendvid.com          |          1 GB          |           90 days            |                 -                 |         -          |
 | <img src="./src/images/uploady.io.png" width="16"/> Uploady                | https://uploady.io           |  👻 1 GB<br>👤 100 GB  |        👻, 👤 30 days        |                ✔️                 |         ✨          |
 | <img src="./src/images/anontransfer.com.png" width="16"/> AnonTransfer     | https://anontransfer.com     |          1 GB          |           30 days            |                 -                 |         -          |
@@ -161,7 +162,7 @@ npm run tailwind
 | Dataupload                                                                 | https://dataupload.net       |         300 MB         |           30 days            |                ✔️                 |         -          |
 | <img src="./src/images/upstore.net.png" width="16"/> Upstore               | https://upstore.net          |          1 GB          |           30 days            |                 -                 |         -          |
 | <img src="./src/images/ufile.io.png" width="16"/> uFile                    | https://ufile.io             |          5 GB          |           30 days            |                 -                 |         -          |
-| <img src="./src/images/krakenfiles.com.png" width="16"/> KrakenFiles       | https://krakenfiles.com      |          1 GB          |           30 days            |                 -                 |         -          |
+| <img src="./src/images/krakenfiles.com.png" width="16"/> KrakenFiles       | https://krakenfiles.com      |   👻 1 GB<br>👤 5 GB   |   👻 30 days<br>👤 90 days   |                🔧                 |         ✨          |
 | Rapidshare.io                                                              | https://rapidshare.io        |          1 GB          |           10 days            |                ✔️                 |         -          |
 | <img src="./src/images/media.cm.png" width="16"/> Media.cm 🎞️             | https://media.cm             |         300 MB         |           90 days            |                 -                 |         -          |
 | <img src="./src/images/oshi.at.png" width="16"/> Oshi.at                   | https://oshi.at              |          5 GB          |           2 hours            |                ✔️                 |         -          |
@@ -170,7 +171,7 @@ npm run tailwind
 | Desiupload                                                                 | https://desiupload.co        |        infinite        |           15 days            |                 -                 |         -          |
 | <img src="./src/images/tempfiles.ninja.png" width="16"/> tempfiles.ninja   | https://tempfiles.ninja      |         100 MB         |           24 hours           |                ✔️                 |         -          |
 | <img src="./src/images/fileditchstuff.me.png" width="16"/> Fileditch       | https://fileditch.com        |          5 GB          |           30 days            |                 -                 |         -          |
-| <img src="./src/images/up2sha.re.png" width="16"/> Up2Share                | https://up2sha.re            |         64 MB          |           30 days            |                 -                 |         -          |
+| <img src="./src/images/up2sha.re.png" width="16"/> Up2Share                | https://up2sha.re            |   👻 64 MB<br>👤 1 GB     |       👻, 👤 30 days      |                🔧                 |         ✨          |
 | Dbree                                                                      | https://dbree.org            |         100 MB         |           60 days            |                 -                 |         -          |
 | <img src="./src/images/udrop.com.png" width="16"/> udrop                   | https://udrop.com            |         10 GB          |            7 days            |                ✔️                 |         -          |
 | <img src="./src/images/tempsend.com.png" width="16"/> Tempsend             | https://tempsend.com         |          2 GB          |            7 days            |                 -                 |         -          |
@@ -182,11 +183,13 @@ npm run tailwind
 | <img src="./src/images/ccu.to.png" width="16"/> CCU.to                     | https://ccu.to               |          5 GB          |            3 days            |                 -                 |         -          |
 | <img src="./src/images/dosya.co.png" width="16"/> Dosya.co                 | https://dosya.co             |          2 GB          |           45 days            |                ✔️                 |         -          |
 | <img src="./src/images/ibb.co.png" width="16"/> ImgBB                      | https://imgbb.com            |         32 MB          |           infinite           |                 -                 |         -          |
+| <img src="./src/images/imgbank.cz.png" width="16"/> IMG Bank               | https://imgbank.cz           |          4 MB          |           infinite           |                 -                 |         -          |
 | ki.tc                                                                      | https://ki.tc                |         400 MB         | depends on the file size[^1] |                 -                 |         -          |
 | <img src="./src/images/udrop.com.png" width="16"/> UploadFile.pl           | https://uploadfile.pl        |        5.98 GB         |           30 days            |                ✔️                 |         -          |
 | <img src="./src/images/nippyfile.com.png" width="16"/> NippyFile           | https://nippyfile.com        |         100 MB         |           infinite           |                 -                 |         -          |
 | <img src="./src/images/filestore.to.png" width="16"/> Filestore            | https://filestore.to         |          2 GB          |           15 days            |                ✔️                 |         -          |
 | <img src="./src/images/fast-down.com.png" width="16"/> Fast Down           | https://down.fast-down.com   |         10 GB          |           30 days            |                 -                 |         -          |
+| <img src="./src/images/theuser.cloud.png" width="16"/> Theuser.cloud       | https://theuser.cloud        |          5 GB          |           30 days            |                ✔️                 |         -          |
 | <img src="./src/images/cyberfile.me.png" width="16"/> CyberFile            | https://cyberfile.me         |         10 GB          |            5 days            |                ✔️                 |         -          |
 | <img src="./src/images/end2end.tech.png" width="16"/> end2end              | https://end2end.tech         |          2 GB          |           infinite           |                ✔️                 |         -          |
 | <img src="./src/images/c-v.sh.png" width="16"/> c-v.sh                     | https://c-v.sh               |         512 MB         | depends on the file size[^1] |                ✔️                 |         -          |
@@ -252,11 +255,11 @@ npm run tailwind
 
 | Category                             | Count |
 | :----------------------------------- | :---: |
-| 🌐 Number of hosts                   |  130  |
-| 🔓 Hosts not requiring an API key    |  93   |
-| ✨ Hosts supporting optional API key  |   9   |
+| 🌐 Number of hosts                   |  133  |
+| 🔓 Hosts not requiring an API key    |  96   |
+| ✨ Hosts supporting optional API key  |  11   |
 | 🔒 Hosts requiring an API key        |  37   |
-| 🗑️ Hosts supporting manual deletion |  55   |
+| 🗑️ Hosts supporting manual deletion |  58   |
 | 🎞️ Specialist video streaming host  |  24   |
 
 If you know of a host that I can add, please open an [issue](https://github.com/spel987/PolyUploader/issues).
@@ -281,7 +284,7 @@ If you know of a host that I can add, please open an [issue](https://github.com/
 
 |                                                                           | PolyUploader | [Mirrored.to](https://mirrored.to) | [Mirrorace.org](https://mirrorace.org) | [MultiUp](https://multiup.io) |
 | :------------------------------------------------------------------------ | :----------: | :--------------------------------: | :------------------------------------: | :---------------------------: |
-| Number of hosting providers supported                                     |     130      |               42[^2]               |                 54[^3]                 |              44               |
+| Number of hosting providers supported                                     |     133      |               42[^2]               |                 54[^3]                 |              44               |
 | No need for a user account to fully use the service                       |      ✔️      |                 ❌                  |                   ❌                    |               ❌               |
 | Maximum file size limit                                                   | infinite[^4] |               750MB                |                  5GB                   |             500GB             |
 | History of uploaded files                                                 |      ✔️      |               ⚠️[^5]               |                 ⚠️[^5]                 |            ⚠️[^5]             |

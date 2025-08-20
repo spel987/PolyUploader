@@ -13,8 +13,8 @@
       "nsis": {
         "sidebarImage": "icons/sidebar.bmp",
         "installerIcon": "icons/setup_icon.ico",
-        "installerHooks": "./windows/hooks.nsh",
-        "installMode": "perMachine"
+        "installerHooks": "windows/hooks.nsh",
+        "installMode": "currentUser"
       }
     },
     "icon": [
@@ -33,7 +33,7 @@
   },
   "productName": "PolyUploader",
   "mainBinaryName": "PolyUploader",
-  "version": "1.7.0",
+  "version": "1.7.1",
   "identifier": "PolyUploader",
   "plugins": {
     "updater": {

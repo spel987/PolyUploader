@@ -138,7 +138,10 @@ export const BUTTONS_HOST = {
     datavaults : document.getElementById("button_datavaults"),
     dropmb : document.getElementById("button_dropmb"),
     filemirage : document.getElementById("button_filemirage"),
-    pomflainla : document.getElementById("button_pomflainla")
+    pomflainla : document.getElementById("button_pomflainla"),
+    ranoz : document.getElementById("button_ranoz"),
+    theusercloud : document.getElementById("button_theusercloud"),
+    imgbank : document.getElementById("button_imgbank")
 }
 
 export const HOST_SITES = [
@@ -155,7 +158,7 @@ export const HOST_SITES = [
     { url: 'https://buzzheavier.com/', discriminator: 'buzzheavier.com', name: "Buzzheavier", api: "optional", anonymous_specs: ["infinite", "7 days"], connected_specs: ["infinite", "7 days"], bypass_check: false },
     { url: 'https://hexload.com/', discriminator: 'hexload.com', name: "HexUpload", api: "no", bypass_check: false },
     { url: 'https://vikingfile.com/', discriminator: 'vikingfile.com', name: "VikingFile", api: "no", bypass_check: false },
-    { url: 'https://dailyuploads.net/', discriminator: 'dailyuploads.net', name: "DailyUploads", api: "no", bypass_check: false },
+    { url: 'https://dailyuploads.net/', discriminator: 'dailyuploads.net', name: "DailyUploads", api: "no", bypass_check: true },
     { url: 'https://usersdrive.com/', discriminator: 'usersdrive.com', name: "UsersDrive", api: "no", bypass_check: false },
     { url: 'https://send.now/', discriminator: 'send.now', name: "Send.now", api: "no", bypass_check: false },
     { url: 'https://mexa.sh/', discriminator: 'mexa.sh', name: "Mexa.sh", api: "no", bypass_check: false },
@@ -184,7 +187,7 @@ export const HOST_SITES = [
     { url: 'https://dataupload.net/', discriminator: 'dataupload.net', name: "Dataupload", api: "no", bypass_check: false },
     { url: 'https://upstore.net/', discriminator: 'upstore.net', name: "Upstore", api: "no", bypass_check: false },
     { url: 'https://ufile.io/', discriminator: 'ufile.io', name: "uFile", api: "no", bypass_check: false },
-    { url: 'https://krakenfiles.com/', discriminator: 'krakenfiles.com', name: "Krakenfiles", api: "no", bypass_check: false },
+    { url: 'https://krakenfiles.com/', discriminator: 'krakenfiles.com', name: "Krakenfiles", api: "optional", anonymous_specs: ["1 GB", "30 days"], connected_specs: ["5 GB", "90 days"], bypass_check: false },
     { url: 'https://rapidshare.io/', discriminator: 'rapidshare.io', name: "Rapidshare.io", api: "no", bypass_check: false },
     { url: 'https://media.cm/', discriminator: 'media.cm', name: "Media.cm", api: "no", bypass_check: false },
     { url: 'https://oshi.at/', discriminator: 'oshi.at', name: "Oshi.at", api: "no", bypass_check: false },
@@ -193,7 +196,7 @@ export const HOST_SITES = [
     { url: 'https://desiupload.co/', discriminator: 'desiupload.co', name: "DesiUpload", api: "no", bypass_check: false },
     { url: 'https://tempfiles.ninja/', discriminator: 'tempfiles.ninja', name: "tempfiles.ninja", api: "no", bypass_check: false },
     { url: 'https://fileditch.com/', discriminator: 'fileditchfiles.me', name: "Fileditch", api: "no", bypass_check: false },
-    { url: 'https://up2sha.re/', discriminator: 'up2sha.re', name: "Up2Share", api: "no", bypass_check: false },
+    { url: 'https://up2sha.re/', discriminator: 'up2sha.re', name: "Up2Share", api: "optional", anonymous_specs: ["64 MB", "30 days"], connected_specs: ["1 GB", "30 days"], bypass_check: false },
     { url: 'https://dbree.org/', discriminator: 'dbree.org', name: "Dbree", api: "no", bypass_check: false },
     { url: 'https://www.udrop.com/', discriminator: 'udrop.com', name: "Udrop", api: "no", bypass_check: false },
     { url: 'https://tempsend.com/', discriminator: 'tempsend.com', name: "Tempsend", api: "no", bypass_check: false },
@@ -236,7 +239,7 @@ export const HOST_SITES = [
     { url: 'https://catbox.moe/', discriminator: 'files.catbox.moe', name: "Catbox", api: "required", bypass_check: false },
     { url: 'https://ddownload.com/', discriminator: 'ddownload.com', name: "ddownload", api: "required", bypass_check: false },
     { url: 'https://mp4upload.com/', discriminator: 'mp4upload.com', name: "mp4upload", api: "required", bypass_check: false },
-    { url: 'https://dropgalaxy.com/', discriminator: 'dropgalaxy.com', name: "DropGalaxy", api: "required", bypass_check: false },
+    { url: 'https://dropgalaxy.com/', discriminator: 'dgdrive.site', name: "DropGalaxy", api: "required", bypass_check: false },
     { url: 'https://nitroflare.com/', discriminator: 'nitroflare.com', name: "Nitroflare", api: "required", bypass_check: false },
     { url: 'https://vidoza.net/', discriminator: 'vidoza.net', name: "Vidoza", api: "required", bypass_check: false },
     { url: 'https://katfile.com/', discriminator: 'katfile.com', name: "Katfile", api: "required", bypass_check: false },
@@ -270,8 +273,11 @@ export const HOST_SITES = [
     { url: 'https://1filesharing.com/', discriminator: '1filesharing.com', name: "1filesharing", api: "no", bypass_check: false },
     { url: 'https://datavaults.co/', discriminator: 'datavaults.co', name: "Data Vaults", api: "no", bypass_check: false },
     { url: 'https://dropmb.com/', discriminator: 'dropmb.com', name: "DropMB", api: "no", bypass_check: false },
-    { url: 'https://filemirage.com/', discriminator: 'filemirage.com', name: "FileMirage", api: "optional", anonymous_specs: ["50 GB", "60 days"], connected_specs: ["50 GB", "60 days"], bypass_check: false },
-    { url: 'https://pomf.lain.la/', discriminator: 'lain.la', name: "Pomf.lain.la", api: "no", bypass_check: false }
+    { url: 'https://filemirage.com/', discriminator: 'filemirage.com', name: "FileMirage", api: "optional", anonymous_specs: ["50 GB", "30 days"], connected_specs: ["50 GB", "30 days"], bypass_check: false },
+    { url: 'https://pomf.lain.la/', discriminator: 'lain.la', name: "Pomf.lain.la", api: "no", bypass_check: false },
+    { url: 'https://ranoz.gg/', discriminator: 'ranoz.gg', name: "Ranoz", api: "no", bypass_check: false },
+    { url: 'https://theuser.cloud/', discriminator: 'theuser.cloud', name: "Theuser.cloud", api: "no", bypass_check: false },
+    { url: 'https://imgbank.cz/', discriminator: 'imgbank.cz', name: "IMG Bank", api: "no", bypass_check: false }
 ]
 
 export const BUTTONS = {

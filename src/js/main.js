@@ -452,13 +452,13 @@ function show_hide_unstable_hosts() {
         if (SELECTS.select_box_unstable.checked) {
           row.classList.remove('hidden');
           localStorage.setItem("show_unstable_hosts", "true");
-          ELEMENT_DISPLAYS.last_blur.classList.add("top-[480rem]")
-          ELEMENT_DISPLAYS.last_blur.classList.remove("top-[405rem]")
+          ELEMENT_DISPLAYS.last_blur.classList.add("top-[490rem]")
+          ELEMENT_DISPLAYS.last_blur.classList.remove("top-[410rem]")
         } else {
           row.classList.add('hidden');
           localStorage.setItem("show_unstable_hosts", "false");
-          ELEMENT_DISPLAYS.last_blur.classList.remove("top-[480rem]")
-          ELEMENT_DISPLAYS.last_blur.classList.add("top-[405rem]")
+          ELEMENT_DISPLAYS.last_blur.classList.remove("top-[490rem]")
+          ELEMENT_DISPLAYS.last_blur.classList.add("top-[410rem]")
         };
       };
     };
@@ -550,7 +550,7 @@ upload_preparation(BUTTONS_HOST.upstore, ["upstore.net"], "Upstore imposes a wai
 upload_preparation(BUTTONS_HOST.ddownload, ["ddownload.com"], "ddownload imposes a captcha before downloading a file.", "https://ddownload.com/tos.html", "https://polyuploader.vercel.app/get-api-keys#ddownload");
 upload_preparation(BUTTONS_HOST.mp4upload, ["mp4upload.com"], "mp4upload imposes a waiting time of 20 seconds before downloading.", "https://mp4upload.com/tos", "https://polyuploader.vercel.app/get-api-keys#mp4upload");
 upload_preparation(BUTTONS_HOST.netu, ["waaw.ac"], "Netu has lots of ads.", "https://netu.ac/view_page.php?pid=12");
-upload_preparation(BUTTONS_HOST.dropgalaxy, ["dropgalaxy.com"], "DropGalaxy imposes a waiting time of 20 seconds and a captcha before downloading and has lots of ads.", "https://dropgalaxy.com/tos.html", "https://polyuploader.vercel.app/get-api-keys#dropgalaxy");
+upload_preparation(BUTTONS_HOST.dropgalaxy, ["dgdrive.site"], "DropGalaxy imposes a waiting time of 20 seconds and a captcha before downloading and has lots of ads.", "https://dropgalaxy.com/tos.html", "https://polyuploader.vercel.app/get-api-keys#dropgalaxy");
 upload_preparation(BUTTONS_HOST.nitroflare, ["nitroflare.com"], "Nitroflare imposes a waiting time of 2 minutes and a captcha before downloading and limits bandwidth.", "https://nitroflare.com/tos", "https://polyuploader.vercel.app/get-api-keys#nitroflare");
 upload_preparation(BUTTONS_HOST.vidoza, ["vidoza.net"], "Vidoza imposes a captcha before downloading.", "https://vidoza.net/tos", "https://polyuploader.vercel.app/get-api-keys#vidoza");
 upload_preparation(BUTTONS_HOST.katfile, ["katfile.com"], "Katfile imposes a waiting time of 2 hours between file downloads.", "https://katfile.com/tos.html", "https://polyuploader.vercel.app/get-api-keys#katfile");
@@ -628,6 +628,9 @@ upload_preparation(BUTTONS_HOST.datavaults, ["datavaults.co"], "Data Vaults impo
 upload_preparation(BUTTONS_HOST.dropmb, ["dropmb.com"], "DropMB has no known bugs or problems.", "https://dropmb.com/privacy");
 upload_preparation(BUTTONS_HOST.filemirage, ["filemirage.com"], "FileMirage has no known bugs or problems.", "https://filemirage.com/terms-of-use");
 upload_preparation(BUTTONS_HOST.pomflainla, ["lain.la"], "Pomf.lain.la is a bit slow.", "https://pomf.lain.la/f/faq.html");
+upload_preparation(BUTTONS_HOST.ranoz, ["ranoz.gg"], "Ranoz has no known bugs or problems.", "https://ranoz.gg/legal/terms-of-service");
+upload_preparation(BUTTONS_HOST.theusercloud, ["theuser.cloud"], "Theuser.cloud imposes a waiting time of 5 seconds and a captcha before the file can be downloaded.", "https://theuser.cloud/pages/tos/");
+upload_preparation(BUTTONS_HOST.imgbank, ["imgbank.cz"], "ImgBank has no known bugs or problems.", "https://imgbank.cz/page/tos");
 
 BUTTONS.popup_upload_local.addEventListener("click", start_upload);
 BUTTONS.popup_upload_url.addEventListener("click", start_upload);

@@ -37,5 +37,6 @@
     "ups2up.fun": ["*", "3gp", "avi", "flv", "mkv", "mov", "mp4", "mpg", "mpeg", "ts", "vob", "webm", "wmv"],
     "uqload.cx": ["*", "3gp", "avi", "divx", "flv", "m2v", "m4v", "mkv", "mov", "mp4", "mpeg", "mpg", "ogg", "ogv", "vob", "webm", "wmv", "xvid"],
     "lulustream.com": ["*", "3gp", "avi", "flv", "mkv", "mov", "mp4", "mpg", "mpeg", "ts", "vob", "webm", "wmv"],
-    "streambolt.tv": ["*", "3gp", "avi", "flv", "mkv", "mov", "mp4", "mpg", "mpeg", "ts", "vob", "webm", "wmv"]
+    "streambolt.tv": ["*", "3gp", "avi", "flv", "mkv", "mov", "mp4", "mpg", "mpeg", "ts", "vob", "webm", "wmv"],
+    "imgbank.cz": ["*", "gif", "jpeg", "jpg", "png"]
 }

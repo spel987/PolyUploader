@@ -23,10 +23,7 @@ function upload_to_host(request_data, response_format, link_extraction = [], aff
       method: request_data[1],
       body: request_data[2],
       signal: STATE.signal,
-      credentials: 'omit',
-      headers: {
-        'X-Requested-With': '*'
-      }
+      credentials: 'omit'
     };
   
     if (request_data[3]) {
@@ -989,15 +986,39 @@ export async function start_upload(event) {
             case "krakenfiles.com":
               (async () => {
                 try {
+                  const api_key_host = await get_api_key(current_host);
+                  const headers = api_key_host ? { "X-AUTH-TOKEN": api_key_host } : {};
+                  let url_for_upload = "";
+                  let url_extraction = [];
+                  let prefix = [];
+                  let manage_file = [];
+                  
                   const res = await fetch(URL_FOR_BYPASS_CORS + "https://krakenfiles.com/api/server/available", {method: "GET", signal: STATE.signal});
                   const data = await res.json();
                   const url_krakenfiles_upload = data.data.url;
-                  const server_krakenfiles = url_krakenfiles_upload.match(/^https:\/\/([^/]+)/)[0];
-                  sent_data_form.append("files[]", STATE.file_to_upload);
-                  upload_to_host([URL_FOR_BYPASS_CORS + server_krakenfiles + "/_uploader/gallery/upload", "POST", sent_data_form], "json", ["files", "0", "url"], ["https://krakenfiles.com"]);
+
+                  if (!url_krakenfiles_upload) throw new Error("Unable to retrieve upload server URL");
+
+                  if (api_key_host) {
+                    const server_access_token = data.data.serverAccessToken;
+
+                    sent_data_form.append("file", STATE.file_to_upload);
+                    sent_data_form.append("serverAccessToken", server_access_token);
+                    url_for_upload = url_krakenfiles_upload;
+                    url_extraction = ["data", "url"];
+                    manage_file = [[["data", "hash"], ""], "DELETE", {}, ["https://krakenfiles.com/api/file/"], headers];
+                  } else {
+                    sent_data_form.append("files[]", STATE.file_to_upload);
+                    url_for_upload = url_krakenfiles_upload.match(/^https:\/\/([^/]+)/)[0] + "/_uploader/gallery/upload";
+                    url_extraction = ["files", "0", "url"];
+                    prefix = ["https://krakenfiles.com"];
+                  }
+
+                  upload_to_host([URL_FOR_BYPASS_CORS + url_for_upload, "POST", sent_data_form, headers], "json", url_extraction, prefix, manage_file);
+
                 } catch (error) {
                   display_final_url([error.message, host_name]);
-                }
+                };
               })();
               break;
 
@@ -1349,7 +1370,7 @@ export async function start_upload(event) {
               })();
               break;
 
-            case "dropgalaxy.com":
+            case "dgdrive.site":
               (async () => {
                 try {
                   const api_key_host = await get_api_key(current_host);
@@ -1359,10 +1380,10 @@ export async function start_upload(event) {
 
                   if (!res.ok || !upload_url || !sess_id) throw new Error("Invalid API key");
 
-                  sent_data_form.append("sess_id", sess_ids);
+                  sent_data_form.append("sess_id", sess_id);
                   sent_data_form.append("utype", "reg");
                   sent_data_form.append("file_0", STATE.file_to_upload);
-                  upload_to_host([URL_FOR_BYPASS_CORS + upload_url + "?upload_type=file&utype=reg", "POST", sent_data_form], "json", [0, "file_code"], ["https://dropgalaxy.com/disk/"]);
+                  upload_to_host([URL_FOR_BYPASS_CORS + upload_url + "?upload_type=file&utype=reg", "POST", sent_data_form], "json", [0, "file_code"], ["https://dgdrive.site/"]);
                 } catch (error) {
                   display_final_url([error.message, host_name]);
                 };
@@ -1794,11 +1815,28 @@ export async function start_upload(event) {
               break; 
 
             case "up2sha.re":
-              sent_data_form.append("file", STATE.file_to_upload);
-              sent_data_form.append("clientFilename", STATE.file_to_upload_name);
-              sent_data_form.append("filesize", STATE.file_to_upload_size);
-              upload_to_host([URL_FOR_BYPASS_CORS + "https://up2sha.re/upload", "POST", sent_data_form], "json", ["result", "public_url"]);
-              break; 
+              (async () => {
+                const api_key_host = await get_api_key(current_host);
+                const headers = api_key_host ? { "X-Api-Key": api_key_host } : {};
+                let url_upload = "https://up2sha.re/upload";
+                let url_extraction = ["result", "public_url"];
+                let manage_file = [];
+
+                if (api_key_host) {
+                  url_upload = "https://api.up2sha.re/files";
+                  sent_data_form.append("filename", STATE.file_to_upload_name);
+                  url_extraction = ["public_url"];
+                  manage_file = [[["id"], ""], "DELETE", {}, ["https://api.up2sha.re/files/"], headers]
+                } else {
+                  sent_data_form.append("clientFilename", STATE.file_to_upload_name);
+                  sent_data_form.append("filesize", STATE.file_to_upload_size);
+                }
+
+                sent_data_form.append("file", STATE.file_to_upload);
+
+                upload_to_host([URL_FOR_BYPASS_CORS + url_upload, "POST", sent_data_form, headers], "json", url_extraction, [], manage_file);
+              })();
+              break;
 
             case "atomauth.com":
               sent_data_form.append("fileToUpload", STATE.file_to_upload);
@@ -2487,7 +2525,7 @@ export async function start_upload(event) {
 
                   const dropmb_form_data = {
                     "id": random_string,
-                    "expiration": "1-years",
+                    "expiration": "5-years",
                     "recipients": [],
                     "security": {}
                   };
@@ -2527,6 +2565,59 @@ export async function start_upload(event) {
               sent_data_form.append("files[]", STATE.file_to_upload);
               upload_to_host([URL_FOR_BYPASS_CORS + "https://pomf.lain.la/upload.php", "POST", sent_data_form], "json", ["files", 0, "url"]);
               break;
+
+            case "ranoz.gg":
+              (async () => {
+                try {
+                  const res = await fetch(URL_FOR_BYPASS_CORS + "https://ranoz.gg/api/v1/files/upload_url", {method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ filename: STATE.file_to_upload_name, size: STATE.file_to_upload_size }), signal: STATE.signal});
+                  const data = await res.json();
+
+                  const upload_url = data.data.upload_url;
+                  const url = data.data.url;
+
+                  upload_to_host([URL_FOR_BYPASS_CORS + upload_url, "PUT", STATE.file_to_upload, { "Content-Length": STATE.file_to_upload_size }], "text", [url]);
+                } catch (error) {
+                  display_final_url([error.message, host_name]);
+                }
+              })();
+              break;
+            
+            case "theuser.cloud":
+              (async () => {
+                try {
+                  const res = await fetch(URL_FOR_BYPASS_CORS + "https://theuser.cloud/server");
+                  const { url: upload_url } = await res.json();
+                  const sid = generate_sid();
+
+                  await fetch(upload_url + "/put_chunk.cgi", {method: "PUT", body: STATE.file_to_upload, headers: {"X-Upload-SID": sid}, signal: STATE.signal});
+
+                  sent_data_form.append("fname", STATE.file_to_upload_name);
+                  sent_data_form.append("op", "import_file");
+                  sent_data_form.append("sid", sid);
+                  upload_to_host([upload_url + "/api.cgi", "POST", sent_data_form], "json", ["file_code"], ["https://theuser.cloud/"], ["https://theuser.cloud", "POST", {"op": "del_file", "id": ["file_code"], "del_id": ["killcode", /https:\/\/theuser\.cloud\/[A-Za-z0-9]+\.html\?killcode=[A-Za-z0-9]+/, "https://theuser.cloud/?op=upload_result&st=OK&fn=", ["file_code"]], "confirm": "yes", "token": "CSRF token to add", "rand": "rand string to add", "code": "captcha to add"}]);
+                } catch {
+                  display_final_url(["Unable to retrieve upload parameters", host_name]);
+                }
+              })();
+              break;
+
+            case "imgbank.cz":
+              (async () => {
+                try {
+                  const res = await fetch(URL_FOR_BYPASS_CORS + "https://imgbank.cz/", {method: "GET", signal: STATE.signal});
+                  const data = await res.text();
+
+                  const auth_token = data.match(/name="auth_token" value="([a-zA-Z0-9]+)"/)[1];
+
+                  sent_data_form.append("type", "file");
+                  sent_data_form.append("action", "upload");
+                  sent_data_form.append("auth_token", auth_token);
+                  sent_data_form.append("source", STATE.file_to_upload);
+                  upload_to_host([URL_FOR_BYPASS_CORS + "https://imgbank.cz/json", "POST", sent_data_form], "json", ["image", "url_viewer"]);
+                } catch {
+                  display_final_url(["Unable to retrieve upload parameters", host_name]);
+                }
+              })();
           }
   
         } else {
