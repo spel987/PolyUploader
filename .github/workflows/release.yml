@@ -47,10 +47,10 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'npm'
 
       - name: Install npm dependencies
-        run: npm ci
+        # `npm install` (not `npm ci`) because package-lock.json is gitignored.
+        run: npm install
 
       - name: Build the Tailwind CSS
         run: npm run build:css
