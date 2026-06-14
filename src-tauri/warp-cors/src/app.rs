@@ -46,8 +46,8 @@ impl Config {
 
 pub async fn run(config: Config) {
     debug!("Using port: {}", config.port);
-
-    let addr: SocketAddr = ([0, 0, 0, 0], config.port).into();
+    
+    let addr: SocketAddr = ([127, 0, 0, 1], config.port).into();
 
     debug!("Using host/alias: {}", config.host);
 
