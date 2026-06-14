@@ -30,9 +30,18 @@
 
 <div align="center">
   <br>
-    <a href="https://www.producthunt.com/products/polyuploader?embed=true&utm_source=badge-featured&utm_medium=badge&utm_source=badge-polyuploader" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1002185&theme=light&t=1754471623485" alt="PolyUploader - Upload&#0032;files&#0032;to&#0032;130&#0043;&#0032;hosts&#0032;simultaneously | Product Hunt" style="width: 139px; height: 30px;" width="139" height="30" /></a>
-    <a href="https://sourceforge.net/projects/polyuploader/files/latest/download"><img alt="Download PolyUploader" src="https://a.fsdn.com/con/app/sf-download-button" width=175 height=30 srcset="https://a.fsdn.com/con/app/sf-download-button?button_size=2x 2x"></a>
-    <a href="https://alternativeto.net/software/polyuploader/about/" target="_blank"><img style='border-radius: 30px; height:30px;' src="https://i.imgur.com/H9JRjL5.png"/></a>
+    <a href="https://github.com/spel987/PolyUploader/releases/latest"  target="_blank">
+      <img src="https://img.shields.io/github/v/release/spel987/PolyUploader?style=flat&logo=github" alt="releases">
+    </a>
+    <a href="https://www.producthunt.com/products/polyuploader?embed=true&utm_source=badge-featured&utm_medium=badge&utm_source=badge-polyuploader" target="_blank">
+      <img src="https://img.shields.io/badge/ProductHunt-Visit-ff6154?logo=producthunt&logoColor=white&style=flat" alt="ProducHunt"/>
+    </a>
+    <a href="https://alternativeto.net/software/polyuploader/about/" target="_blank">
+      <img src="https://img.shields.io/badge/AlternativeTo-Visit-0c9ef0?logo=alternativeto&logoColor=white&style=flat" alt="AlternativeTo"/>
+    </a>
+    <a href="https://sourceforge.net/projects/polyuploader/files/latest/download" target="_blank">
+      <img src="https://img.shields.io/badge/SourceForge-Download_now-cc5200?logo=sourceforge&logoColor=white&style=flat" alt="SourceForge Download" >
+    </a>
 </div>
 
 # Quick overview:
@@ -127,9 +136,9 @@ npm run tailwind
 | <img src="./src/images/rapidfileshare.net.png" width="16"/> RapidFileShare | http://rapidfileshare.net    |         512 MB         |            5 days            |                ✔️                 |         -          |
 | <img src="./src/images/upload.ee.png" width="16"/> Upload.ee               | https://upload.ee            |         100 MB         |           50 days            |                ✔️                 |         -          |
 | <img src="./src/images/waaw.ac.png" width="16"/> Netu 🎞️                  | https://netu.ac              |  👻 8 GB<br>👤 100 GB  |        👻, 👤 30 days        |                 -                 |         ✨          |
-| <img src="./src/images/buzzheavier.com.png" width="16"/> Buzzheavier       | https://buzzheavier.com      |    👻, 👤 infinite     |        👻, 👤 7 days         |                🔧                 |         ✨          |
+| <img src="./src/images/buzzheavier.com.png" width="16"/> Buzzheavier       | https://buzzheavier.com      |    👻, 👤 infinite     |        👻, 👤 7 days         |                🔧                 |        ✨          |
 | <img src="./src/images/hexload.com.png" width="16"/> HexUpload             | https://hexload.com          |          2 GB          |           60 days            |                ✔️                 |         -          |
-| <img src="./src/images/vikingfile.com.png" width="16"/> VikingFile         | https://vikingfile.com       |         10 GB          |           20 days            |                 -                 |         -          |
+| <img src="./src/images/vikingfile.com.png" width="16"/> VikingFile         | https://vikingfile.com       |    👻, 👤  10 GB      |    👻, 👤 15 days            |                🔧                 |        ✨          |
 | DailyUploads                                                               | https://dailyuploads.net     |        infinite        |           30 days            |                 -                 |         -          |
 | <img src="./src/images/usersdrive.com.png" width="16"/> UsersDrive         | https://usersdrive.com       |        2.25 GB         |           10 days            |                ✔️                 |         -          |
 | <img src="./src/images/send.now.png" width="16"/> Send.now                 | https://send.now             |         100 GB         |           15 days            |                 -                 |         -          |
@@ -258,9 +267,9 @@ npm run tailwind
 | :----------------------------------- | :---: |
 | 🌐 Number of hosts                   |  133  |
 | 🔓 Hosts not requiring an API key    |  96   |
-| ✨ Hosts supporting optional API key  |  11   |
+| ✨ Hosts supporting optional API key  |  12   |
 | 🔒 Hosts requiring an API key        |  37   |
-| 🗑️ Hosts supporting manual deletion |  58   |
+| 🗑️ Hosts supporting manual deletion |  59   |
 | 🎞️ Specialist video streaming host  |  24   |
 
 If you know of a host that I can add, please open an [issue](https://github.com/spel987/PolyUploader/issues).

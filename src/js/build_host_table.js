@@ -4,6 +4,7 @@ const BADGE = {
   api_optional: TOOLTIP(`<i class="ml-2 fa-sharp-duotone fa-solid fa-sparkles opacity-40"></i>`, `This host supports personal API keys, set it up by pressing the "Manage API keys" button.`),
   api_required: TOOLTIP(`<i class="ml-2 fa-sharp fa-solid fa-key opacity-40"></i>`, `This host requires an API key.`),
   deletion: TOOLTIP(`<i class="ml-2 fa-sharp-duotone fa-solid fa-screwdriver-wrench opacity-40"></i>`, `This host supports manual deletion of uploaded files.`),
+  api_deletion: TOOLTIP(`<i class="ml-2 fa-sharp-duotone fa-solid fa-gears opacity-40"></i>`, `This host supports manual deletion of uploaded files only when using the API key.`),
   video: TOOLTIP(`<i class="ml-2 fa-sharp-duotone fa-solid fa-film opacity-40"></i>`, `This host allows video streaming and therefore only accepts video files.`),
   unstable: TOOLTIP(`<i class="ml-2 opacity-50 fa-sharp fa-solid fa-circle-exclamation" style="color: #ffae00;"></i>`, `Errors are frequently encountered during uploads, not from PolyUploader but from the website.`),
 };
@@ -25,6 +26,7 @@ export function build_host_table(host_sites) {
     if (site.api === "optional") badges += BADGE.api_optional;
     else if (site.api === "required") badges += BADGE.api_required;
     if (site.deletion) badges += BADGE.deletion;
+    else if (site.api_deletion) badges += BADGE.api_deletion;
     if (site.video) badges += BADGE.video;
     if (site.unstable) badges += BADGE.unstable;
 

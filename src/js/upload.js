@@ -1959,13 +1959,17 @@ export async function start_upload(event) {
             case "vikingfile.com":
               (async () => {
                 try {
+                  const api_key_host = await get_api_key(current_host);
                   const res = await fetch(URL_FOR_BYPASS_CORS + "https://vikingfile.com/api/get-server");
                   const { server: upload_url } = await res.json();
                   if (!res.ok || !upload_url) throw new Error("Unable to retrieve upload server URL");
 
                   sent_data_form.append("file", STATE.file_to_upload);
-                  sent_data_form.append("user", "");
-                  upload_to_host([URL_FOR_BYPASS_CORS + upload_url, "POST", sent_data_form], "json", ["url"]);
+                  sent_data_form.append("user", api_key_host || "");
+
+                  const manage_file = api_key_host ? ["https://vikingfile.com/api/delete-file", "POST", {"hash": ["hash"], "user": api_key_host}] : [];
+
+                  upload_to_host([URL_FOR_BYPASS_CORS + upload_url, "POST", sent_data_form], "json", ["url"], [], manage_file);
                 } catch (error) {
                   display_final_url([error.message, host_name]);
                 };
