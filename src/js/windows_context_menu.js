@@ -2,6 +2,13 @@ import { invoke } from './tauri.js';
 import { SELECTS, ELEMENT_DISPLAYS } from './globals.js';
 
 export function init_windows_context_menu() {
+    // The Windows Explorer context-menu integration only exists on Windows.
+    // Hide the toggle (and skip wiring it) on Linux/macOS.
+    if (!navigator.userAgent.includes("Windows")) {
+      document.getElementById("select_box_container_shell")?.classList.add("hidden");
+      return;
+    };
+
     if (!localStorage.getItem("add_to_context_menu")) {
       localStorage.setItem("add_to_context_menu", "false");
     };

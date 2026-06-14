@@ -39,6 +39,24 @@ export async function get_resource_path() {
   } catch (error) {
     console.error("Error obtaining local data directory : ", error);
   };
+}
+
+// Absolute path of the writable, per-user data directory where the mutable
+// JSON files (api_keys.json, history.json, profiles.json) live. Unlike the
+// bundled `Resources` folder, this location is writable on every platform
+// (it is read-only inside an AppImage / .app bundle / system install).
+export async function get_data_path() {
+  try {
+    return await invoke("get_data_dir");
+  } catch (error) {
+    console.error("Error obtaining the writable data directory : ", error);
+  };
+}
+
+// Asset-protocol URL for one of the mutable JSON files, usable with fetch().
+export async function get_data_file_url(filename) {
+  const data_path = await get_data_path();
+  return convertFileSrc(data_path + "/" + filename);
 };
 
 export function get_file_name_from_url(url) {

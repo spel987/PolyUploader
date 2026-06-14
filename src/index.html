@@ -23,6 +23,17 @@
         display: none;
     }
 
+    /* Linux/WebKitGTK fallback: when backdrop-filter cannot be composited,
+       give the frosted-glass panels a readable, mostly-opaque background so
+       the UI stays legible instead of looking broken. Windows/WebView2,
+       which supports backdrop-filter, is unaffected by this rule. */
+    @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+      [class*="backdrop-blur"] {
+        background-color: rgba(15, 17, 26, 0.92) !important;
+        border-color: #4c5666;
+      }
+    }
+
     @keyframes wiggle {
       0% { transform: rotate(0deg); }
       25% { transform: rotate(-2deg); }
@@ -454,7 +465,7 @@
       <tbody>
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\1fichier.com.png" alt="1fichier Logo" class="h-6 mr-2">
+            <img src="images/1fichier.com.png" alt="1fichier Logo" class="h-6 mr-2">
             1fichier&nbsp(<a class="text-sky-400 hover:underline" href="https://1fichier.com/" target="_blank">https://1fichier.com/</a>)
             <div class="relative inline-block group">
               <i class="ml-2 fa-sharp-duotone fa-solid fa-sparkles opacity-40"></i>
@@ -485,7 +496,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\torbobit.net.png" alt="Turbobit Logo" class="h-6 mr-2">
+            <img src="images/torbobit.net.png" alt="Turbobit Logo" class="h-6 mr-2">
             Turbobit&nbsp(<a class="text-sky-400 hover:underline" href="https://torbobit.net/" target="_blank">https://torbobit.net/</a>)
             <div class="relative inline-block group">
               <i class="ml-2 fa-sharp-duotone fa-solid fa-sparkles opacity-40"></i>
@@ -507,7 +518,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\bowfile.com.png" alt="Bowfile Logo" class="h-6 mr-2">
+            <img src="images/bowfile.com.png" alt="Bowfile Logo" class="h-6 mr-2">
             Bowfile&nbsp(<a class="text-sky-400 hover:underline" href="https://bowfile.com/" target="_blank">https://bowfile.com/</a>)
             <div class="relative inline-block group">
               <i class="ml-2 fa-sharp-duotone fa-solid fa-screwdriver-wrench opacity-40"></i>
@@ -529,7 +540,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\gofile.io.png" alt="Gofile Logo" class="h-5 mr-1">
+            <img src="images/gofile.io.png" alt="Gofile Logo" class="h-5 mr-1">
             Gofile&nbsp(<a class="text-sky-400 hover:underline" href="https://gofile.io/" id="linkExternal" target="_blank">https://gofile.io/</a>)
             <div class="relative inline-block group">
               <i class="ml-2 fa-sharp-duotone fa-solid fa-sparkles opacity-40"></i>
@@ -560,7 +571,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\hitfile.net.png" alt="Hitfile Logo" class="h-6 mr-2">
+            <img src="images/hitfile.net.png" alt="Hitfile Logo" class="h-6 mr-2">
             Hitfile&nbsp(<a class="text-sky-400 hover:underline" href="https://hitfile.net/" target="_blank">https://hitfile.net/</a>)
             <div class="relative inline-block group">
               <i class="ml-2 fa-sharp-duotone fa-solid fa-sparkles opacity-40"></i>
@@ -582,7 +593,7 @@
         
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\1cloudfile.com.png" alt="1Cloudfile Logo" class="h-6 mr-1.5">
+            <img src="images/1cloudfile.com.png" alt="1Cloudfile Logo" class="h-6 mr-1.5">
             1Cloudfile&nbsp(<a class="text-sky-400 hover:underline" href="https://1cloudfile.com/" target="_blank">https://1cloudfile.com/</a>)
             <div class="relative inline-block group">
               <i class="ml-2 fa-sharp-duotone fa-solid fa-screwdriver-wrench opacity-40"></i>
@@ -604,7 +615,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\file-upload.org.png" alt="file-upload.org Logo" class="h-6 mr-1.5">
+            <img src="images/file-upload.org.png" alt="file-upload.org Logo" class="h-6 mr-1.5">
             file-upload.org&nbsp(<a class="text-sky-400 hover:underline" href="https://file-upload.org/" target="_blank">https://file-upload.org/</a>)
             <div class="relative inline-block group">
               <i class="ml-2 opacity-50 fa-sharp fa-solid fa-circle-exclamation" style="color: #ffae00;"></i>
@@ -626,7 +637,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\rapidfileshare.net.png" alt="RapidFileShare Logo" class="h-5 mr-2">
+            <img src="images/rapidfileshare.net.png" alt="RapidFileShare Logo" class="h-5 mr-2">
             RapidFileShare&nbsp(<a class="text-sky-400 hover:underline" href="http://rapidfileshare.net/" target="_blank">http://rapidfileshare.net/</a>)
             <div class="relative inline-block group">
               <i class="ml-2 fa-sharp-duotone fa-solid fa-screwdriver-wrench opacity-40"></i>
@@ -657,7 +668,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\upload.ee.png" alt="Upload.ee Logo" class="h-6 mr-1">
+            <img src="images/upload.ee.png" alt="Upload.ee Logo" class="h-6 mr-1">
             Upload.ee&nbsp(<a class="text-sky-400 hover:underline" href="https://upload.ee/" target="_blank">https://upload.ee/</a>)
             <div class="relative inline-block group">
               <i class="ml-2 fa-sharp-duotone fa-solid fa-screwdriver-wrench opacity-40"></i>
@@ -679,7 +690,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\waaw.ac.png" alt="Netu Logo" class="h-6 mr-2">
+            <img src="images/waaw.ac.png" alt="Netu Logo" class="h-6 mr-2">
             Netu&nbsp(<a class="text-sky-400 hover:underline" href="https://netu.ac/" target="_blank">https://netu.ac/</a>)
             <div class="relative inline-block group">
               <i class="ml-2 fa-sharp-duotone fa-solid fa-sparkles opacity-40"></i>
@@ -710,7 +721,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\buzzheavier.com.png" alt="Buzzheavier Logo" class="h-6 mr-2">
+            <img src="images/buzzheavier.com.png" alt="Buzzheavier Logo" class="h-6 mr-2">
             Buzzheavier&nbsp(<a class="text-sky-400 hover:underline" href="https://buzzheavier.com/" target="_blank">https://buzzheavier.com/</a>)
             <div class="relative inline-block group">
               <i class="ml-2 fa-sharp-duotone fa-solid fa-sparkles opacity-40"></i>
@@ -741,7 +752,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\hexload.com.png" alt="HexUpload Logo" class="h-6 mr-1.5">
+            <img src="images/hexload.com.png" alt="HexUpload Logo" class="h-6 mr-1.5">
             HexUpload&nbsp(<a class="text-sky-400 hover:underline" href="https://hexload.com/" target="_blank">https://hexload.com/</a>)
             <div class="relative inline-block group">
               <i class="ml-2 fa-sharp-duotone fa-solid fa-screwdriver-wrench opacity-40"></i>
@@ -772,7 +783,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\vikingfile.com.png" alt="VikingFile Logo" class="h-5 mr-2">
+            <img src="images/vikingfile.com.png" alt="VikingFile Logo" class="h-5 mr-2">
             VikingFile&nbsp(<a class="text-sky-400 hover:underline" href="https://vikingfile.com/" target="_blank">https://vikingfile.com/</a>)
           </td>
           <td class="px-4 py-2">10 GB</td>
@@ -798,7 +809,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\usersdrive.com.png" alt="UsersDrive Logo" class="h-5 mr-1.5">
+            <img src="images/usersdrive.com.png" alt="UsersDrive Logo" class="h-5 mr-1.5">
             UsersDrive&nbsp(<a class="text-sky-400 hover:underline" href="https://usersdrive.com/" target="_blank">https://usersdrive.com/</a>)
             <div class="relative inline-block group">
               <i class="ml-2 fa-sharp-duotone fa-solid fa-screwdriver-wrench opacity-40"></i>
@@ -829,7 +840,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\send.now.png" alt="Send.now Logo" class="h-6 mr-2">
+            <img src="images/send.now.png" alt="Send.now Logo" class="h-6 mr-2">
             Send.now&nbsp(<a class="text-sky-400 hover:underline" href="https://send.now/" target="_blank">https://send.now/</a>)
           </td>
           <td class="px-4 py-2">100 GB</td>
@@ -842,7 +853,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\mexa.sh.png" alt="Mexa.sh Logo" class="h-6 mr-1.5">
+            <img src="images/mexa.sh.png" alt="Mexa.sh Logo" class="h-6 mr-1.5">
             Mexa.sh&nbsp(<a class="text-sky-400 hover:underline" href="https://mexa.sh/" target="_blank">https://mexa.sh/</a>)
             <div class="relative inline-block group">
               <i class="ml-2 fa-sharp-duotone fa-solid fa-screwdriver-wrench opacity-40"></i>
@@ -864,7 +875,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\uploadify.net.png" alt="Uploadify Logo" class="h-5 mr-2">
+            <img src="images/uploadify.net.png" alt="Uploadify Logo" class="h-5 mr-2">
             Uploadify&nbsp(<a class="text-sky-400 hover:underline" href="https://uploadify.net/" target="_blank">https://uploadify.net/</a>)
             <div class="relative inline-block group">
               <i class="ml-2 fa-sharp-duotone fa-solid fa-screwdriver-wrench opacity-40"></i>
@@ -895,7 +906,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\clicknupload.click.png" alt="Clicknupload Logo" class="h-6 mr-2">
+            <img src="images/clicknupload.click.png" alt="Clicknupload Logo" class="h-6 mr-2">
             Clicknupload&nbsp(<a class="text-sky-400 hover:underline" href="https://clicknupload.click/" target="_blank">https://clicknupload.click/</a>)
             <div class="relative inline-block group">
               <i class="ml-2 fa-sharp-duotone fa-solid fa-screwdriver-wrench opacity-40"></i>
@@ -926,7 +937,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\megaup.net.png" alt="MegaUp Logo" class="h-6 mr-2">
+            <img src="images/megaup.net.png" alt="MegaUp Logo" class="h-6 mr-2">
             MegaUp&nbsp(<a class="text-sky-400 hover:underline" href="https://megaup.net/" target="_blank">https://megaup.net/</a>)
             <div class="relative inline-block group">
               <i class="ml-2 fa-sharp-duotone fa-solid fa-screwdriver-wrench opacity-40"></i>
@@ -957,7 +968,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\filespace.com.png" alt="Filespace Logo" class="h-5 mr-0.5">
+            <img src="images/filespace.com.png" alt="Filespace Logo" class="h-5 mr-0.5">
             Filespace&nbsp(<a class="text-sky-400 hover:underline" href="https://filespace.com/" target="_blank">https://filespace.com/</a>)
             <div class="relative inline-block group">
               <i class="ml-2 fa-sharp-duotone fa-solid fa-screwdriver-wrench opacity-40"></i>
@@ -979,7 +990,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\gulf-up.com.png" alt="Gulfup Logo" class="h-6 mr-2">
+            <img src="images/gulf-up.com.png" alt="Gulfup Logo" class="h-6 mr-2">
             Gulfup&nbsp(<a class="text-sky-400 hover:underline" href="https://www.gulf-up.com" target="_blank">https://www.gulf-up.com/</a>)
             <div class="relative inline-block group">
               <i class="ml-2 fa-sharp-duotone fa-solid fa-sparkles opacity-40"></i>
@@ -1010,7 +1021,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\fastupload.io.png" alt="Fastupload Logo" class="h-6 mr-2">
+            <img src="images/fastupload.io.png" alt="Fastupload Logo" class="h-6 mr-2">
             Fastupload&nbsp(<a class="text-sky-400 hover:underline" href="https://fastupload.io/" target="_blank">https://fastupload.io/</a>)
             <div class="relative inline-block group">
               <i class="ml-2 fa-sharp-duotone fa-solid fa-screwdriver-wrench opacity-40"></i>
@@ -1063,7 +1074,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\dfiles.eu.png" alt="DepositFiles Logo" class="h-6 mr-2">
+            <img src="images/dfiles.eu.png" alt="DepositFiles Logo" class="h-6 mr-2">
             DepositFiles&nbsp(<a class="text-sky-400 hover:underline" href="https://dfiles.eu/" target="_blank">https://dfiles.eu/</a>)
           </td>
           <td class="px-4 py-2">10 GB</td>
@@ -1076,7 +1087,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\download.gg.png" alt="Download.gg Logo" class="h-5 mr-0.5">
+            <img src="images/download.gg.png" alt="Download.gg Logo" class="h-5 mr-0.5">
             Download.gg&nbsp(<a class="text-sky-400 hover:underline" href="https://download.gg/" target="_blank">https://download.gg/</a>)
             <div class="relative inline-block group">
               <i class="ml-2 fa-sharp-duotone fa-solid fa-screwdriver-wrench opacity-40"></i>
@@ -1098,7 +1109,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\ranoz.gg.png" alt="Ranoz Logo" class="h-6 mr-1">
+            <img src="images/ranoz.gg.png" alt="Ranoz Logo" class="h-6 mr-1">
             Ranoz&nbsp(<a class="text-sky-400 hover:underline" href="https://ranoz.gg/" target="_blank">https://ranoz.gg/</a>)
           </td>
           <td class="px-4 py-2">5 GB</td>
@@ -1111,7 +1122,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\sendvid.com.png" alt="Sendvid Logo" class="h-6 mr-2">
+            <img src="images/sendvid.com.png" alt="Sendvid Logo" class="h-6 mr-2">
             Sendvid&nbsp(<a class="text-sky-400 hover:underline" href="https://sendvid.com/" target="_blank">https://sendvid.com/</a>)
             <div class="relative inline-block group">
               <i class="ml-2 fa-sharp-duotone fa-solid fa-film opacity-40"></i>
@@ -1133,7 +1144,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\uploady.io.png" alt="Uploady Logo" class="h-6 mr-1">
+            <img src="images/uploady.io.png" alt="Uploady Logo" class="h-6 mr-1">
             Uploady&nbsp(<a class="text-sky-400 hover:underline" href="https://uploady.io/" target="_blank">https://uploady.io/</a>)
             <div class="relative inline-block group">
               <i class="ml-2 fa-sharp-duotone fa-solid fa-sparkles opacity-40"></i>
@@ -1164,7 +1175,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\anontransfer.com.png" alt="AnonTransfer Logo" class="h-3 mr-2">
+            <img src="images/anontransfer.com.png" alt="AnonTransfer Logo" class="h-3 mr-2">
             AnonTransfer&nbsp(<a class="text-sky-400 hover:underline" href="https://anontransfer.com/" target="_blank">https://anontransfer.com/</a>)
           </td>
           <td class="px-4 py-2">15 GB</td>
@@ -1177,7 +1188,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\filemirage.com.png" alt="FileMirage Logo" class="h-6 mr-2">
+            <img src="images/filemirage.com.png" alt="FileMirage Logo" class="h-6 mr-2">
             FileMirage&nbsp(<a class="text-sky-400 hover:underline" href="https://filemirage.com/" target="_blank">https://filemirage.com/</a>)
             <div class="relative inline-block group">
               <i class="ml-2 fa-sharp-duotone fa-solid fa-sparkles opacity-40"></i>
@@ -1199,7 +1210,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\litter.catbox.moe.png" alt="Litterbox Logo" class="h-6 mr-2">
+            <img src="images/litter.catbox.moe.png" alt="Litterbox Logo" class="h-6 mr-2">
             Litterbox&nbsp(<a class="text-sky-400 hover:underline" href="https://litterbox.catbox.moe/" target="_blank">https://litterbox.catbox.moe/</a>)
           </td>
           <td class="px-4 py-2">1 GB</td>
@@ -1225,7 +1236,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\tmpfiles.org.png" alt="TmpFiles.org Logo" class="h-6 mr-1.5">
+            <img src="images/tmpfiles.org.png" alt="TmpFiles.org Logo" class="h-6 mr-1.5">
             TmpFiles.org&nbsp(<a class="text-sky-400 hover:underline" href="https://tmpfiles.org/" target="_blank">https://tmpfiles.org/</a>)
           </td>
           <td class="px-4 py-2">100 MB</td>
@@ -1238,7 +1249,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\gofile.to.png" alt="Gofile.to Logo" class="h-6 mr-2">
+            <img src="images/gofile.to.png" alt="Gofile.to Logo" class="h-6 mr-2">
             Gofile.to&nbsp(<a class="text-sky-400 hover:underline" href="https://gofile.to/" target="_blank">https://gofile.to/</a>)
           </td>
           <td class="px-4 py-2">5 GB</td>
@@ -1251,7 +1262,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\free.fr.png" alt="Free Logo" class="h-6 mr-2">
+            <img src="images/free.fr.png" alt="Free Logo" class="h-6 mr-2">
             Free.fr&nbsp(<a class="text-sky-400 hover:underline" href="https://transfert.free.fr/" target="_blank">https://transfert.free.fr/</a>)
             <div class="relative inline-block group">
               <i class="ml-2 fa-sharp-duotone fa-solid fa-screwdriver-wrench opacity-40"></i>
@@ -1282,7 +1293,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\uguu.se.png" alt="Uguu.se Logo" class="h-6 mr-2">
+            <img src="images/uguu.se.png" alt="Uguu.se Logo" class="h-6 mr-2">
             Uguu.se&nbsp(<a class="text-sky-400 hover:underline" href="https://uguu.se/" target="_blank">https://uguu.se/</a>)
           </td>
           <td class="px-4 py-2">32 MB</td>
@@ -1295,7 +1306,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\uguu.se.png" alt="lurkmore Uguu Logo" class="h-6 mr-2">
+            <img src="images/uguu.se.png" alt="lurkmore Uguu Logo" class="h-6 mr-2">
             lurmore Uguu&nbsp(<a class="text-sky-400 hover:underline" href="https://upload.lurkmore.com/" target="_blank">https://upload.lurkmore.com/</a>)
           </td>
           <td class="px-4 py-2">1.28 GB</td>
@@ -1308,7 +1319,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\uguu.se.png" alt="Uguu Logo" class="h-6 mr-2">
+            <img src="images/uguu.se.png" alt="Uguu Logo" class="h-6 mr-2">
             Uguu&nbsp(<a class="text-sky-400 hover:underline" href="https://uguu.aishiteiru.moe/" target="_blank">https://uguu.aishiteiru.moe/</a>)
           </td>
           <td class="px-4 py-2">128 MB</td>
@@ -1321,7 +1332,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\uguu.se.png" alt="Pomf.lain.la Logo" class="h-6 mr-2">
+            <img src="images/uguu.se.png" alt="Pomf.lain.la Logo" class="h-6 mr-2">
             Pomf.lain.la&nbsp(<a class="text-sky-400 hover:underline" href="https://pomf.lain.la/" target="_blank">https://pomf.lain.la/</a>)
           </td>
           <td class="px-4 py-2">1 GB</td>
@@ -1334,7 +1345,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\filer.net.png" alt="Uguu Logo" class="h-6 mr-1.5">
+            <img src="images/filer.net.png" alt="Uguu Logo" class="h-6 mr-1.5">
             Filer.net&nbsp(<a class="text-sky-400 hover:underline" href="https://filer.net/" target="_blank">https://filer.net/</a>)
           </td>
           <td class="px-4 py-2">500 MB</td>
@@ -1347,7 +1358,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\filebin.net.png" alt="Filebin Logo" class="h-5 mr-2.5">
+            <img src="images/filebin.net.png" alt="Filebin Logo" class="h-5 mr-2.5">
             Filebin&nbsp(<a class="text-sky-400 hover:underline" href="https://filebin.net/" target="_blank">https://filebin.net/</a>)
             <div class="relative inline-block group">
               <i class="ml-2 fa-sharp-duotone fa-solid fa-screwdriver-wrench opacity-40"></i>
@@ -1369,7 +1380,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\douploads.net.png" alt="DoUploads Logo" class="h-4 mr-2">
+            <img src="images/douploads.net.png" alt="DoUploads Logo" class="h-4 mr-2">
             DoUploads&nbsp(<a class="text-sky-400 hover:underline" href="https://douploads.net/" target="_blank">https://douploads.net/</a>)
             <div class="relative inline-block group">
               <i class="ml-2 fa-sharp-duotone fa-solid fa-screwdriver-wrench opacity-40"></i>
@@ -1413,7 +1424,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\upstore.net.png" alt="Upstore Logo" class="h-5 mr-2">
+            <img src="images/upstore.net.png" alt="Upstore Logo" class="h-5 mr-2">
             Upstore&nbsp(<a class="text-sky-400 hover:underline" href="https://upstore.net/" target="_blank">https://upstore.net/</a>)
           </td>
           <td class="px-4 py-2">1 GB</td>
@@ -1426,7 +1437,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\ufile.io.png" alt="uFile Logo" class="h-6 mr-2">
+            <img src="images/ufile.io.png" alt="uFile Logo" class="h-6 mr-2">
             uFile&nbsp(<a class="text-sky-400 hover:underline" href="https://ufile.io/" target="_blank">https://ufile.io/</a>)
           </td>
           <td class="px-4 py-2">5 GB</td>
@@ -1439,7 +1450,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\krakenfiles.com.png" alt="Krakenfiles Logo" class="h-3 mr-1">
+            <img src="images/krakenfiles.com.png" alt="Krakenfiles Logo" class="h-3 mr-1">
             KrakenFiles&nbsp(<a class="text-sky-400 hover:underline" href="https://krakenfiles.com/" target="_blank">https://krakenfiles.com/</a>)
             <div class="relative inline-block group">
               <i class="ml-2 fa-sharp-duotone fa-solid fa-sparkles opacity-40"></i>
@@ -1492,7 +1503,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\media.cm.png" alt="Media.cm Logo" class="h-6 mr-1.5">
+            <img src="images/media.cm.png" alt="Media.cm Logo" class="h-6 mr-1.5">
             Media.cm&nbsp(<a class="text-sky-400 hover:underline" href="https://media.cm/" target="_blank">https://media.cm/</a>)
             <div class="relative inline-block group">
               <i class="ml-2 fa-sharp-duotone fa-solid fa-film opacity-40"></i>
@@ -1514,7 +1525,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\oshi.at.png" alt="Oshi.at Logo" class="h-6 mr-2">
+            <img src="images/oshi.at.png" alt="Oshi.at Logo" class="h-6 mr-2">
             Oshi.at&nbsp(<a class="text-sky-400 hover:underline" href="https://oshi.at/" target="_blank">https://oshi.at/</a>)
             <div class="relative inline-block group">
               <i class="ml-2 fa-sharp-duotone fa-solid fa-screwdriver-wrench opacity-40"></i>
@@ -1558,7 +1569,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\tommo.team.png" alt="Tommo.team Logo" class="h-6 mr-1">
+            <img src="images/tommo.team.png" alt="Tommo.team Logo" class="h-6 mr-1">
             Tommo.team&nbsp(<a class="text-sky-400 hover:underline" href="https://tommo.team/" target="_blank">https://tommo.team/</a>)
             <div class="relative inline-block group">
               <i class="ml-2 opacity-50 fa-sharp fa-solid fa-circle-exclamation" style="color: #ffae00;"></i>
@@ -1602,7 +1613,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\tempfiles.ninja.png" alt="TempFile.ninja Logo" class="h-6 mr-1.5">
+            <img src="images/tempfiles.ninja.png" alt="TempFile.ninja Logo" class="h-6 mr-1.5">
             tempfiles.ninja&nbsp(<a class="text-sky-400 hover:underline" href="https://tempfiles.ninja/" target="_blank">https://tempfiles.ninja/</a>)
             <div class="relative inline-block group">
               <i class="ml-2 fa-sharp-duotone fa-solid fa-screwdriver-wrench opacity-40"></i>
@@ -1624,7 +1635,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\fileditchstuff.me.png" alt="Fileditch Logo" class="h-5 mr-2">
+            <img src="images/fileditchstuff.me.png" alt="Fileditch Logo" class="h-5 mr-2">
             Fileditch&nbsp(<a class="text-sky-400 hover:underline" href="https://fileditch.com/" target="_blank">https://fileditch.com/</a>)
           </td>
           <td class="px-4 py-2">5 GB</td>
@@ -1637,7 +1648,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\up2sha.re.png" alt="Up2Share Logo" class="h-5 mr-2">
+            <img src="images/up2sha.re.png" alt="Up2Share Logo" class="h-5 mr-2">
             Up2Share&nbsp(<a class="text-sky-400 hover:underline" href="https://up2sha.re/" target="_blank">https://up2sha.re/</a>)
             <div class="relative inline-block group">
               <i class="ml-2 fa-sharp-duotone fa-solid fa-sparkles opacity-40"></i>
@@ -1690,7 +1701,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\udrop.com.png" alt="udrop Logo" class="h-6 mr-1.5">
+            <img src="images/udrop.com.png" alt="udrop Logo" class="h-6 mr-1.5">
             udrop&nbsp(<a class="text-sky-400 hover:underline" href="https://www.udrop.com/" target="_blank">https://www.udrop.com/</a>)
             <div class="relative inline-block group">
               <i class="ml-2 fa-sharp-duotone fa-solid fa-screwdriver-wrench opacity-40"></i>
@@ -1712,7 +1723,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\tempsend.com.png" alt="Tempsend Logo" class="h-6 mr-1">
+            <img src="images/tempsend.com.png" alt="Tempsend Logo" class="h-6 mr-1">
             Tempsend&nbsp(<a class="text-sky-400 hover:underline" href="https://tempsend.com/" target="_blank">https://tempsend.com/</a>)
           </td>
           <td class="px-4 py-2">2 GB</td>
@@ -1738,7 +1749,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\uptomega.net.png" alt="Uptomega Logo" class="h-5 mr-1.5">
+            <img src="images/uptomega.net.png" alt="Uptomega Logo" class="h-5 mr-1.5">
             Uptomega&nbsp(<a class="text-sky-400 hover:underline" href="https://uptomega.net/" target="_blank">https://uptomega.net/</a>)
             <div class="relative inline-block group">
               <i class="ml-2 opacity-50 fa-sharp fa-solid fa-circle-exclamation" style="color: #ffae00;"></i>
@@ -1773,7 +1784,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\qu.ax.png" alt="qu.ax Logo" class="h-5 mr-2">
+            <img src="images/qu.ax.png" alt="qu.ax Logo" class="h-5 mr-2">
             qu.ax&nbsp(<a class="text-sky-400 hover:underline" href="https://qu.ax/" target="_blank">https://qu.ax/</a>)
           </td>
           <td class="px-4 py-2">256 MB</td>
@@ -1786,7 +1797,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\filetmp.com.png" alt="FileTmp Logo" class="h-6 ml-1 mr-2">
+            <img src="images/filetmp.com.png" alt="FileTmp Logo" class="h-6 ml-1 mr-2">
             FileTmp&nbsp(<a class="text-sky-400 hover:underline" href="https://filetmp.com/" target="_blank">https://filetmp.com/</a>)
           </td>
           <td class="px-4 py-2">300 MB</td>
@@ -1799,7 +1810,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\ccu.to.png" alt="CCU.to Logo" class="h-6 mr-1.5">
+            <img src="images/ccu.to.png" alt="CCU.to Logo" class="h-6 mr-1.5">
             CCU.to&nbsp(<a class="text-sky-400 hover:underline" href="https://ccu.to/" target="_blank">https://ccu.to/</a>)
           </td>
           <td class="px-4 py-2">5 GB</td>
@@ -1812,7 +1823,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\dosya.co.png" alt="Dosya.co Logo" class="h-5 mr-2">
+            <img src="images/dosya.co.png" alt="Dosya.co Logo" class="h-5 mr-2">
             Dosya.co&nbsp(<a class="text-sky-400 hover:underline" href="https://dosya.co/" target="_blank">https://dosya.co/</a>)
             <div class="relative inline-block group">
               <i class="ml-2 fa-sharp-duotone fa-solid fa-screwdriver-wrench opacity-40"></i>
@@ -1834,7 +1845,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\ibb.co.png" alt="ImgBB Logo" class="h-6 mr-1.5">
+            <img src="images/ibb.co.png" alt="ImgBB Logo" class="h-6 mr-1.5">
             ImgBB&nbsp(<a class="text-sky-400 hover:underline" href="https://imgbb.com/" target="_blank">https://imgbb.com/</a>)
           </td>
           <td class="px-4 py-2">32 MB</td>
@@ -1847,7 +1858,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\imgbank.cz.png" alt="IMG Bank Logo" class="h-6 mr-1.5">
+            <img src="images/imgbank.cz.png" alt="IMG Bank Logo" class="h-6 mr-1.5">
             IMG Bank&nbsp(<a class="text-sky-400 hover:underline" href="https://imgbank.cz/" target="_blank">https://imgbank.cz/</a>)
           </td>
           <td class="px-4 py-2">4 MB</td>
@@ -1883,7 +1894,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\udrop.com.png" alt="UploadFile.pl Logo" class="h-6 mr-1.5">
+            <img src="images/udrop.com.png" alt="UploadFile.pl Logo" class="h-6 mr-1.5">
             UploadFile.pl&nbsp(<a class="text-sky-400 hover:underline" href="https://uploadfile.pl/" target="_blank">https://uploadfile.pl/</a>)
             <div class="relative inline-block group">
               <i class="ml-2 fa-sharp-duotone fa-solid fa-screwdriver-wrench opacity-40"></i>
@@ -1905,7 +1916,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\nippyfile.com.png" alt="NippyFile Logo" class="h-6 mr-1">
+            <img src="images/nippyfile.com.png" alt="NippyFile Logo" class="h-6 mr-1">
             NippyFile&nbsp(<a class="text-sky-400 hover:underline" href="https://nippyfile.com/" target="_blank">https://nippyfile.com/</a>)
             <div class="relative inline-block group">
               <i class="ml-2 opacity-50 fa-sharp fa-solid fa-circle-exclamation" style="color: #ffae00;"></i>
@@ -1927,7 +1938,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\filestore.to.png" alt="Filestore Logo" class="h-5 mr-2">
+            <img src="images/filestore.to.png" alt="Filestore Logo" class="h-5 mr-2">
             Filestore&nbsp(<a class="text-sky-400 hover:underline" href="https://filestore.to/" target="_blank">https://filestore.to/</a>)
             <div class="relative inline-block group">
               <i class="ml-2 fa-sharp-duotone fa-solid fa-screwdriver-wrench opacity-40"></i>
@@ -1949,7 +1960,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\fast-down.com.png" alt="Fast Down Logo" class="h-4 mr-1.5">
+            <img src="images/fast-down.com.png" alt="Fast Down Logo" class="h-4 mr-1.5">
             Fast Down&nbsp(<a class="text-sky-400 hover:underline" href="https://down.fast-down.com/" target="_blank">https://down.fast-down.com/</a>)
           </td>
           <td class="px-4 py-2">10 GB</td>
@@ -1962,7 +1973,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\theuser.cloud.png" alt="Theuser.cloud Logo" class="h-4 mr-1.5">
+            <img src="images/theuser.cloud.png" alt="Theuser.cloud Logo" class="h-4 mr-1.5">
             Theuser.cloud&nbsp(<a class="text-sky-400 hover:underline" href="https://theuser.cloud/" target="_blank">https://theuser.cloud/</a>)
             <div class="relative inline-block group">
               <i class="ml-2 fa-sharp-duotone fa-solid fa-screwdriver-wrench opacity-40"></i>
@@ -1984,7 +1995,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\cyberfile.me.png" alt="CyberFile Logo" class="mr-1 h-7">
+            <img src="images/cyberfile.me.png" alt="CyberFile Logo" class="mr-1 h-7">
             CyberFile&nbsp(<a class="text-sky-400 hover:underline" href="https://cyberfile.me/" target="_blank">https://cyberfile.me/</a>)
             <div class="relative inline-block group">
               <i class="ml-2 fa-sharp-duotone fa-solid fa-screwdriver-wrench opacity-40"></i>
@@ -2015,7 +2026,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\end2end.tech.png" alt="end2end Logo" class="h-6 mr-2">
+            <img src="images/end2end.tech.png" alt="end2end Logo" class="h-6 mr-2">
             end2end&nbsp(<a class="text-sky-400 hover:underline" href="https://end2end.tech/" target="_blank">https://end2end.tech/</a>)
             <div class="relative inline-block group">
               <i class="ml-2 fa-sharp-duotone fa-solid fa-screwdriver-wrench opacity-40"></i>
@@ -2037,7 +2048,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\c-v.sh.png" alt="C-V.sh Logo" class="h-6 mr-1.5">
+            <img src="images/c-v.sh.png" alt="C-V.sh Logo" class="h-6 mr-1.5">
             c-v.sh&nbsp(<a class="text-sky-400 hover:underline" href="https://c-v.sh/" target="_blank">https://c-v.sh/</a>)
             <div class="relative inline-block group">
               <i class="ml-2 fa-sharp-duotone fa-solid fa-screwdriver-wrench opacity-40"></i>
@@ -2101,7 +2112,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\1filesharing.com.png" alt="1filesharing Logo" class="h-6 mr-2">
+            <img src="images/1filesharing.com.png" alt="1filesharing Logo" class="h-6 mr-2">
             1filesharing&nbsp(<a class="text-sky-400 hover:underline" href="https://1filesharing.com/" target="_blank">https://1filesharing.com/</a>)
             <div class="relative inline-block group">
               <i class="ml-2 fa-sharp-duotone fa-solid fa-screwdriver-wrench opacity-40"></i>
@@ -2123,7 +2134,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\nopaste.net.png" alt="nopaste.net Logo" class="h-6 mr-2">
+            <img src="images/nopaste.net.png" alt="nopaste.net Logo" class="h-6 mr-2">
             nopaste.net&nbsp(<a class="text-sky-400 hover:underline" href="https://nopaste.net/" target="_blank">https://nopaste.net/</a>)
             <div class="relative inline-block group">
               <i class="ml-2 opacity-50 fa-sharp fa-solid fa-circle-exclamation" style="color: #ffae00;"></i>
@@ -2145,7 +2156,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\tmpsend.com.png" alt="TmpSend Logo" class="h-6 mr-1">
+            <img src="images/tmpsend.com.png" alt="TmpSend Logo" class="h-6 mr-1">
             TmpSend&nbsp(<a class="text-sky-400 hover:underline" href="https://tmpsend.com/" target="_blank">https://tmpsend.com/</a>)
           </td>
           <td class="px-4 py-2">1 GB</td>
@@ -2158,7 +2169,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\mega4upload.net.png" alt="Mega4up Logo" class="h-6 mr-2">
+            <img src="images/mega4upload.net.png" alt="Mega4up Logo" class="h-6 mr-2">
             Mega4up&nbsp(<a class="text-sky-400 hover:underline" href="https://mega4upload.net/" target="_blank">https://mega4upload.net/</a>)
             <div class="relative inline-block group">
               <i class="ml-2 fa-sharp-duotone fa-solid fa-screwdriver-wrench opacity-40"></i>
@@ -2180,7 +2191,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\hostuje.net.png" alt="Hostuje Logo" class="h-6 mr-2">
+            <img src="images/hostuje.net.png" alt="Hostuje Logo" class="h-6 mr-2">
             Hostuje&nbsp(<a class="text-sky-400 hover:underline" href="https://hostuje.net/" target="_blank">https://hostuje.net/</a>)
             <div class="relative inline-block group">
               <i class="ml-2 fa-sharp-duotone fa-solid fa-screwdriver-wrench opacity-40"></i>
@@ -2202,7 +2213,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\uploadflix.com.png" alt="UploadFlix Logo" class="h-5 mr-1">
+            <img src="images/uploadflix.com.png" alt="UploadFlix Logo" class="h-5 mr-1">
             UploadFlix&nbsp(<a class="text-sky-400 hover:underline" href="https://uploadflix.com/" target="_blank">https://uploadflix.com/</a>)
             <div class="relative inline-block group">
               <i class="ml-2 fa-sharp-duotone fa-solid fa-screwdriver-wrench opacity-40"></i>
@@ -2233,7 +2244,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\dz4up.com.png" alt="DZ4Up Logo" class="h-5 mr-2">
+            <img src="images/dz4up.com.png" alt="DZ4Up Logo" class="h-5 mr-2">
             DZ4Up&nbsp(<a class="text-sky-400 hover:underline" href="https://dz4up.com/" target="_blank">https://dz4up.com/</a>)
             <div class="relative inline-block group">
               <i class="ml-2 fa-sharp-duotone fa-solid fa-screwdriver-wrench opacity-40"></i>
@@ -2255,7 +2266,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\wdfiles.ru.png" alt="WDFiles Logo" class="h-5 mr-1">
+            <img src="images/wdfiles.ru.png" alt="WDFiles Logo" class="h-5 mr-1">
             WDFiles&nbsp(<a class="text-sky-400 hover:underline" href="https://wdfiles.ru/" target="_blank">https://wdfiles.ru/</a>)
             <div class="relative inline-block group">
               <i class="ml-2 fa-sharp-duotone fa-solid fa-screwdriver-wrench opacity-40"></i>
@@ -2277,7 +2288,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\m1r.ai.png" alt="m1rai Logo" class="h-5 mr-2">
+            <img src="images/m1r.ai.png" alt="m1rai Logo" class="h-5 mr-2">
             m1rai&nbsp(<a class="text-sky-400 hover:underline" href="https://up.m1r.ai/" target="_blank">https://up.m1r.ai/</a>)
           </td>
           <td class="px-4 py-2">100 MB</td>
@@ -2290,7 +2301,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\s3k.ai.png" alt="s3kai Logo" class="h-5 mr-2">
+            <img src="images/s3k.ai.png" alt="s3kai Logo" class="h-5 mr-2">
             s3kai&nbsp(<a class="text-sky-400 hover:underline" href="https://up.s3k.ai/" target="_blank">https://up.s3k.ai/</a>)
           </td>
           <td class="px-4 py-2">1 GB</td>
@@ -2303,7 +2314,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\xup.in.png" alt="s3kai Logo" class="h-5 mr-2">
+            <img src="images/xup.in.png" alt="s3kai Logo" class="h-5 mr-2">
             XUP&nbsp(<a class="text-sky-400 hover:underline" href="https://www.xup.in/" target="_blank">https://www.xup.in/</a>)
             <div class="relative inline-block group">
               <i class="ml-2 fa-sharp-duotone fa-solid fa-screwdriver-wrench opacity-40"></i>
@@ -2382,7 +2393,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\dropmb.com.png" alt="DropMB Logo" class="h-5 mr-2">
+            <img src="images/dropmb.com.png" alt="DropMB Logo" class="h-5 mr-2">
             DropMB&nbsp(<a class="text-sky-400 hover:underline" href="https://dropmb.com/" target="_blank">https://dropmb.com/</a>)
           </td>
           <td class="px-4 py-2">512 MB</td>
@@ -2395,7 +2406,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\nelion.me.png" alt="Nelion Logo" class="h-6 mr-2">
+            <img src="images/nelion.me.png" alt="Nelion Logo" class="h-6 mr-2">
             Nelion&nbsp(<a class="text-sky-400 hover:underline" href="https://nelion.me/" target="_blank">https://nelion.me/</a>)
             <div class="relative inline-block group">
               <i class="ml-2 fa-sharp-duotone fa-solid fa-screwdriver-wrench opacity-40"></i>
@@ -2417,7 +2428,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\atomauth.com.png" alt="Atomauth Logo" class="h-5 mr-2">
+            <img src="images/atomauth.com.png" alt="Atomauth Logo" class="h-5 mr-2">
             Atomauth&nbsp(<a class="text-sky-400 hover:underline" href="https://atomauth.com" target="_blank">https://atomauth.com/</a>)
           </td>
           <td class="px-4 py-2">200 MB</td>
@@ -2430,7 +2441,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\kawaii.su.png" alt="imouto.kawaii.su Logo" class="h-6 mr-2">
+            <img src="images/kawaii.su.png" alt="imouto.kawaii.su Logo" class="h-6 mr-2">
             imouto.kawaii.su&nbsp(<a class="text-sky-400 hover:underline" href="https://imouto.kawaii.su/" target="_blank">https://imouto.kawaii.su/</a>)
           </td>
           <td class="px-4 py-2">20 MB</td>
@@ -2443,7 +2454,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\do7go.com.png" alt="DoodStream Logo" class="h-6 mr-1.5">
+            <img src="images/do7go.com.png" alt="DoodStream Logo" class="h-6 mr-1.5">
             DoodStream&nbsp(<a class="text-sky-400 hover:underline" href="https://doodstream.com/" target="_blank">https://doodstream.com/</a>)
             <div class="relative inline-block group">
               <i class="ml-2 fa-sharp fa-solid fa-key opacity-40"></i>
@@ -2474,7 +2485,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\pixeldrain.com.png" alt="Pixeldrain Logo" class="h-6 mr-2">
+            <img src="images/pixeldrain.com.png" alt="Pixeldrain Logo" class="h-6 mr-2">
             Pixeldrain&nbsp(<a class="text-sky-400 hover:underline" href="https://pixeldrain.com/" target="_blank">https://pixeldrain.com/</a>)
             <div class="relative inline-block group">
               <i class="ml-2 fa-sharp fa-solid fa-key opacity-40"></i>
@@ -2505,7 +2516,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\drop.download.png" alt="Drop.download Logo" class="h-6 mr-1.5">
+            <img src="images/drop.download.png" alt="Drop.download Logo" class="h-6 mr-1.5">
             Drop.download&nbsp(<a class="text-sky-400 hover:underline" href="https://drop.download/" target="_blank">https://drop.download/</a>)
             <div class="relative inline-block group">
               <i class="ml-2 fa-sharp fa-solid fa-key opacity-40"></i>
@@ -2527,7 +2538,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\filemoon.sx.png" alt="FileMoon Logo" class="h-3 mr-1">
+            <img src="images/filemoon.sx.png" alt="FileMoon Logo" class="h-3 mr-1">
             FileMoon&nbsp(<a class="text-sky-400 hover:underline" href="https://filemoon.sx/" target="_blank">https://filemoon.sx/</a>)
             <div class="relative inline-block group">
               <i class="ml-2 fa-sharp fa-solid fa-key opacity-40"></i>
@@ -2558,7 +2569,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\files.catbox.moe.png" alt="Catbox Logo" class="h-6 mr-1.5">
+            <img src="images/files.catbox.moe.png" alt="Catbox Logo" class="h-6 mr-1.5">
             Catbox&nbsp(<a class="text-sky-400 hover:underline" href="https://catbox.moe/" target="_blank">https://catbox.moe/</a>)
             <div class="relative inline-block group">
               <i class="ml-2 fa-sharp fa-solid fa-key opacity-40"></i>
@@ -2589,7 +2600,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\ddownload.com.png" alt="ddownload Logo" class="h-6 mr-1.5">
+            <img src="images/ddownload.com.png" alt="ddownload Logo" class="h-6 mr-1.5">
             ddownload&nbsp(<a class="text-sky-400 hover:underline" href="https://ddownload.com/" target="_blank">https://ddownload.com/</a>)
             <div class="relative inline-block group">
               <i class="ml-2 fa-sharp fa-solid fa-key opacity-40"></i>
@@ -2620,7 +2631,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\mp4upload.com.png" alt="mp4upload Logo" class="h-5 ml-0.5 mr-1.5">
+            <img src="images/mp4upload.com.png" alt="mp4upload Logo" class="h-5 ml-0.5 mr-1.5">
             mp4upload&nbsp(<a class="text-sky-400 hover:underline" href="https://mp4upload.com/" target="_blank">https://mp4upload.com/</a>)
             <div class="relative inline-block group">
               <i class="ml-2 fa-sharp fa-solid fa-key opacity-40"></i>
@@ -2651,7 +2662,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\dgdrive.site.png" alt="DropGalaxy Logo" class="h-5 mr-1.5">
+            <img src="images/dgdrive.site.png" alt="DropGalaxy Logo" class="h-5 mr-1.5">
             DropGalaxy&nbsp(<a class="text-sky-400 hover:underline" href="https://dropgalaxy.com/" target="_blank">https://dropgalaxy.com/</a>)
             <div class="relative inline-block group">
               <i class="ml-2 fa-sharp fa-solid fa-key opacity-40"></i>
@@ -2673,7 +2684,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\nitroflare.com.png" alt="Nitroflare Logo" class="h-5 mr-1.5">
+            <img src="images/nitroflare.com.png" alt="Nitroflare Logo" class="h-5 mr-1.5">
             Nitroflare&nbsp(<a class="text-sky-400 hover:underline" href="https://nitroflare.com/" target="_blank">https://nitroflare.com/</a>)
             <div class="relative inline-block group">
               <i class="ml-2 fa-sharp fa-solid fa-key opacity-40"></i>
@@ -2695,7 +2706,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\vidoza.net.png" alt="Vidoza Logo" class="h-5 mr-2">
+            <img src="images/vidoza.net.png" alt="Vidoza Logo" class="h-5 mr-2">
             Vidoza&nbsp(<a class="text-sky-400 hover:underline" href="https://vidoza.net/" target="_blank">https://vidoza.net/</a>)
             <div class="relative inline-block group">
               <i class="ml-2 fa-sharp fa-solid fa-key opacity-40"></i>
@@ -2726,7 +2737,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\katfile.com.png" alt="Katfile Logo" class="h-5 mr-2">
+            <img src="images/katfile.com.png" alt="Katfile Logo" class="h-5 mr-2">
             Katfile&nbsp(<a class="text-sky-400 hover:underline" href="https://katfile.com/" target="_blank">https://katfile.com/</a>)
             <div class="relative inline-block group">
               <i class="ml-2 fa-sharp fa-solid fa-key opacity-40"></i>
@@ -2757,7 +2768,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\rapidgator.net.png" alt="Rapidgator Logo" class="h-6 mr-1">
+            <img src="images/rapidgator.net.png" alt="Rapidgator Logo" class="h-6 mr-1">
             Rapidgator&nbsp(<a class="text-sky-400 hover:underline" href="https://rapidgator.net/" target="_blank">https://rapidgator.net/</a>)
             <div class="relative inline-block group">
               <i class="ml-2 fa-sharp fa-solid fa-key opacity-40"></i>
@@ -2779,7 +2790,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\streama2z.xyz.png" alt="StreamA2Z Logo" class="h-5 mr-2">
+            <img src="images/streama2z.xyz.png" alt="StreamA2Z Logo" class="h-5 mr-2">
             StreamA2Z&nbsp(<a class="text-sky-400 hover:underline" href="https://streama2z.com/" target="_blank">https://streama2z.com/</a>)
             <div class="relative inline-block group">
               <i class="ml-2 fa-sharp fa-solid fa-key opacity-40"></i>
@@ -2819,7 +2830,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\strwish.com.png" alt="StreamWish Logo" class="h-5 mr-2">
+            <img src="images/strwish.com.png" alt="StreamWish Logo" class="h-5 mr-2">
             StreamWish&nbsp(<a class="text-sky-400 hover:underline" href="https://streamwish.com/" target="_blank">https://streamwish.com/</a>)
             <div class="relative inline-block group">
               <i class="ml-2 fa-sharp fa-solid fa-key opacity-40"></i>
@@ -2850,7 +2861,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\rubystm.com.png" alt="StreamRuby Logo" class="h-4 mr-0.5">
+            <img src="images/rubystm.com.png" alt="StreamRuby Logo" class="h-4 mr-0.5">
             StreamRuby&nbsp(<a class="text-sky-400 hover:underline" href="https://streamruby.com/" target="_blank">https://streamruby.com/</a>)
             <div class="relative inline-block group">
               <i class="ml-2 fa-sharp fa-solid fa-key opacity-40"></i>
@@ -2881,7 +2892,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\voe.sx.png" alt="Voe.sx Logo" class="h-5 mr-1.5">
+            <img src="images/voe.sx.png" alt="Voe.sx Logo" class="h-5 mr-1.5">
             Voe.sx&nbsp(<a class="text-sky-400 hover:underline" href="https://voe.sx/" target="_blank">https://voe.sx/</a>)
             <div class="relative inline-block group">
               <i class="ml-2 fa-sharp fa-solid fa-key opacity-40"></i>
@@ -2921,7 +2932,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\devuploads.com.png" alt="DevUploads Logo" class="h-5 mr-1">
+            <img src="images/devuploads.com.png" alt="DevUploads Logo" class="h-5 mr-1">
             DevUploads&nbsp(<a class="text-sky-400 hover:underline" href="https://devuploads.com/" target="_blank">https://devuploads.com/</a>)
             <div class="relative inline-block group">
               <i class="ml-2 fa-sharp fa-solid fa-key opacity-40"></i>
@@ -2943,7 +2954,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\darkibox.com.png" alt="Darkibox Logo" class="h-5 mr-2">
+            <img src="images/darkibox.com.png" alt="Darkibox Logo" class="h-5 mr-2">
             Darkibox&nbsp(<a class="text-sky-400 hover:underline" href="https://darkibox.com/" target="_blank">https://darkibox.com/</a>)
             <div class="relative inline-block group">
               <i class="ml-2 fa-sharp fa-solid fa-key opacity-40"></i>
@@ -2974,7 +2985,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\filegram.to.png" alt="Filegram Logo" class="h-5 mr-2">
+            <img src="images/filegram.to.png" alt="Filegram Logo" class="h-5 mr-2">
             Filegram&nbsp(<a class="text-sky-400 hover:underline" href="https://filegram.to/" target="_blank">https://filegram.to/</a>)
             <div class="relative inline-block group">
               <i class="ml-2 fa-sharp fa-solid fa-key opacity-40"></i>
@@ -3014,7 +3025,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\goodstream.one.png" alt="Goodstream Logo" class="h-5 mr-1.5">
+            <img src="images/goodstream.one.png" alt="Goodstream Logo" class="h-5 mr-1.5">
             Goodstream&nbsp(<a class="text-sky-400 hover:underline" href="https://goodstream.one/" target="_blank">https://goodstream.one/</a>)
             <div class="relative inline-block group">
               <i class="ml-2 fa-sharp-duotone fa-solid fa-screwdriver-wrench opacity-40"></i>
@@ -3054,7 +3065,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\dropload.io.png" alt="Dropload Logo" class="h-5 mr-1.5">
+            <img src="images/dropload.io.png" alt="Dropload Logo" class="h-5 mr-1.5">
             Dropload&nbsp(<a class="text-sky-400 hover:underline" href="https://dropload.io/" target="_blank">https://dropload.io/</a>)
             <div class="relative inline-block group">
               <i class="ml-2 fa-sharp fa-solid fa-key opacity-40"></i>
@@ -3085,7 +3096,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\gett.su.png" alt="GeTT Logo" class="h-5 mr-1.5">
+            <img src="images/gett.su.png" alt="GeTT Logo" class="h-5 mr-1.5">
             GeTT&nbsp(<a class="text-sky-400 hover:underline" href="https://gett.su/" target="_blank">https://gett.su/</a>)
             <div class="relative inline-block group">
               <i class="ml-2 fa-sharp fa-solid fa-key opacity-40"></i>
@@ -3107,7 +3118,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\oneupload.to.png" alt="OneUpload Logo" class="h-5 mr-1.5">
+            <img src="images/oneupload.to.png" alt="OneUpload Logo" class="h-5 mr-1.5">
             OneUpload&nbsp(<a class="text-sky-400 hover:underline" href="https://oneupload.to/" target="_blank">https://oneupload.to/</a>)
             <div class="relative inline-block group">
               <i class="ml-2 fa-sharp fa-solid fa-key opacity-40"></i>
@@ -3147,7 +3158,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\smoothpre.com.png" alt="EarnVids Logo" class="h-5 mr-1.5">
+            <img src="images/smoothpre.com.png" alt="EarnVids Logo" class="h-5 mr-1.5">
             EarnVids&nbsp(<a class="text-sky-400 hover:underline" href="https://earnvids.com/" target="_blank">https://earnvids.com/</a>)
             <div class="relative inline-block group">
               <i class="ml-2 fa-sharp fa-solid fa-key opacity-40"></i>
@@ -3178,7 +3189,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\vinovo.to.png" alt="Vinovo Logo" class="h-5 mr-1.5">
+            <img src="images/vinovo.to.png" alt="Vinovo Logo" class="h-5 mr-1.5">
             Vinovo&nbsp(<a class="text-sky-400 hover:underline" href="https://vinovo.si/" target="_blank">https://vinovo.si/</a>)
             <div class="relative inline-block group">
               <i class="ml-2 fa-sharp fa-solid fa-key opacity-40"></i>
@@ -3209,7 +3220,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\uploadrar.com.png" alt="Uploadrar Logo" class="h-5 mr-1.5">
+            <img src="images/uploadrar.com.png" alt="Uploadrar Logo" class="h-5 mr-1.5">
             Uploadrar&nbsp(<a class="text-sky-400 hover:underline" href="https://uploadrar.com/" target="_blank">https://uploadrar.com/</a>)
             <div class="relative inline-block group">
               <i class="ml-2 fa-sharp fa-solid fa-key opacity-40"></i>
@@ -3231,7 +3242,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\listeamed.net.png" alt="Vidguard Logo" class="h-5 mr-1.5">
+            <img src="images/listeamed.net.png" alt="Vidguard Logo" class="h-5 mr-1.5">
             Vidguard&nbsp(<a class="text-sky-400 hover:underline" href="https://vidguard.to/" target="_blank">https://vidguard.to/</a>)
             <div class="relative inline-block group">
               <i class="ml-2 fa-sharp fa-solid fa-key opacity-40"></i>
@@ -3271,7 +3282,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\savefiles.com.png" alt="SaveFiles Logo" class="h-5 mr-1.5">
+            <img src="images/savefiles.com.png" alt="SaveFiles Logo" class="h-5 mr-1.5">
             SaveFiles&nbsp(<a class="text-sky-400 hover:underline" href="https://savefiles.com/" target="_blank">https://savefiles.com/</a>)
             <div class="relative inline-block group">
               <i class="ml-2 fa-sharp fa-solid fa-key opacity-40"></i>
@@ -3311,7 +3322,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\filespayouts.com.png" alt="Filespayouts Logo" class="h-5 mr-1.5">
+            <img src="images/filespayouts.com.png" alt="Filespayouts Logo" class="h-5 mr-1.5">
             Filespayouts&nbsp(<a class="text-sky-400 hover:underline" href="https://filespayouts.com/" target="_blank">https://filespayouts.com/</a>)
             <div class="relative inline-block group">
               <i class="ml-2 fa-sharp fa-solid fa-key opacity-40"></i>
@@ -3333,7 +3344,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\fileaxa.com.png" alt="Fileaxa Logo" class="h-5 mr-1.5">
+            <img src="images/fileaxa.com.png" alt="Fileaxa Logo" class="h-5 mr-1.5">
             Fileaxa&nbsp(<a class="text-sky-400 hover:underline" href="https://fileaxa.com/" target="_blank">https://fileaxa.com/</a>)
             <div class="relative inline-block group">
               <i class="ml-2 fa-sharp fa-solid fa-key opacity-40"></i>
@@ -3355,7 +3366,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\supervideo.cc.png" alt="SuperVideo Logo" class="h-5 mr-1.5">
+            <img src="images/supervideo.cc.png" alt="SuperVideo Logo" class="h-5 mr-1.5">
             SuperVideo&nbsp(<a class="text-sky-400 hover:underline" href="https://supervideo.cc/" target="_blank">https://supervideo.cc/</a>)
             <div class="relative inline-block group">
               <i class="ml-2 fa-sharp fa-solid fa-key opacity-40"></i>
@@ -3386,7 +3397,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\mixloads.to.png" alt="MixLoads Logo" class="h-5 mr-1.5">
+            <img src="images/mixloads.to.png" alt="MixLoads Logo" class="h-5 mr-1.5">
             MixLoads&nbsp(<a class="text-sky-400 hover:underline" href="https://mixloads.to/" target="_blank">https://mixloads.to/</a>)
             <div class="relative inline-block group">
               <i class="ml-2 fa-sharp fa-solid fa-key opacity-40"></i>
@@ -3408,7 +3419,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\ups2up.fun.png" alt="Up4Stream Logo" class="h-5 mr-1.5">
+            <img src="images/ups2up.fun.png" alt="Up4Stream Logo" class="h-5 mr-1.5">
             Up4Stream&nbsp(<a class="text-sky-400 hover:underline" href="https://up4stream.com/" target="_blank">https://up4stream.com/</a>)
             <div class="relative inline-block group">
               <i class="ml-2 fa-sharp fa-solid fa-key opacity-40"></i>
@@ -3457,7 +3468,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\uqload.cx.png" alt="Uqload Logo" class="h-5 mr-1.5">
+            <img src="images/uqload.cx.png" alt="Uqload Logo" class="h-5 mr-1.5">
             Uqload&nbsp(<a class="text-sky-400 hover:underline" href="https://uqload.cx/" target="_blank">https://uqload.cx/</a>)
             <div class="relative inline-block group">
               <i class="ml-2 fa-sharp fa-solid fa-key opacity-40"></i>
@@ -3488,7 +3499,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\lulustream.com.png" alt="LuluStream Logo" class="h-5 mr-1.5">
+            <img src="images/lulustream.com.png" alt="LuluStream Logo" class="h-5 mr-1.5">
             LuluStream&nbsp(<a class="text-sky-400 hover:underline" href="https://lulustream.com/" target="_blank">https://lulustream.com/</a>)
             <div class="relative inline-block group">
               <i class="ml-2 fa-sharp fa-solid fa-key opacity-40"></i>
@@ -3519,7 +3530,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\upfiles.com.png" alt="UpFiles Logo" class="h-5 mr-1.5">
+            <img src="images/upfiles.com.png" alt="UpFiles Logo" class="h-5 mr-1.5">
             UpFiles&nbsp(<a class="text-sky-400 hover:underline" href="https://upfiles.com/" target="_blank">https://upfiles.com/</a>)
             <div class="relative inline-block group">
               <i class="ml-2 fa-sharp fa-solid fa-key opacity-40"></i>
@@ -3541,7 +3552,7 @@
 
         <tr class="alternate-row search-result">
           <td class="px-4 py-2 flex items-center mt-1.5">
-            <img src="images\streambolt.tv.png" alt="StreamBolt Logo" class="h-5 mr-1.5">
+            <img src="images/streambolt.tv.png" alt="StreamBolt Logo" class="h-5 mr-1.5">
             StreamBolt&nbsp(<a class="text-sky-400 hover:underline" href="https://streambolt.tv/" target="_blank">https://streambolt.tv/</a>)
             <div class="relative inline-block group">
               <i class="ml-2 fa-sharp fa-solid fa-key opacity-40"></i>

@@ -1,6 +1,6 @@
-import { invoke, convertFileSrc } from './tauri.js';
+import { invoke } from './tauri.js';
 import { BUTTONS, ELEMENT_DISPLAYS, POPUPS, STATE, HOST_SITES } from './globals.js';
-import { get_resource_path } from './utils.js';
+import { get_data_file_url } from './utils.js';
 
 let row_color_indicator = "bright";
 
@@ -57,7 +57,7 @@ function init_show_api_key(host, api_key) {
 
   const host_cell = document.createElement("td");
   host_cell.className = "px-4 py-2";
-  host_cell.innerHTML = `<div class="flex items-center"><img src="images\\${host}.png" alt="${host} Logo" class="h-5 ml-1 mr-1">` + HOST_SITES.find(site => site.discriminator === host)?.name; + `</div>`;
+  host_cell.innerHTML = `<div class="flex items-center"><img src="images/${host}.png" alt="${host} Logo" class="h-5 ml-1 mr-1">` + HOST_SITES.find(site => site.discriminator === host)?.name; + `</div>`;
 
   const host_api_key = document.createElement("td");
   host_api_key.className = "px-4 py-2";
@@ -157,8 +157,7 @@ export function init_api_management() {
   };
 
   BUTTONS.upload_generic.forEach(async (element) => {
-    const result = await get_resource_path();
-    const res = await fetch(convertFileSrc(result + "/api_keys.json"));
+    const res = await fetch(await get_data_file_url("api_keys.json"));
     const data = await res.json();
 
     if (element.hasAttribute("api_needed")) {
@@ -240,10 +239,9 @@ export function init_api_management() {
     });
 
     try {
-      const result = await get_resource_path();
-      const res = await fetch(convertFileSrc(result + "/api_keys.json"));
+      const res = await fetch(await get_data_file_url("api_keys.json"));
       const data = await res.json();
-    
+
       const keys = Object.keys(data);
 
       if (keys.length != 0) {

@@ -6,9 +6,7 @@
   },
   "bundle": {
     "active": true,
-    "targets": [
-      "nsis"
-    ],
+    "targets": "all",
     "windows": {
       "nsis": {
         "sidebarImage": "icons/sidebar.bmp",
@@ -22,18 +20,19 @@
       "icons/128x128.png",
       "icons/128x128@2x.png",
       "icons/icon.ico",
-      "icon.icns",
-      "icon.png"
+      "icons/icon.icns",
+      "icons/icon.png"
     ],
     "resources": [
-      "Resources/*"
+      "Resources/prohibited_format.json",
+      "Resources/icon.ico"
     ],
     "licenseFile": "../LICENSE",
     "createUpdaterArtifacts": true
   },
   "productName": "PolyUploader",
   "mainBinaryName": "PolyUploader",
-  "version": "1.7.1",
+  "version": "1.7.2",
   "identifier": "PolyUploader",
   "plugins": {
     "updater": {

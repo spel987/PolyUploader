@@ -1,6 +1,6 @@
-import { invoke, convertFileSrc } from './tauri.js';
+import { invoke } from './tauri.js';
 import { BUTTONS, ELEMENT_DISPLAYS, POPUPS, SELECTS, URL_FOR_BYPASS_CORS, API_URL } from './globals.js';
-import { get_resource_path, copy_to_clipboard, disable_button, enable_button } from './utils.js';
+import { get_data_file_url, copy_to_clipboard, disable_button, enable_button } from './utils.js';
 
 function rows_color_history() {
   const tbody = document.getElementById("history_table_body");
@@ -52,8 +52,7 @@ function show_hide_expired_files(clicked) {
 };
 
 export async function init_history() {
-    const result = await get_resource_path();
-    const res = await fetch(convertFileSrc(result + "/history.json"));
+    const res = await fetch(await get_data_file_url("history.json"));
     const data = await res.json();
     if (Object.keys(data).length != 0) {
         BUTTONS.upload_history.classList.remove("opacity-50", "cursor-not-allowed", "pointer-events-none", "hidden");
@@ -68,10 +67,9 @@ export async function init_history() {
         ELEMENT_DISPLAYS.history_table_body.removeChild(ELEMENT_DISPLAYS.history_table_body.firstChild);
       };
 
-      const result = await get_resource_path();
-      const res = await fetch(convertFileSrc(result + "/history.json"));
+      const res = await fetch(await get_data_file_url("history.json"));
       const data = await res.json();
-    
+
       const keys = Object.keys(data).reverse();
     
       let row_color_indicator = "bright";
