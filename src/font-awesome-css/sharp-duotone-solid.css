@@ -1,0 +1,50 @@
+/*!
+ * Font Awesome Pro 6.7.2 by @fontawesome - https://fontawesome.com
+ * License - https://fontawesome.com/license (Commercial License)
+ * Copyright 2024 Fonticons, Inc.
+ */
+:host,:root {
+    --fa-style-family-sharp-duotone: "Font Awesome 6 Sharp Duotone";
+    --fa-font-sharp-duotone-solid: normal 900 1em/1 "Font Awesome 6 Sharp Duotone"
+}
+
+@font-face {
+    font-family: "Font Awesome 6 Sharp Duotone";
+    font-style: normal;
+    font-weight: 900;
+    font-display: block;
+    src: url(../webfonts/fa-sharp-duotone-solid-900.woff2) format("woff2"),url(../webfonts/fa-sharp-duotone-solid-900.ttf) format("truetype")
+}
+
+.fa-sharp-duotone,.fa-sharp-duotone.fa-solid,.fasds {
+    position: relative;
+    font-weight: 900;
+    letter-spacing: normal
+}
+
+.fa-sharp-duotone.fa-solid:before,.fa-sharp-duotone:before,.fasds:before {
+    position: absolute;
+    color: var(--fa-primary-color,inherit);
+    opacity: var(--fa-primary-opacity,1)
+}
+
+.fa-sharp-duotone.fa-solid:after,.fa-sharp-duotone:after,.fasds:after {
+    color: var(--fa-secondary-color,inherit);
+    opacity: var(--fa-secondary-opacity,.4)
+}
+
+.fa-sharp-duotone.fa-solid.fa-swap-opacity:before,.fa-sharp-duotone.fa-swap-opacity:before,.fa-swap-opacity .fa-sharp-duotone.fa-solid:before,.fa-swap-opacity .fa-sharp-duotone:before,.fa-swap-opacity .fasds:before,.fasds.fa-swap-opacity:before {
+    opacity: var(--fa-secondary-opacity,.4)
+}
+
+.fa-sharp-duotone.fa-solid.fa-swap-opacity:after,.fa-sharp-duotone.fa-swap-opacity:after,.fa-swap-opacity .fa-sharp-duotone.fa-solid:after,.fa-swap-opacity .fa-sharp-duotone:after,.fa-swap-opacity .fasds:after,.fasds.fa-swap-opacity:after {
+    opacity: var(--fa-primary-opacity,1)
+}
+
+.fa-sharp-duotone.fa-inverse,.fa-sharp-duotone.fa-solid.fa-inverse,.fasds.fa-inverse {
+    color: var(--fa-inverse,#fff)
+}
+
+.fa-sharp-duotone.fa-solid.fa-stack-1x,.fa-sharp-duotone.fa-solid.fa-stack-2x,.fa-sharp-duotone.fa-stack-1x,.fa-sharp-duotone.fa-stack-2x,.fasds.fa-stack-1x,.fasds.fa-stack-2x {
+    position: absolute
+}

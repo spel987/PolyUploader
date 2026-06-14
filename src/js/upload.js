@@ -1,6 +1,6 @@
-import { invoke, convertFileSrc } from './tauri.js';
+import { invoke } from './tauri.js';
 import { ENV, BUTTONS, ELEMENT_DISPLAYS, INPUTS, STATE, URL_FOR_BYPASS_CORS, SELECTS, HOST_SITES, API_URL } from './globals.js';
-import { disabled_upload_button, get_resource_path, get_file_name_from_url, copy_to_clipboard, disable_button, get_site_name, get_value_from_path, get_values_from_paths, resolve_value, get_domain_name, get_retention_duration, enable_upload_button } from './utils.js';
+import { disabled_upload_button, get_data_file_url, get_file_name_from_url, copy_to_clipboard, disable_button, get_site_name, get_value_from_path, get_values_from_paths, resolve_value, get_domain_name, get_retention_duration, enable_upload_button } from './utils.js';
 import { create_privatebin_paste, create_cryptgeon_note, create_safelinking_package, create_pastesdev_paste, create_katbin_paste, create_filecrypt_container } from './link_protection.js';
 
 function anonymize_urls(text) {
@@ -790,12 +790,11 @@ export async function get_api_key(host) {
   let api_key = "";
 
   try {
-    const result = await get_resource_path();
-    const response = await fetch(convertFileSrc(result + "/api_keys.json"));
+    const response = await fetch(await get_data_file_url("api_keys.json"));
     const data = await response.json();
 
     api_key = data[host];
-    
+
   } catch (error) {
     console.error("Error retrieving path to local application data: " + error);
   };

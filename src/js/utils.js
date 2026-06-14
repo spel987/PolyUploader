@@ -39,6 +39,19 @@ export async function get_resource_path() {
   } catch (error) {
     console.error("Error obtaining local data directory : ", error);
   };
+}
+
+export async function get_data_path() {
+  try {
+    return await invoke("get_data_dir");
+  } catch (error) {
+    console.error("Error obtaining the writable data directory : ", error);
+  };
+}
+
+export async function get_data_file_url(filename) {
+  const data_path = await get_data_path();
+  return convertFileSrc(data_path + "/" + filename);
 };
 
 export function get_file_name_from_url(url) {

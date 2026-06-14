@@ -1,11 +1,10 @@
-import { convertFileSrc, invoke } from './tauri.js';
-import { get_resource_path, enable_button, reset_popup, disable_button, reset_upload_profile } from './utils.js';
+import { invoke } from './tauri.js';
+import { get_data_file_url, enable_button, reset_popup, disable_button, reset_upload_profile } from './utils.js';
 import { SELECTS, STATE, BUTTONS, INPUTS, ELEMENT_DISPLAYS, POPUPS } from './globals.js';
 
 export function init_profiles() {
     async function load_profiles() {
-      const result = await get_resource_path();
-      const response = await fetch(convertFileSrc(result + "/profiles.json"));
+      const response = await fetch(await get_data_file_url("profiles.json"));
       const data = await response.json();
       SELECTS.profile.innerHTML = `<option id="default_option" value="default" disabled selected>Select a profile</option>`;
       for (const profil in data) {

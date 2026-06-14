@@ -25,6 +25,36 @@ use winreg::RegKey;
 
 struct FilePathState(Mutex<Option<String>>);
 
+struct AppPaths {
+    data_dir: PathBuf,
+}
+
+const DATA_FILES: [&str; 3] = ["api_keys.json", "history.json", "profiles.json"];
+
+fn init_data_files(data_dir: &Path) {
+    let _ = std::fs::create_dir_all(data_dir);
+
+    let legacy_dir = env::current_exe()
+        .ok()
+        .and_then(|exe| exe.parent().map(|p| p.join("Resources")));
+
+    for filename in DATA_FILES {
+        let target = data_dir.join(filename);
+        if target.exists() {
+            continue;
+        }
+
+        if let Some(ref legacy) = legacy_dir {
+            let source = legacy.join(filename);
+            if source.exists() && std::fs::copy(&source, &target).is_ok() {
+                continue;
+            }
+        }
+
+        let _ = std::fs::write(&target, "{}");
+    }
+}
+
 #[derive(Serialize, Deserialize, Clone)]
 struct FileInfo {
     name: String,
@@ -42,7 +72,7 @@ fn get_selected_file(state: State<'_, FilePathState>) -> Option<FileInfo> {
                 .unwrap_or_default()
                 .to_string_lossy()
                 .to_string();
-            
+
             let mime_type = get_mime_type(&file_name);
 
             return Some(FileInfo {
@@ -64,6 +94,11 @@ fn get_mime_type(filename: &str) -> String {
 }
 
 #[tauri::command]
+fn get_data_dir(paths: State<'_, AppPaths>) -> String {
+    paths.data_dir.to_string_lossy().to_string()
+}
+
+#[tauri::command]
 fn read_file_chunk(path: String, start: u64, length: u64) -> Result<Vec<u8>, String> {
     use std::io::{Seek, SeekFrom, Read};
 
@@ -78,10 +113,10 @@ fn read_file_chunk(path: String, start: u64, length: u64) -> Result<Vec<u8>, Str
 }
 
 #[tauri::command]
-fn add_profile_json(profileName: &str, selectedHost: Vec<&str>) {
-    let profiles_file_path = "Resources/profiles.json";
+fn add_profile_json(paths: State<'_, AppPaths>, profileName: &str, selectedHost: Vec<&str>) {
+    let profiles_file_path = paths.data_dir.join("profiles.json");
 
-    let mut file = File::open(profiles_file_path.clone()).unwrap();
+    let mut file = File::open(&profiles_file_path).unwrap();
     let mut contents = String::new();
     file.read_to_string(&mut contents).unwrap();
 
@@ -96,7 +131,7 @@ fn add_profile_json(profileName: &str, selectedHost: Vec<&str>) {
     let mut file = OpenOptions::new()
         .write(true)
         .truncate(true)
-        .open(profiles_file_path)
+        .open(&profiles_file_path)
         .unwrap();
 
     let json_str = serde_json::to_string_pretty(&json).unwrap();
@@ -105,10 +140,10 @@ fn add_profile_json(profileName: &str, selectedHost: Vec<&str>) {
 }
 
 #[tauri::command]
-fn delete_profile_json(profileName: &str) {
-    let profiles_file_path = "Resources/profiles.json";
+fn delete_profile_json(paths: State<'_, AppPaths>, profileName: &str) {
+    let profiles_file_path = paths.data_dir.join("profiles.json");
 
-    let mut file = File::open(profiles_file_path.clone()).unwrap();
+    let mut file = File::open(&profiles_file_path).unwrap();
     let mut contents = String::new();
     file.read_to_string(&mut contents).unwrap();
 
@@ -119,7 +154,7 @@ fn delete_profile_json(profileName: &str) {
     let mut file = OpenOptions::new()
         .write(true)
         .truncate(true)
-        .open(profiles_file_path)
+        .open(&profiles_file_path)
         .unwrap();
 
     let json_str = serde_json::to_string_pretty(&json).unwrap();
@@ -128,10 +163,10 @@ fn delete_profile_json(profileName: &str) {
 }
 
 #[tauri::command]
-fn rename_profile_json(oldProfileName: &str, newProfileName: &str) {
-    let profiles_file_path = "Resources/profiles.json";
+fn rename_profile_json(paths: State<'_, AppPaths>, oldProfileName: &str, newProfileName: &str) {
+    let profiles_file_path = paths.data_dir.join("profiles.json");
 
-    let mut file = File::open(profiles_file_path.clone()).unwrap();
+    let mut file = File::open(&profiles_file_path).unwrap();
     let mut contents = String::new();
     file.read_to_string(&mut contents).unwrap();
 
@@ -144,7 +179,7 @@ fn rename_profile_json(oldProfileName: &str, newProfileName: &str) {
     let mut file = OpenOptions::new()
         .write(true)
         .truncate(true)
-        .open(profiles_file_path)
+        .open(&profiles_file_path)
         .unwrap();
 
     let json_str = serde_json::to_string_pretty(&json).unwrap();
@@ -153,10 +188,10 @@ fn rename_profile_json(oldProfileName: &str, newProfileName: &str) {
 }
 
 #[tauri::command]
-fn add_history_json(newLink: &str, newUploadDate: &str, newExpirationDate: &str, manageLink: &str, deleteMethod: &str, deleteParameters: &str, deleteHeaders: &str, formattedRequest: &str, uploadFilename: &str) {
-    let history_file_path = "Resources/history.json";
+fn add_history_json(paths: State<'_, AppPaths>, newLink: &str, newUploadDate: &str, newExpirationDate: &str, manageLink: &str, deleteMethod: &str, deleteParameters: &str, deleteHeaders: &str, formattedRequest: &str, uploadFilename: &str) {
+    let history_file_path = paths.data_dir.join("history.json");
 
-    let mut file = File::open(history_file_path.clone()).unwrap();
+    let mut file = File::open(&history_file_path).unwrap();
     let mut contents = String::new();
     file.read_to_string(&mut contents).unwrap();
 
@@ -177,7 +212,7 @@ fn add_history_json(newLink: &str, newUploadDate: &str, newExpirationDate: &str,
     let mut file = OpenOptions::new()
         .write(true)
         .truncate(true)
-        .open(history_file_path)
+        .open(&history_file_path)
         .unwrap();
 
     let json_str = serde_json::to_string_pretty(&json).unwrap();
@@ -186,9 +221,9 @@ fn add_history_json(newLink: &str, newUploadDate: &str, newExpirationDate: &str,
 }
 
 #[tauri::command]
-fn clear_history_json() {
-    let history_file_path = "Resources/history.json";
-    let mut file = File::create(history_file_path).expect("Unable to create JSON file.");
+fn clear_history_json(paths: State<'_, AppPaths>) {
+    let history_file_path = paths.data_dir.join("history.json");
+    let mut file = File::create(&history_file_path).expect("Unable to create JSON file.");
 
     let empty_json = json!({});
     let json_str =
@@ -199,10 +234,10 @@ fn clear_history_json() {
 }
 
 #[tauri::command]
-fn delete_history_link(historyLink: &str) {
-    let history_file_path = "Resources/history.json";
+fn delete_history_link(paths: State<'_, AppPaths>, historyLink: &str) {
+    let history_file_path = paths.data_dir.join("history.json");
 
-    let mut file = File::open(history_file_path.clone()).unwrap();
+    let mut file = File::open(&history_file_path).unwrap();
     let mut contents = String::new();
     file.read_to_string(&mut contents).unwrap();
 
@@ -213,7 +248,7 @@ fn delete_history_link(historyLink: &str) {
     let mut file = OpenOptions::new()
         .write(true)
         .truncate(true)
-        .open(history_file_path)
+        .open(&history_file_path)
         .unwrap();
 
     let json_str = serde_json::to_string_pretty(&json).unwrap();
@@ -222,10 +257,10 @@ fn delete_history_link(historyLink: &str) {
 }
 
 #[tauri::command]
-fn update_api_key(hostName: &str, apiKey: &str) {
-    let api_keys_file_path = "Resources/api_keys.json";
+fn update_api_key(paths: State<'_, AppPaths>, hostName: &str, apiKey: &str) {
+    let api_keys_file_path = paths.data_dir.join("api_keys.json");
 
-    let mut file = File::open(api_keys_file_path.clone()).unwrap();
+    let mut file = File::open(&api_keys_file_path).unwrap();
     let mut contents = String::new();
     file.read_to_string(&mut contents).unwrap();
 
@@ -236,7 +271,7 @@ fn update_api_key(hostName: &str, apiKey: &str) {
     let mut file = OpenOptions::new()
         .write(true)
         .truncate(true)
-        .open(api_keys_file_path)
+        .open(&api_keys_file_path)
         .unwrap();
 
     let json_str = serde_json::to_string_pretty(&json).unwrap();
@@ -245,10 +280,10 @@ fn update_api_key(hostName: &str, apiKey: &str) {
 }
 
 #[tauri::command]
-fn delete_api_key(hostName: &str) {
-    let api_keys_file_path = "Resources/api_keys.json";
+fn delete_api_key(paths: State<'_, AppPaths>, hostName: &str) {
+    let api_keys_file_path = paths.data_dir.join("api_keys.json");
 
-    let mut file = File::open(api_keys_file_path.clone()).unwrap();
+    let mut file = File::open(&api_keys_file_path).unwrap();
     let mut contents = String::new();
     file.read_to_string(&mut contents).unwrap();
 
@@ -259,7 +294,7 @@ fn delete_api_key(hostName: &str) {
     let mut file = OpenOptions::new()
         .write(true)
         .truncate(true)
-        .open(api_keys_file_path)
+        .open(&api_keys_file_path)
         .unwrap();
 
     let json_str = serde_json::to_string_pretty(&json).unwrap();
@@ -268,23 +303,19 @@ fn delete_api_key(hostName: &str) {
 }
 
 #[tauri::command]
-fn create_zip(zipPath: &str) -> String {
+fn create_zip(paths: State<'_, AppPaths>, zipPath: &str) -> String {
     let path = std::path::Path::new(zipPath);
 
     if let Ok(file) = File::create(&path) {
-        let files = vec![
-            "Resources/api_keys.json",
-            "Resources/history.json",
-            "Resources/profiles.json",
-        ];
         let mut zip = ZipWriter::new(file);
 
         let options = FileOptions::default()
             .compression_method(zip::CompressionMethod::Stored)
             .unix_permissions(0o755);
 
-        for filename in files {
-            if let Ok(mut f) = File::open(filename) {
+        for filename in DATA_FILES {
+            let full_path = paths.data_dir.join(filename);
+            if let Ok(mut f) = File::open(&full_path) {
                 let mut buffer = Vec::new();
                 if let Ok(_) = f.read_to_end(&mut buffer) {
                     if let Ok(_) = zip.start_file(filename, options) {
@@ -301,26 +332,33 @@ fn create_zip(zipPath: &str) -> String {
 }
 
 #[tauri::command]
-fn extract_zip(zipPath: &str) -> String {
-    let root_dir = Path::new(".");
-
+fn extract_zip(paths: State<'_, AppPaths>, zipPath: &str) -> String {
     if let Ok(file) = File::open(&Path::new(zipPath)) {
         if let Ok(mut archive) = ZipArchive::new(file) {
             for i in 0..archive.len() {
-                if let Ok(mut file) = archive.by_index(i) {
-                    let outpath = root_dir.join(file.name());
+                if let Ok(mut entry) = archive.by_index(i) {
+                    let entry_name = entry.name().to_string();
+                    if entry_name.ends_with('/') {
+                        continue;
+                    }
 
-                    if (*file.name()).ends_with('/') {
-                        let _ = std::fs::create_dir_all(&outpath);
-                    } else {
-                        if let Some(p) = outpath.parent() {
-                            if !p.exists() {
-                                let _ = std::fs::create_dir_all(&p);
-                            }
+                    let base = Path::new(&entry_name)
+                        .file_name()
+                        .map(|b| b.to_string_lossy().to_string())
+                        .unwrap_or_default();
+
+                    if !DATA_FILES.contains(&base.as_str()) {
+                        continue;
+                    }
+
+                    let outpath = paths.data_dir.join(&base);
+                    if let Some(parent) = outpath.parent() {
+                        if !parent.exists() {
+                            let _ = std::fs::create_dir_all(parent);
                         }
-                        if let Ok(mut outfile) = File::create(&outpath) {
-                            let _ = std::io::copy(&mut file, &mut outfile);
-                        }
+                    }
+                    if let Ok(mut outfile) = File::create(&outpath) {
+                        let _ = std::io::copy(&mut entry, &mut outfile);
                     }
                 }
             }
@@ -391,27 +429,22 @@ fn register_polyuploader_context_menu(action: String) -> Result<String, String> 
 
 #[cfg(not(windows))]
 #[tauri::command]
-fn register_polyuploader_context_menu() -> Result<String, String> {
+fn register_polyuploader_context_menu(_action: String) -> Result<String, String> {
     Err("Context menu only available on Windows".to_string())
 }
 
-fn set_current_dir_to_exe_dir() {
-    if let Ok(exe_path) = env::current_exe() {
-        if let Some(exe_dir) = exe_path.parent() {
-            let _ = env::set_current_dir(&exe_dir);
-        }
-    }
-}
-
 fn main() {
-    set_current_dir_to_exe_dir();
+    #[cfg(target_os = "linux")]
+    if std::env::var_os("WEBKIT_DISABLE_DMABUF_RENDERER").is_none() {
+        std::env::set_var("WEBKIT_DISABLE_DMABUF_RENDERER", "1");
+    }
 
     std::thread::spawn(|| {
         let rt = Builder::new_multi_thread()
             .enable_all()
             .build()
             .unwrap();
-        let cfg = Config { host: "0.0.0.0".into(), port: 61337 };
+        let cfg = Config { host: "127.0.0.1".into(), port: 61337 };
         rt.block_on(run(cfg));
     });
 
@@ -434,18 +467,26 @@ fn main() {
             extract_zip,
             get_selected_file,
             read_file_chunk,
+            get_data_dir,
             register_polyuploader_context_menu
         ])
         .setup(|app| {
+            let data_dir = app
+                .path()
+                .app_data_dir()
+                .expect("failed to resolve the app data directory");
+            init_data_files(&data_dir);
+            app.manage(AppPaths { data_dir });
+
             let args: Vec<String> = std::env::args().collect();
-            
+
             if args.len() > 1 {
                 let file_path = args[1].clone();
-                
+
                 *app.state::<FilePathState>().0.lock().unwrap() = Some(file_path);
-                
+
                 let app_handle = app.handle().clone();
-                
+
                 tauri::async_runtime::spawn(async move {
                     sleep(Duration::from_millis(1000)).await;
                     if let Some(window) = app_handle.get_webview_window("main") {
@@ -456,7 +497,7 @@ fn main() {
                     }
                 });
             }
-            
+
             Ok(())
         })
         .run(tauri::generate_context!())

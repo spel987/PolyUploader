@@ -1,6 +1,6 @@
 [package]
 name = "PolyUploader"
-version = "1.7.1"
+version = "1.7.2"
 description = "PolyUploader"
 authors = ["spel987"]
 license = ""
