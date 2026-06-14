@@ -444,7 +444,7 @@ If you’d like to learn more, feel free to explore the repositories:
 ### Frontend:
 
 - Tailwind CSS: https://tailwindcss.com/
-- Font Awesome: https://fontawesome.com/
+- Phosphor Icons: https://phosphoricons.com/
 - Flaticon (and author [DinosoftLabs](https://www.flaticon.com/authors/dinosoftlabs)): https://www.flaticon.com/free-icon/box_5899516
   
 ### The sites used

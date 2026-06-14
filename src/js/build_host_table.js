@@ -1,12 +1,12 @@
 const TOOLTIP = (icon, text) => `<div class="relative inline-block group">${icon}<div class="absolute hidden w-48 bottom-full group-hover:block"><div class="bg-slate-900 text-white text-xs rounded-lg py-1 px-2 shadow-[0_5px_15px_rgba(0,_0,_0,_0.4)]">${text}</div></div></div>`;
 
 const BADGE = {
-  api_optional: TOOLTIP(`<i class="ml-2 fa-sharp-duotone fa-solid fa-sparkles opacity-40"></i>`, `This host supports personal API keys, set it up by pressing the "Manage API keys" button.`),
-  api_required: TOOLTIP(`<i class="ml-2 fa-sharp fa-solid fa-key opacity-40"></i>`, `This host requires an API key.`),
-  deletion: TOOLTIP(`<i class="ml-2 fa-sharp-duotone fa-solid fa-screwdriver-wrench opacity-40"></i>`, `This host supports manual deletion of uploaded files.`),
-  api_deletion: TOOLTIP(`<i class="ml-2 fa-sharp-duotone fa-solid fa-gears opacity-40"></i>`, `This host supports manual deletion of uploaded files only when using the API key.`),
-  video: TOOLTIP(`<i class="ml-2 fa-sharp-duotone fa-solid fa-film opacity-40"></i>`, `This host allows video streaming and therefore only accepts video files.`),
-  unstable: TOOLTIP(`<i class="ml-2 opacity-50 fa-sharp fa-solid fa-circle-exclamation" style="color: #ffae00;"></i>`, `Errors are frequently encountered during uploads, not from PolyUploader but from the website.`),
+  api_optional: TOOLTIP(`<i class="ml-2 ph-duotone ph-sparkle opacity-40"></i>`, `This host supports personal API keys, set it up by pressing the "Manage API keys" button.`),
+  api_required: TOOLTIP(`<i class="ml-2 ph-bold ph-key opacity-40"></i>`, `This host requires an API key.`),
+  deletion: TOOLTIP(`<i class="ml-2 ph-duotone ph-wrench opacity-40"></i>`, `This host supports manual deletion of uploaded files.`),
+  api_deletion: TOOLTIP(`<i class="ml-2 ph-duotone ph-gear-six opacity-40"></i>`, `This host supports manual deletion of uploaded files only when using the API key.`),
+  video: TOOLTIP(`<i class="ml-2 ph-duotone ph-film-strip opacity-40"></i>`, `This host allows video streaming and therefore only accepts video files.`),
+  unstable: TOOLTIP(`<i class="ml-2 opacity-50 ph-bold ph-warning-circle" style="color: #ffae00;"></i>`, `Errors are frequently encountered during uploads, not from PolyUploader but from the website.`),
 };
 
 const CHECKBOX_SVG = `<svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 -1 20 20" fill="currentColor" stroke="currentColor" stroke-width="1"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>`;
@@ -20,7 +20,7 @@ export function build_host_table(host_sites) {
 
     const icon = site.icon
       ? `<img src="images/${site.iconFile ?? site.discriminator}.png" alt="${site.name} Logo" class="${site.iconClass}">`
-      : `<i class="fa-solid fa-cloud mr-1.5" style="color: #564ef0; font-size: 19px;"></i>`;
+      : `<i class="ph-bold ph-cloud mr-1.5" style="color: #564ef0; font-size: 19px;"></i>`;
 
     let badges = "";
     if (site.api === "optional") badges += BADGE.api_optional;

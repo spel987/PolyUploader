@@ -16,7 +16,7 @@ export function init_check_host() {
             
                 const host_name = host_element.innerHTML;
             
-                host_element.innerHTML = host_name + `<p class="ml-2" style="color: #ff2828;"><i class="fa-sharp fa-solid fa-circle-exclamation" style="color: #ff2828;"></i> <strong>Offline</strong></p>`;
+                host_element.innerHTML = host_name + `<p class="ml-2" style="color: #ff2828;"><i class="ph-bold ph-warning-circle" style="color: #ff2828;"></i> <strong>Offline</strong></p>`;
             };
         };
         return null;
@@ -30,7 +30,7 @@ export function init_check_host() {
             const host_name = host_element.innerHTML;
         
             if (host_name.includes("Offline")) {
-                host_element.innerHTML = host_name.replace(`<p class="ml-2" style="color: #ff2828;"><i class="fa-sharp fa-solid fa-circle-exclamation" style="color: #ff2828;"></i> <strong>Offline</strong></p>`, "");
+                host_element.innerHTML = host_name.replace(`<p class="ml-2" style="color: #ff2828;"><i class="ph-bold ph-warning-circle" style="color: #ff2828;"></i> <strong>Offline</strong></p>`, "");
                 row.classList.remove("opacity-60", "cursor-not-allowed", "pointer-events-none");
                 const checkbox_element = row.querySelector('input[type="checkbox"]');
                 checkbox_element.removeAttribute("disabled");
@@ -93,7 +93,7 @@ export function init_check_host() {
     
       Promise.all(requests_promises)
       .then(() => {
-        BUTTONS.check_status.innerHTML = `Check host status <i class="ml-1 fa-sharp-duotone fa-solid fa-arrows-rotate-reverse"></i>`;
+        BUTTONS.check_status.innerHTML = `Check host status <i class="ml-1 ph-duotone ph-arrows-counter-clockwise"></i>`;
         ELEMENT_DISPLAYS.stats_text.classList.remove("hidden");
         BUTTONS.check_status.classList.remove("animate-pulse", "pointer-events-none");
         ELEMENT_DISPLAYS.stats_text.innerHTML = total_hosts - offline_hosts + "/" + total_hosts + " online hosts. Last check: " + new Date(parseInt(last_check_date_global)).toLocaleString("en-US", {month: "2-digit", day: "2-digit", year: "numeric", hour: "numeric", minute: "numeric", hour12: true,}).replace(",", "");
@@ -107,7 +107,7 @@ export function init_check_host() {
 
     BUTTONS.check_status.addEventListener("click", function () {
       enable_hosts();
-      BUTTONS.check_status.innerHTML = `Check host status <i class="ml-1 fa-sharp-duotone fa-solid fa-arrows-rotate-reverse"></i>`;
+      BUTTONS.check_status.innerHTML = `Check host status <i class="ml-1 ph-duotone ph-arrows-counter-clockwise"></i>`;
       BUTTONS.check_status.classList.add("animate-pulse", "pointer-events-none");
       ELEMENT_DISPLAYS.stats_text.classList.add("hidden");
       check_host_status(true);

@@ -1,0 +1,8 @@
+@keyframes ph-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+.ph-spin       { display: inline-block; animation: ph-spin 1s linear infinite; }
+.ph-rotate-90  { display: inline-block; transform: rotate(90deg); }
+.ph-rotate-180 { display: inline-block; transform: rotate(180deg); }
+.ph-2xs        { font-size: 0.625em; }

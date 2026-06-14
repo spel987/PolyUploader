@@ -285,7 +285,7 @@ async function display_final_url(result) {
 
   if (String(result[0]).includes('File format not supported by host')) {
     const final_url = document.createElement("div");
-    final_url.innerHTML = '<i class="fa-sharp fa-solid fa-circle-exclamation ml-2" style="color: #ffae00;"></i> <span style="color: #ffae00;"> <strong>' + result[1] + '</strong> </span> - File format is not allowed by the host.';
+    final_url.innerHTML = '<i class="ph-bold ph-warning-circle ml-2" style="color: #ffae00;"></i> <span style="color: #ffae00;"> <strong>' + result[1] + '</strong> </span> - File format is not allowed by the host.';
     
     const final_url_container = document.createElement("div");
     final_url_container.style.display = "block";
@@ -295,7 +295,7 @@ async function display_final_url(result) {
 
   } else if (String(result[0]).includes('Insufficient storage space')) {
     const final_url = document.createElement("div");
-    final_url.innerHTML = '<i class="fa-sharp fa-solid fa-circle-exclamation ml-2" style="color: #ffae00;"></i> <span style="color: #ffae00;"> <strong>' + result[1] + '</strong> </span> - Insufficient storage space.';
+    final_url.innerHTML = '<i class="ph-bold ph-warning-circle ml-2" style="color: #ffae00;"></i> <span style="color: #ffae00;"> <strong>' + result[1] + '</strong> </span> - Insufficient storage space.';
 
     const final_url_container = document.createElement("div");
     final_url_container.style.display = "block";
@@ -305,7 +305,7 @@ async function display_final_url(result) {
 
   } else if (String(result).includes("undefined") || String(result).includes("undef")) {
     const final_url = document.createElement("div");
-    final_url.innerHTML = '<i class="fa-sharp fa-solid fa-circle-exclamation ml-2" style="color: #ffae00;"></i> <span style="color: #ffae00;"> <strong>' + result[1] + '</strong> </span> - No link returned by the host';
+    final_url.innerHTML = '<i class="ph-bold ph-warning-circle ml-2" style="color: #ffae00;"></i> <span style="color: #ffae00;"> <strong>' + result[1] + '</strong> </span> - No link returned by the host';
 
     const final_url_container = document.createElement("div");
     final_url_container.style.display = "block";
@@ -321,7 +321,7 @@ async function display_final_url(result) {
     const final_url_container = document.createElement("div");
     final_url_container.href = "#";
     final_url_container.style.display = "block";
-    final_url_container.innerHTML = `<a href="${result[0]}" target="_blank" class="hover:underline transition duration-20">${result[0]}</a><button id="copy_button" class="ml-2 transition active:scale-125" alt="Copy link" final_link_to_copy="${result[0]}"><i class="fa-sharp-duotone fa-solid fa-copy"></i></button>`;
+    final_url_container.innerHTML = `<a href="${result[0]}" target="_blank" class="hover:underline transition duration-20">${result[0]}</a><button id="copy_button" class="ml-2 transition active:scale-125" alt="Copy link" final_link_to_copy="${result[0]}"><i class="ph-duotone ph-copy"></i></button>`;
 
     ELEMENT_DISPLAYS.final_upload_url.appendChild(final_url_container);
 
@@ -337,7 +337,7 @@ async function display_final_url(result) {
     if (!result[1]) {
       result[1] = "Unknown host"
     }
-    final_url.innerHTML = '<i class="fa-sharp fa-solid fa-circle-exclamation ml-2" style="color: #ffae00;"></i> <span style="color: #ffae00;"> <strong>' + result[1] + '</strong> </span> - ' + result[0];
+    final_url.innerHTML = '<i class="ph-bold ph-warning-circle ml-2" style="color: #ffae00;"></i> <span style="color: #ffae00;"> <strong>' + result[1] + '</strong> </span> - ' + result[0];
 
     const final_url_container = document.createElement("a");
     final_url_container.style.display = "block";
@@ -347,10 +347,10 @@ async function display_final_url(result) {
   }
 
   if (STATE.upload_mode == "local") {
-    BUTTONS.popup_upload_local.innerHTML = '<i class="fa-sharp-duotone fa-solid fa-spinner fa-spin-pulse mr-1"></i> Uploading... (' + STATE.link_receive + '/' + link_to_receive + ')';
+    BUTTONS.popup_upload_local.innerHTML = '<i class="ph-duotone ph-circle-notch ph-spin mr-1"></i> Uploading... (' + STATE.link_receive + '/' + link_to_receive + ')';
     BUTTONS.popup_upload_local.classList.add("animate-pulse");
   } else if (STATE.upload_mode == "url") {
-    BUTTONS.popup_upload_url.innerHTML = '<i class="fa-sharp-duotone fa-solid fa-spinner fa-spin-pulse mr-1"></i> Uploading... (' + STATE.link_receive + '/' + link_to_receive + ')';
+    BUTTONS.popup_upload_url.innerHTML = '<i class="ph-duotone ph-circle-notch ph-spin mr-1"></i> Uploading... (' + STATE.link_receive + '/' + link_to_receive + ')';
     BUTTONS.popup_upload_url.classList.add("animate-pulse");
   }
 
@@ -392,8 +392,8 @@ async function display_final_url(result) {
       const share_link_button = document.createElement("div");
       copy_all_button.href = "#";
       share_link_button.href = "#";
-      copy_all_button.innerHTML = `<button id="copy_all_button" class="mt-5 transition duration-200 hover:scale-[1.02] active:scale-[1.05] hover:underline">Copy all links <i class="fa-sharp-duotone fa-solid fa-clipboard-medical"></i></button><br>`;
-      share_link_button.innerHTML = `<button id="share_link_button" class="mt-1 transition duration-200 hover:scale-[1.02] active:scale-[1.05] hover:underline">Create a share link <i class="fa-sharp-duotone fa-solid fa-up-right-from-square"></i></button>`;
+      copy_all_button.innerHTML = `<button id="copy_all_button" class="mt-5 transition duration-200 hover:scale-[1.02] active:scale-[1.05] hover:underline">Copy all links <i class="ph-duotone ph-clipboard-text"></i></button><br>`;
+      share_link_button.innerHTML = `<button id="share_link_button" class="mt-1 transition duration-200 hover:scale-[1.02] active:scale-[1.05] hover:underline">Create a share link <i class="ph-duotone ph-arrow-square-out"></i></button>`;
 
       ELEMENT_DISPLAYS.final_upload_url.appendChild(copy_all_button);
       ELEMENT_DISPLAYS.final_upload_url.appendChild(share_link_button);
@@ -406,7 +406,7 @@ async function display_final_url(result) {
 
       document.getElementById("share_link_button").addEventListener("click", async function () {
         if (share_link_created == 0) {
-          document.getElementById("share_link_button").innerHTML = `Create a share link <i class="fa-sharp-duotone fa-solid fa-spinner fa-spin-pulse mr-1"></i>`;
+          document.getElementById("share_link_button").innerHTML = `Create a share link <i class="ph-duotone ph-circle-notch ph-spin mr-1"></i>`;
           document.getElementById("share_link_button").classList.remove("hover:scale-[1.02]", "active:scale-[1.05]", "hover:underline");
           document.getElementById("share_link_button").classList.add("pointer-events-none");
 
@@ -432,9 +432,9 @@ async function display_final_url(result) {
             const id_bin = data.data.id;
             const token_bin = data.data.token;
             document.getElementById("share_link_button").classList.remove("pointer-events-none");
-            document.getElementById("share_link_button").innerHTML = `<button id="share_link_button" class="mt-1 transition duration-200 hover:underline">Copy a share link <i class="fa-sharp fa-solid fa-check"></i></button>`;
+            document.getElementById("share_link_button").innerHTML = `<button id="share_link_button" class="mt-1 transition duration-200 hover:underline">Copy a share link <i class="ph-bold ph-check"></i></button>`;
             setTimeout(function() {
-              document.getElementById("share_link_button").innerHTML = `<a id="share_link_button_link" class="mt-1 transition duration-200 hover:underline" href="${share_link}" target="_blank">${share_link}</a><button id="copy_button_share_link" class="ml-2 transition active:scale-125" alt="Copy link"><i class="fa-sharp-duotone fa-solid fa-copy"></i></button>`;
+              document.getElementById("share_link_button").innerHTML = `<a id="share_link_button_link" class="mt-1 transition duration-200 hover:underline" href="${share_link}" target="_blank">${share_link}</a><button id="copy_button_share_link" class="ml-2 transition active:scale-125" alt="Copy link"><i class="ph-duotone ph-copy"></i></button>`;
 
               document.getElementById("copy_button_share_link").addEventListener("click", function() {
                 copy_to_clipboard(share_link);
@@ -448,7 +448,7 @@ async function display_final_url(result) {
             document.getElementById("share_link_button").classList.add("hover:scale-[1.02]", "active:scale-[1.05]", "hover:underline");
             document.getElementById("share_link_button").classList.remove("pointer-events-none");
             setTimeout(function() {
-              document.getElementById("share_link_button").innerHTML = `Create a share link <i class="fa-sharp-duotone fa-solid fa-up-right-from-square"></i></button>`;
+              document.getElementById("share_link_button").innerHTML = `Create a share link <i class="ph-duotone ph-arrow-square-out"></i></button>`;
             }, 2000);
           };
         };
@@ -462,9 +462,9 @@ async function display_final_url(result) {
       lp_wrap.innerHTML = `
         <div class="mt-4 pt-4 border-t border-[#4c5666]/50">
           <button id="lp_trigger_btn" class="flex items-center gap-2 mx-auto text-sm text-slate-400 hover:text-white transition duration-200 group">
-            <i class="fa-sharp-duotone fa-solid fa-lock text-slate-500 group-hover:text-indigo-400 transition duration-200"></i>
+            <i class="ph-duotone ph-lock-simple text-slate-500 group-hover:text-indigo-400 transition duration-200"></i>
             <span>Link protection</span>
-            <i id="lp_chevron" class="fa-sharp fa-solid fa-chevron-down text-xs transition-transform duration-200"></i>
+            <i id="lp_chevron" class="ph-bold ph-caret-down text-xs transition-transform duration-200"></i>
           </button>
           <div id="lp_panel" class="hidden mt-3 p-4 rounded-xl border border-[#4c5666] bg-white/5">
             <div class="flex items-center gap-2 mb-3">
@@ -485,7 +485,7 @@ async function display_final_url(result) {
               <input id="lp_fc_key" type="text" placeholder="Filecrypt API key" class="w-full bg-[#0d0f1a] border border-[#4c5666] text-white text-sm rounded-lg px-2 py-1.5 hover:border-[#616e83] transition duration-200 focus:outline-none focus:border-indigo-500" />
             </div>
             <div id="lp_pb_warn" class="hidden mb-3 text-center">
-              <p class="text-xs text-amber-400/80"><i class="fa-sharp fa-solid fa-clock mr-1"></i> PrivateBin imposes a 10-second cooldown between paste creations in "one per link" mode.</p>
+              <p class="text-xs text-amber-400/80"><i class="ph-bold ph-clock mr-1"></i> PrivateBin imposes a 10-second cooldown between paste creations in "one per link" mode.</p>
             </div>
             <div class="flex items-center justify-center gap-6 mb-4 text-sm text-slate-300">
               <label class="flex items-center gap-2 cursor-pointer hover:text-white transition duration-200">
@@ -499,7 +499,7 @@ async function display_final_url(result) {
             </div>
             <div class="flex justify-center">
               <button id="lp_protect_btn" class="bg-gradient-to-t from-indigo-700 to-indigo-500 text-white text-sm px-4 py-1.5 rounded-lg transition duration-200 hover:scale-[1.02] hover:from-indigo-600 hover:to-[#7072ee] hover:shadow-[0_0px_20px_rgba(99,_102,_241,_0.2)] active:scale-[1.03]">
-                <i class="fa-sharp-duotone fa-solid fa-shield-halved mr-1"></i> Protect
+                <i class="ph-duotone ph-shield-check mr-1"></i> Protect
               </button>
             </div>
             <div id="lp_results" class="mt-3 text-center"></div>
@@ -571,7 +571,7 @@ async function display_final_url(result) {
         const raw_inst = (localStorage.getItem("privatebin_instance_url") || "").trim();
         const pb_inst = raw_inst ? (raw_inst.endsWith('/') ? raw_inst : raw_inst + '/') : 'https://privatebin.net/';
 
-        protect_btn.innerHTML = `<i class="fa-sharp-duotone fa-solid fa-spinner fa-spin-pulse mr-1"></i> Processing...`;
+        protect_btn.innerHTML = `<i class="ph-duotone ph-circle-notch ph-spin mr-1"></i> Processing...`;
         protect_btn.classList.add("pointer-events-none", "opacity-70");
         results_div.innerHTML = "";
 
@@ -639,7 +639,7 @@ async function display_final_url(result) {
           item.innerHTML = `
             ${show_index ? `<span class="text-xs text-slate-500 whitespace-nowrap">Link ${idx + 1}</span>` : ""}
             <a href="${url}" target="_blank" class="truncate max-w-[340px] text-indigo-300 hover:underline transition duration-200">${url}</a>
-            <button class="lp_copy_btn flex-shrink-0 transition active:scale-125 text-slate-400 hover:text-white" data-url="${url}"><i class="fa-sharp-duotone fa-solid fa-copy text-xs"></i></button>
+            <button class="lp_copy_btn flex-shrink-0 transition active:scale-125 text-slate-400 hover:text-white" data-url="${url}"><i class="ph-duotone ph-copy text-xs"></i></button>
           `;
           item.querySelector(".lp_copy_btn").addEventListener("click", () => copy_to_clipboard(url));
           results_div.appendChild(item);
@@ -649,13 +649,13 @@ async function display_final_url(result) {
           if (mode === "bundle") {
             const r = await run_lp_paste(all_links_copy);
             copy_to_clipboard(r.url);
-            results_div.innerHTML = `<p class="text-xs text-slate-400 mb-1"><i class="fa-sharp-duotone fa-solid fa-lock mr-1 text-indigo-400"></i><span class="text-white/80">${svc_label}</span> — copied to clipboard <i class="fa-sharp fa-solid fa-check text-emerald-400 ml-0.5"></i></p>`;
+            results_div.innerHTML = `<p class="text-xs text-slate-400 mb-1"><i class="ph-duotone ph-lock-simple mr-1 text-indigo-400"></i><span class="text-white/80">${svc_label}</span> — copied to clipboard <i class="ph-bold ph-check text-emerald-400 ml-0.5"></i></p>`;
             lp_append_result(r.url, 0, false);
           } else {
             const links_arr = Array.from(all_links_to_copy).map(b => b.getAttribute("final_link_to_copy")).filter(l => l && l.trim().length > 0);
             const header = document.createElement("p");
             header.className = "mb-1 text-xs text-slate-400";
-            header.innerHTML = `<i class="fa-sharp-duotone fa-solid fa-lock mr-1 text-indigo-400"></i><span class="text-white/80">${svc_label}</span> — <span id="lp_progress">0 / ${links_arr.length}</span>`;
+            header.innerHTML = `<i class="ph-duotone ph-lock-simple mr-1 text-indigo-400"></i><span class="text-white/80">${svc_label}</span> — <span id="lp_progress">0 / ${links_arr.length}</span>`;
             results_div.appendChild(header);
             const progress_el = document.getElementById("lp_progress");
 
@@ -666,7 +666,7 @@ async function display_final_url(result) {
                 countdown_el.className = "mt-1 text-xs text-amber-400/70";
                 results_div.appendChild(countdown_el);
                 for (let s = 11; s > 0; s--) {
-                  countdown_el.innerHTML = `<i class="fa-sharp fa-solid fa-clock mr-1"></i> Waiting ${s}s before next paste...`;
+                  countdown_el.innerHTML = `<i class="ph-bold ph-clock mr-1"></i> Waiting ${s}s before next paste...`;
                   await new Promise(res => setTimeout(res, 1000));
                 }
                 countdown_el.remove();
@@ -679,10 +679,10 @@ async function display_final_url(result) {
             copy_to_clipboard(all_urls.join("\n"));
           }
 
-          protect_btn.innerHTML = `<i class="fa-sharp fa-solid fa-check mr-1"></i> Protect`;
+          protect_btn.innerHTML = `<i class="ph-bold ph-check mr-1"></i> Protect`;
           protect_btn.classList.remove("opacity-70");
           setTimeout(() => {
-            protect_btn.innerHTML = `<i class="fa-sharp-duotone fa-solid fa-shield-halved mr-1"></i> Protect`;
+            protect_btn.innerHTML = `<i class="ph-duotone ph-shield-check mr-1"></i> Protect`;
             protect_btn.classList.remove("pointer-events-none");
           }, 1500);
         } catch (error) {
@@ -690,9 +690,9 @@ async function display_final_url(result) {
           const err_el = document.createElement("p");
           err_el.className = "mt-2 text-sm";
           err_el.style.color = "#ff2828";
-          err_el.innerHTML = `<i class="fa-sharp fa-solid fa-circle-exclamation mr-1"></i> ${error.message || "Link protection failed."}`;
+          err_el.innerHTML = `<i class="ph-bold ph-warning-circle mr-1"></i> ${error.message || "Link protection failed."}`;
           results_div.appendChild(err_el);
-          protect_btn.innerHTML = `<i class="fa-sharp-duotone fa-solid fa-shield-halved mr-1"></i> Protect`;
+          protect_btn.innerHTML = `<i class="ph-duotone ph-shield-check mr-1"></i> Protect`;
           protect_btn.classList.remove("pointer-events-none", "opacity-70");
         }
       });
@@ -750,10 +750,10 @@ function get_file_hash(file, chunk_size = 1024 * 1024) {
 
 async function get_prefix_url_server(url, regex, regex_number) {
   if (STATE.upload_mode == "local") {
-    BUTTONS.popup_upload_local.innerHTML = '<i class="fa-sharp-duotone fa-solid fa-spinner fa-spin-pulse mr-1"></i> Uploading...';
+    BUTTONS.popup_upload_local.innerHTML = '<i class="ph-duotone ph-circle-notch ph-spin mr-1"></i> Uploading...';
     BUTTONS.popup_upload_local.classList.add("animate-pulse");
   } else if (STATE.upload_mode == "url") {
-    BUTTONS.popup_upload_url.innerHTML = '<i class="fa-sharp-duotone fa-solid fa-spinner fa-spin-pulse mr-1"></i> Uploading...';
+    BUTTONS.popup_upload_url.innerHTML = '<i class="ph-duotone ph-circle-notch ph-spin mr-1"></i> Uploading...';
     BUTTONS.popup_upload_url.classList.add("animate-pulse");
   };
 
@@ -828,11 +828,11 @@ export async function start_upload(event) {
       };
 
       if (STATE.file_to_upload_size > 0) {
-        BUTTONS.popup_upload_local.innerHTML = '<i class="fa-sharp-duotone fa-solid fa-spinner fa-spin-pulse mr-1"></i> Uploading...';
+        BUTTONS.popup_upload_local.innerHTML = '<i class="ph-duotone ph-circle-notch ph-spin mr-1"></i> Uploading...';
         BUTTONS.popup_upload_local.classList.add("animate-pulse");
       };
     } else if (STATE.upload_mode == "url") {
-      BUTTONS.popup_upload_url.innerHTML = '<i class="fa-sharp-duotone fa-solid fa-spinner fa-spin-pulse mr-1"></i> Upload initialisation...';
+      BUTTONS.popup_upload_url.innerHTML = '<i class="ph-duotone ph-circle-notch ph-spin mr-1"></i> Upload initialisation...';
       BUTTONS.popup_upload_url.classList.add("animate-pulse");
       disable_button(BUTTONS.popup_upload_url);
 
@@ -857,7 +857,7 @@ export async function start_upload(event) {
           if (total > 0) {
             loaded += value.length;
             const percent = Math.round((loaded / total) * 100);
-            BUTTONS.popup_upload_url.innerHTML = `<i class="fa-sharp-duotone fa-solid fa-spinner fa-spin-pulse mr-1"></i> Upload initialisation (${percent}%)...`;
+            BUTTONS.popup_upload_url.innerHTML = `<i class="ph-duotone ph-circle-notch ph-spin mr-1"></i> Upload initialisation (${percent}%)...`;
           };
         };
 
@@ -868,7 +868,7 @@ export async function start_upload(event) {
           STATE.file_to_upload = new File([blob], STATE.file_to_upload_name, { type: blob.type });
           STATE.file_to_upload_size = STATE.file_to_upload.size;
         } else {
-          ELEMENT_DISPLAYS.final_upload_url.innerHTML = `<i class="fa-sharp fa-solid fa-circle-exclamation ml-2" style="color: #ffae00;"></i> <span style="color: #ffae00;"> <strong>Error:</strong> </span> Unable to retrieve file name from provided URL.`;
+          ELEMENT_DISPLAYS.final_upload_url.innerHTML = `<i class="ph-bold ph-warning-circle ml-2" style="color: #ffae00;"></i> <span style="color: #ffae00;"> <strong>Error:</strong> </span> Unable to retrieve file name from provided URL.`;
           STATE.file_to_upload = "";
         };
 

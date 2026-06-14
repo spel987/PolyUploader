@@ -20,7 +20,7 @@ export function delete_api_key(element, host) {
     if (element.getAttribute("api_needed") == host) {
       element.innerHTML = `Set API key
         <div class="inline-block relative group text-left">
-          <i class="fa-sharp-duotone fa-solid fa-circle-question" style="color: #ffffff;"></i>
+          <i class="ph-duotone ph-question" style="color: #ffffff;"></i>
           <div class="absolute bottom-full group-hover:block w-24 hidden" style="margin-left: -80px;">
             <div class="bg-slate-900 text-white text-xs rounded-lg py-1 px-2 shadow-[0_5px_15px_rgba(0,_0,_0,_0.4)]">
               To use this host, enter your personal API key.
@@ -66,7 +66,7 @@ function init_show_api_key(host, api_key) {
     <div class="flex items-center gap-2">
       <input id="input_api_keys_management" class="bg-slate-900 rounded-lg border-separate border-slate-950 border pl-2 pr-2 p-1 text-sm focus:outline-none hover:bg-[#0b1322] transition duration-200" type="text" host="${host}" value="${api_key}">
       <span id="mirror" class="absolute invisible whitespace-pre text-sm px-2 py-1 font-inherit max-w-[600px]"></span>
-      <button id="delete_api_key" class="transition active:scale-125" value="${host}"><i class="fa-sharp fa-solid fa-eraser text-red-500"></i></button>
+      <button id="delete_api_key" class="transition active:scale-125" value="${host}"><i class="ph-bold ph-eraser text-red-500"></i></button>
     </div>
   `;
 
@@ -164,7 +164,7 @@ export function init_api_management() {
       if (!data[element.getAttribute("api_needed")]) {
         element.innerHTML = `Set API key
         <div class="inline-block relative group text-left">
-          <i class="fa-sharp-duotone fa-solid fa-circle-question" style="color: #ffffff;"></i>
+          <i class="ph-duotone ph-question" style="color: #ffffff;"></i>
       
           <div class="absolute bottom-full group-hover:block w-24 hidden" style="margin-left: -80px;">
               <div class="bg-slate-900 text-white text-xs rounded-lg py-1 px-2 shadow-[0_5px_15px_rgba(0,_0,_0,_0.4)]">To use this host, enter your personal API key.</div>
@@ -310,12 +310,12 @@ export function init_api_management() {
         document.querySelectorAll("#input_api_keys_management").forEach(input => {
           input.classList.remove("blur-[3px]");
         });
-        ELEMENT_DISPLAYS.hide_show_api_keys_text.innerHTML = `<i class="mr-1 fa-sharp-duotone fa-solid fa-eye-slash"></i>Hide API keys`;
+        ELEMENT_DISPLAYS.hide_show_api_keys_text.innerHTML = `<i class="mr-1 ph-duotone ph-eye-slash"></i>Hide API keys`;
       } else {
         document.querySelectorAll("#input_api_keys_management").forEach(input => {
           input.classList.add("blur-[3px]");
         });
-        ELEMENT_DISPLAYS.hide_show_api_keys_text.innerHTML = `<i class="mr-1 fa-sharp-duotone fa-solid fa-eye"></i>Show API keys`;
+        ELEMENT_DISPLAYS.hide_show_api_keys_text.innerHTML = `<i class="mr-1 ph-duotone ph-eye"></i>Show API keys`;
       }
 
       init_api_key_inputs();
@@ -330,13 +330,13 @@ export function init_api_management() {
       document.querySelectorAll("#input_api_keys_management").forEach(input => {
         input.classList.add("blur-[3px]");
       });
-      ELEMENT_DISPLAYS.hide_show_api_keys_text.innerHTML = `<i class="mr-1 fa-sharp-duotone fa-solid fa-eye"></i>Show API keys`;
+      ELEMENT_DISPLAYS.hide_show_api_keys_text.innerHTML = `<i class="mr-1 ph-duotone ph-eye"></i>Show API keys`;
       localStorage.setItem("show_api_keys", "false");
     } else {
       document.querySelectorAll("#input_api_keys_management").forEach(input => {
         input.classList.remove("blur-[3px]");
       });
-      ELEMENT_DISPLAYS.hide_show_api_keys_text.innerHTML = `<i class="mr-1 fa-sharp-duotone fa-solid fa-eye-slash"></i>Hide API keys`;
+      ELEMENT_DISPLAYS.hide_show_api_keys_text.innerHTML = `<i class="mr-1 ph-duotone ph-eye-slash"></i>Hide API keys`;
       localStorage.setItem("show_api_keys", "true");
     }
   });
@@ -345,20 +345,20 @@ export function init_api_management() {
   BUTTONS.toggle_api_keys_required.addEventListener("click", function () {
     if (ELEMENT_DISPLAYS.api_keys_required_menu.classList.contains("hidden")) {
       ELEMENT_DISPLAYS.api_keys_required_menu.classList.remove("hidden");
-      BUTTONS.toggle_api_keys_required.innerHTML = `<i class="mr-1 fa-sharp fa-solid fa-triangle fa-rotate-180 fa-2xs"></i><span>Hosts requiring an API key</span>`;
+      BUTTONS.toggle_api_keys_required.innerHTML = `<i class="mr-1 ph-bold ph-triangle ph-rotate-180 ph-2xs"></i><span>Hosts requiring an API key</span>`;
     } else {
       ELEMENT_DISPLAYS.api_keys_required_menu.classList.add("hidden");
-      BUTTONS.toggle_api_keys_required.innerHTML = `<i class="mr-1 fa-sharp fa-solid fa-triangle fa-rotate-90 fa-2xs"></i><span>Hosts requiring an API key</span>`;
+      BUTTONS.toggle_api_keys_required.innerHTML = `<i class="mr-1 ph-bold ph-triangle ph-rotate-90 ph-2xs"></i><span>Hosts requiring an API key</span>`;
     }
   });
 
   BUTTONS.toggle_api_keys_optional.addEventListener("click", function () {
     if (ELEMENT_DISPLAYS.api_keys_optional_menu.classList.contains("hidden")) {
       ELEMENT_DISPLAYS.api_keys_optional_menu.classList.remove("hidden");
-      BUTTONS.toggle_api_keys_optional.innerHTML = `<i class="mr-1 fa-sharp fa-solid fa-triangle fa-rotate-180 fa-2xs"></i><span>Hosts using an optional API key</span>`;
+      BUTTONS.toggle_api_keys_optional.innerHTML = `<i class="mr-1 ph-bold ph-triangle ph-rotate-180 ph-2xs"></i><span>Hosts using an optional API key</span>`;
     } else {
       ELEMENT_DISPLAYS.api_keys_optional_menu.classList.add("hidden");
-      BUTTONS.toggle_api_keys_optional.innerHTML = `<i class="mr-1 fa-sharp fa-solid fa-triangle fa-rotate-90 fa-2xs"></i><span>Hosts using an optional API key</span>`;
+      BUTTONS.toggle_api_keys_optional.innerHTML = `<i class="mr-1 ph-bold ph-triangle ph-rotate-90 ph-2xs"></i><span>Hosts using an optional API key</span>`;
     }
   });
 }

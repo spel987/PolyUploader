@@ -20,7 +20,7 @@ export function init_profiles() {
         STATE.selected_profile = SELECTS.profile.value;
         const values = data[STATE.selected_profile];
 
-        BUTTONS.popup_new_profile.innerHTML = `<i class="fa-sharp-duotone fa-solid fa-pen"></i>`;
+        BUTTONS.popup_new_profile.innerHTML = `<i class="ph-duotone ph-pencil-simple"></i>`;
 
         STATE.host = [];
 
@@ -54,7 +54,7 @@ export function init_profiles() {
       });
     
       ELEMENT_DISPLAYS.upload_name.textContent = "Upload";
-      BUTTONS.toggle_upload_mode.innerHTML = `<i class="fa-sharp-duotone fa-solid fa-arrows-turn-right mr-1"></i> Switch to multiple upload mode`;
+      BUTTONS.toggle_upload_mode.innerHTML = `<i class="ph-duotone ph-arrows-split mr-1"></i> Switch to multiple upload mode`;
       BUTTONS.multiple_host_popup.classList.add("hidden");
       STATE.button_upload_status = 0;
       SELECTS.profile.value = "default";
@@ -66,12 +66,12 @@ export function init_profiles() {
       });
     
       if (STATE.selected_profile !== "") {
-        document.getElementById("profile_name_text").innerHTML = '<i class="mr-1 fa-sharp-duotone fa-solid fa-pen-to-square"></i> New profile name:';
+        document.getElementById("profile_name_text").innerHTML = '<i class="mr-1 ph-duotone ph-note-pencil"></i> New profile name:';
         BUTTONS.delete_profiles.classList.remove("hidden");
-        BUTTONS.delete_profiles.innerHTML = '<i class="mr-1 fa-sharp-duotone fa-solid fa-trash"></i> Delete profile';
+        BUTTONS.delete_profiles.innerHTML = '<i class="mr-1 ph-duotone ph-trash"></i> Delete profile';
         BUTTONS.rename_profiles.classList.remove("hidden");
-        BUTTONS.rename_profiles.innerHTML = '<i class="mr-1 fa-sharp-duotone fa-solid fa-pen"></i> Rename profile';
-        BUTTONS.select_host.innerHTML = '<i class="mr-1 fa-sharp-duotone fa-solid fa-database"></i> Change selected hosts';
+        BUTTONS.rename_profiles.innerHTML = '<i class="mr-1 ph-duotone ph-pencil-simple"></i> Rename profile';
+        BUTTONS.select_host.innerHTML = '<i class="mr-1 ph-duotone ph-database"></i> Change selected hosts';
         STATE.profile_status = 1;
         enable_button(BUTTONS.select_host, "indigo", "small");
       };

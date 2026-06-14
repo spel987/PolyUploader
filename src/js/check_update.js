@@ -15,7 +15,7 @@ export async function check_update() {
       ELEMENT_DISPLAYS.polyuploader_version_text.innerHTML = "PolyUploader <strong>" + current_version + "</strong> (update available: <strong>" + latest_version + "</strong>)";
 
       POPUPS.new_version_download.addEventListener("click", async function () {
-        POPUPS.new_version_download.innerHTML = 'Downloading the update <i class="fas fa-spinner fa-spin"></i>';
+        POPUPS.new_version_download.innerHTML = 'Downloading the update <i class="ph-bold ph-circle-notch ph-spin"></i>';
         document.body.classList.add("cursor-not-allowed", "pointer-events-none")
 
         let downloaded = 0;
@@ -29,10 +29,10 @@ export async function check_update() {
             case 'Progress':
               downloaded += event.data.chunkLength;
               const percentage = Math.round((downloaded / content_length) * 100);
-              POPUPS.new_version_download.innerHTML = 'Downloading the update (' + percentage + '%) <i class="ml-1 fas fa-spinner fa-spin"></i>';
+              POPUPS.new_version_download.innerHTML = 'Downloading the update (' + percentage + '%) <i class="ml-1 ph-bold ph-circle-notch ph-spin"></i>';
               break;
             case 'Finished':
-              POPUPS.new_version_download.innerHTML = 'Installing the update <i class="fas fa-spinner fa-spin"></i>';
+              POPUPS.new_version_download.innerHTML = 'Installing the update <i class="ph-bold ph-circle-notch ph-spin"></i>';
               break;
           };
         });

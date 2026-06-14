@@ -180,9 +180,9 @@ INPUTS.url_upload.addEventListener("input", async function () {
       prohibited_format_text.classList.add("mb-5", "text-[#ffae00]");
       prohibited_format_text.id = "prohibited_format_text";
       if (STATE.host.length > 1) {
-        prohibited_format_text.innerHTML = `<strong><i class="mr-1 fa-sharp-duotone fa-solid fa-ban"></i> Prohibited file format (${prohibited_hosts.join(", ")})</strong>`;
+        prohibited_format_text.innerHTML = `<strong><i class="mr-1 ph-duotone ph-prohibit"></i> Prohibited file format (${prohibited_hosts.join(", ")})</strong>`;
       } else {
-        prohibited_format_text.innerHTML = `<strong><i class="mr-1 fa-sharp-duotone fa-solid fa-ban"></i> Prohibited file format</strong>`;
+        prohibited_format_text.innerHTML = `<strong><i class="mr-1 ph-duotone ph-prohibit"></i> Prohibited file format</strong>`;
       };
       ELEMENT_DISPLAYS.final_upload_url.prepend(prohibited_format_text);
       ELEMENT_DISPLAYS.final_upload_url.classList.remove("hidden");
@@ -221,9 +221,9 @@ INPUTS.popup_file.addEventListener("change", async function () {
     prohibited_format_text.classList.add("mb-4", "text-[#ffae00]");
     prohibited_format_text.id = "prohibited_format_text";
     if (STATE.host.length > 1) {
-      prohibited_format_text.innerHTML = `<strong><i class="mr-1 fa-sharp-duotone fa-solid fa-ban"></i> Prohibited file format (${prohibited_hosts.join(", ")})</strong>`;
+      prohibited_format_text.innerHTML = `<strong><i class="mr-1 ph-duotone ph-prohibit"></i> Prohibited file format (${prohibited_hosts.join(", ")})</strong>`;
     } else {
-      prohibited_format_text.innerHTML = `<strong><i class="mr-1 fa-sharp-duotone fa-solid fa-ban"></i> Prohibited file format</strong>`;
+      prohibited_format_text.innerHTML = `<strong><i class="mr-1 ph-duotone ph-prohibit"></i> Prohibited file format</strong>`;
     };
     ELEMENT_DISPLAYS.final_upload_url.prepend(prohibited_format_text);
     ELEMENT_DISPLAYS.final_upload_url.classList.remove("hidden");
@@ -237,7 +237,7 @@ POPUPS.upload.addEventListener("click", function (event) {
     
     POPUPS.upload.classList.add("hidden");
     BUTTONS.popup_new_profile.classList.add("hidden");
-    BUTTONS.popup_new_profile.innerHTML = `<i class="fa-sharp fa-solid fa-plus"></i>`;
+    BUTTONS.popup_new_profile.innerHTML = `<i class="ph-bold ph-plus"></i>`;
   };
 });
 
@@ -299,7 +299,7 @@ BUTTONS.toggle_upload_mode.addEventListener("click", function () {
     });
 
     ELEMENT_DISPLAYS.upload_name.textContent = "Selected";
-    BUTTONS.toggle_upload_mode.innerHTML = `<i class="fa-sharp fa-solid fa-arrow-turn-down -rotate-90 mr-1 mb-1"></i> Switch to single upload mode`;
+    BUTTONS.toggle_upload_mode.innerHTML = `<i class="ph-bold ph-arrow-elbow-down-right -rotate-90 mr-1 mb-1"></i> Switch to single upload mode`;
     BUTTONS.multiple_host_popup.classList.remove("hidden");
     STATE.button_upload_status = 1;
 
@@ -312,7 +312,7 @@ BUTTONS.toggle_upload_mode.addEventListener("click", function () {
     });
 
     ELEMENT_DISPLAYS.upload_name.textContent = "Upload";
-    BUTTONS.toggle_upload_mode.innerHTML = `<i class="mr-1 fa-sharp-duotone fa-solid fa-arrows-turn-right"></i> Switch to multiple upload mode`;
+    BUTTONS.toggle_upload_mode.innerHTML = `<i class="mr-1 ph-duotone ph-arrows-split"></i> Switch to multiple upload mode`;
     BUTTONS.multiple_host_popup.classList.add("hidden");
     STATE.button_upload_status = 0;
   }
@@ -350,7 +350,7 @@ BUTTONS.delete_file_input.addEventListener("click", function () {
   INPUTS.popup_file.value = "";
   disabled_upload_button();
   BUTTONS.popup_upload_local.classList.add("opacity-50");
-  BUTTONS.popup_browse.innerHTML = `<i class="mr-2 fa-sharp-duotone fa-solid fa-file-medical"></i>Add a file`;
+  BUTTONS.popup_browse.innerHTML = `<i class="mr-2 ph-duotone ph-file-plus"></i>Add a file`;
 
   if (document.getElementById("prohibited_format_text")) {
     document.getElementById("prohibited_format_text").remove();
@@ -367,7 +367,7 @@ BUTTONS.close_popup.forEach((element) => {
       
       POPUPS.upload.classList.add("hidden");
       BUTTONS.popup_new_profile.classList.add("hidden");
-      BUTTONS.popup_new_profile.innerHTML = `<i class="fa-sharp fa-solid fa-plus"></i>`;
+      BUTTONS.popup_new_profile.innerHTML = `<i class="ph-bold ph-plus"></i>`;
     } else if (element.attributes.target.value === "update_popup") {
       POPUPS.update.classList.add("hidden");
     } else if (element.attributes.target.value === "profile_maker_popup") {
@@ -445,7 +445,7 @@ buttons_top_margin.forEach(btn => {
 
 function show_hide_unstable_hosts() {
   document.querySelectorAll('tr').forEach(row => {
-    const warning = row.querySelector('.fa-circle-exclamation');
+    const warning = row.querySelector('.ph-warning-circle');
     if (warning) {
       const tooltip_text = warning.closest('.group')?.querySelector('div div')?.textContent?.trim();
       if (tooltip_text?.includes("Errors are frequently encountered during uploads")) {
@@ -469,7 +469,7 @@ function show_hide_unstable_hosts() {
 function count_hosts_with_text() {
   let count = 0;
   document.querySelectorAll('tr').forEach(row => {
-    const warning = row.querySelector('.fa-circle-exclamation');
+    const warning = row.querySelector('.ph-warning-circle');
     if (warning) {
       const tooltip_text = warning.closest('.group')?.querySelector('div div')?.textContent?.trim();
       if (tooltip_text?.includes("Errors are frequently encountered during uploads")) {

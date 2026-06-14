@@ -248,7 +248,7 @@ export function reset_popup() {
   POPUPS.upload.classList.remove("hidden");
   if (STATE.force_keep_file == 0) {
     INPUTS.popup_file.value = "";
-    BUTTONS.popup_browse.innerHTML = `<i class="mr-2 fa-sharp-duotone fa-solid fa-file-medical"></i>Add a file`;
+    BUTTONS.popup_browse.innerHTML = `<i class="mr-2 ph-duotone ph-file-plus"></i>Add a file`;
     disable_button(BUTTONS.popup_upload_local);
     BUTTONS.delete_file_input.classList.add("hidden");
   } else {
@@ -265,7 +265,7 @@ export function reset_popup() {
   BUTTONS.popup_upload_url.classList.remove("hidden");
   BUTTONS.copy.classList.add("hidden");
   SELECTS.profile_menu.classList.add("hidden");
-  BUTTONS.select_host.innerHTML = `<i class="mr-1 fa-sharp-duotone fa-solid fa-database"></i> Select hosts`;
+  BUTTONS.select_host.innerHTML = `<i class="mr-1 ph-duotone ph-database"></i> Select hosts`;
   ELEMENT_DISPLAYS.conditions_of_use.classList.remove("hidden");
   INPUTS.url_upload.classList.remove("cursor-not-allowed", "opacity-50");
   INPUTS.url_upload.removeAttribute("disabled", "")
@@ -376,7 +376,7 @@ export async function check_prohibited_format(selected_file_name) {
 
 export function display_info(text) {
     POPUPS.info.classList.remove("hidden");
-    ELEMENT_DISPLAYS.info_text.innerHTML = `<i class="mr-1 fa-sharp fa-solid fa-circle-info"></i>` + text;
+    ELEMENT_DISPLAYS.info_text.innerHTML = `<i class="mr-1 ph-bold ph-info"></i>` + text;
   
     POPUPS.info.addEventListener("click", function () {
       POPUPS.info.classList.add("hidden");
@@ -431,7 +431,7 @@ export function upload_preparation(upload_button, host_name, indications_of_host
         });
   
         ELEMENT_DISPLAYS.upload_name.textContent = "Upload";
-        BUTTONS.toggle_upload_mode.innerHTML = `<i class="mr-1 fa-sharp-duotone fa-solid fa-arrows-turn-right"></i> Switch to multiple upload mode`;
+        BUTTONS.toggle_upload_mode.innerHTML = `<i class="mr-1 ph-duotone ph-arrows-split"></i> Switch to multiple upload mode`;
         BUTTONS.multiple_host_popup.classList.add("hidden");
         STATE.button_upload_status = 0;
         reset_popup();
@@ -445,7 +445,7 @@ export function upload_preparation(upload_button, host_name, indications_of_host
       STATE.host = host_name;
 
       const indication_of_host_text = document.createElement("p");
-      indication_of_host_text.innerHTML = `<i class="mr-0.5 fa-sharp-duotone fa-solid fa-circle-info"></i> ${indications_of_host}`;
+      indication_of_host_text.innerHTML = `<i class="mr-0.5 ph-duotone ph-info"></i> ${indications_of_host}`;
 
       const api_key_host = await get_api_key(host_name);
       if (api_key_host) {
@@ -459,10 +459,10 @@ export function upload_preparation(upload_button, host_name, indications_of_host
       let list_content = "";
 
       if (result[0] == "*") {
-        list_content = `<i class="mt-2 fa-sharp-duotone fa-solid fa-file-check mr-1.5"></i><strong>Only authorized</strong> file formats: `;
+        list_content = `<i class="mt-2 ph-duotone ph-check-circle mr-1.5"></i><strong>Only authorized</strong> file formats: `;
         result.shift();
       } else {
-        list_content = `<i class="mt-2 fa-sharp-duotone fa-solid fa-file-slash mr-1"></i><strong>Forbidden</strong> file formats: `;
+        list_content = `<i class="mt-2 ph-duotone ph-file-x mr-1"></i><strong>Forbidden</strong> file formats: `;
       };
       
       let index = 0;
@@ -517,20 +517,25 @@ export function reset_table_order() {
   apply_alternate_row_colors();
 
   STATE.sort_states.fill(null);
+  STATE.sort_icon_states.fill(0);
 
-  const reset_order_button = document.getElementsByClassName("ml-5 fa-sharp fa-solid fa-arrow-rotate-left");
-
-  if (reset_order_button) {
-    Array.from(reset_order_button).forEach(element => element.remove())
+  const base_headers = {
+    name_header: 'Name <i class="ph-duotone ph-sort-ascending"></i>',
+    max_file_size_header: 'Max file size <i class="ph-duotone ph-sort-descending"></i>',
+    expire_header: 'Expire in <i class="ph-duotone ph-sort-descending"></i>',
+  };
+  for (const [id, html] of Object.entries(base_headers)) {
+    const header = document.getElementById(id);
+    if (header) header.innerHTML = html;
   };
 };
 
 export function reset_upload_profile() {
   POPUPS.profile_maker.classList.add("hidden");
-  BUTTONS.popup_new_profile.innerHTML = `<i class="fa-sharp fa-solid fa-plus"></i>`;
+  BUTTONS.popup_new_profile.innerHTML = `<i class="ph-bold ph-plus"></i>`;
   BUTTONS.popup_new_profile.classList.add("hidden");
   STATE.selected_profile = "";
-  document.getElementById("profile_name_text").innerHTML = `<i class="mr-1 fa-sharp-duotone fa-solid fa-pen-to-square"></i> Profile name:`;
+  document.getElementById("profile_name_text").innerHTML = `<i class="mr-1 ph-duotone ph-note-pencil"></i> Profile name:`;
   BUTTONS.delete_profiles.classList.add("hidden");
   BUTTONS.rename_profiles.classList.add("hidden");
   INPUTS.profile_name.value = "";

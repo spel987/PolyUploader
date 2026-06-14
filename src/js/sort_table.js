@@ -66,19 +66,16 @@ export function init_sort_table() {
         return has_days ? time * 24 * 60 : time;
       };
       
-      let alpahbetic_order = 0;
-      let file_size_order = 0;
-      let expire_order = 0;
       
       document.getElementById("name_header").addEventListener("click", () => {
         sort_table(0, null, get_name_value);
       
-        if (alpahbetic_order == 0) {
-          document.getElementById("name_header").innerHTML = `Name <i class="fa-sharp-duotone fa-solid fa-arrow-down-a-z"></i><i id="name_order_reset" class="ml-5 fa-sharp fa-solid fa-arrow-rotate-left hover:text-red-500"></i>`
-          alpahbetic_order = 1;
+        if (STATE.sort_icon_states[0] == 0) {
+          document.getElementById("name_header").innerHTML = `Name <i class="ph-duotone ph-sort-ascending"></i><i id="name_order_reset" class="ml-5 ph-bold ph-arrow-counter-clockwise hover:text-red-500"></i>`
+          STATE.sort_icon_states[0] = 1;
         } else {
-          document.getElementById("name_header").innerHTML = `Name <i class="fa-sharp-duotone fa-solid fa-arrow-down-z-a"></i><i id="name_order_reset" class="ml-5 fa-sharp fa-solid fa-arrow-rotate-left hover:text-red-500"></i>`
-          alpahbetic_order = 0;
+          document.getElementById("name_header").innerHTML = `Name <i class="ph-duotone ph-sort-descending"></i><i id="name_order_reset" class="ml-5 ph-bold ph-arrow-counter-clockwise hover:text-red-500"></i>`
+          STATE.sort_icon_states[0] = 0;
         };
       
         document.getElementById("name_order_reset").addEventListener("click", (event) => {
@@ -90,12 +87,12 @@ export function init_sort_table() {
       document.getElementById("max_file_size_header").addEventListener("click", () => {
         sort_table(1, get_max_size_file_value);
       
-        if (file_size_order == 0) {
-          document.getElementById("max_file_size_header").innerHTML = `Max file size <i class="fa-sharp-duotone fa-solid fa-arrow-down-wide-short"></i><i id="max_file_size_order_reset" class="ml-5 fa-sharp fa-solid fa-arrow-rotate-left hover:text-red-500"></i>`
-          file_size_order = 1;
+        if (STATE.sort_icon_states[1] == 0) {
+          document.getElementById("max_file_size_header").innerHTML = `Max file size <i class="ph-duotone ph-sort-descending"></i><i id="max_file_size_order_reset" class="ml-5 ph-bold ph-arrow-counter-clockwise hover:text-red-500"></i>`
+          STATE.sort_icon_states[1] = 1;
         } else {
-          document.getElementById("max_file_size_header").innerHTML = `Max file size <i class="fa-sharp-duotone fa-solid fa-arrow-down-short-wide"></i><i id="max_file_size_order_reset" class="ml-5 fa-sharp fa-solid fa-arrow-rotate-left hover:text-red-500"></i>`
-          file_size_order = 0;
+          document.getElementById("max_file_size_header").innerHTML = `Max file size <i class="ph-duotone ph-sort-ascending"></i><i id="max_file_size_order_reset" class="ml-5 ph-bold ph-arrow-counter-clockwise hover:text-red-500"></i>`
+          STATE.sort_icon_states[1] = 0;
         };
       
         document.getElementById("max_file_size_order_reset").addEventListener("click", (event) => {
@@ -107,12 +104,12 @@ export function init_sort_table() {
       document.getElementById("expire_header").addEventListener("click", () => {
         sort_table(2, get_expire_value);
       
-        if (expire_order == 0) {
-          document.getElementById("expire_header").innerHTML = `Expire in <i class="fa-sharp-duotone fa-solid fa-arrow-down-wide-short"></i><i id="expire_order_reset" class="ml-5 fa-sharp fa-solid fa-arrow-rotate-left hover:text-red-500"></i>`
-          expire_order = 1;
+        if (STATE.sort_icon_states[2] == 0) {
+          document.getElementById("expire_header").innerHTML = `Expire in <i class="ph-duotone ph-sort-descending"></i><i id="expire_order_reset" class="ml-5 ph-bold ph-arrow-counter-clockwise hover:text-red-500"></i>`
+          STATE.sort_icon_states[2] = 1;
         } else {
-          document.getElementById("expire_header").innerHTML = `Expire in <i class="fa-sharp-duotone fa-solid fa-arrow-down-short-wide"></i><i id="expire_order_reset" class="ml-5 fa-sharp fa-solid fa-arrow-rotate-left hover:text-red-500"></i>`
-          expire_order = 0;
+          document.getElementById("expire_header").innerHTML = `Expire in <i class="ph-duotone ph-sort-ascending"></i><i id="expire_order_reset" class="ml-5 ph-bold ph-arrow-counter-clockwise hover:text-red-500"></i>`
+          STATE.sort_icon_states[2] = 0;
         };
       
         document.getElementById("expire_order_reset").addEventListener("click", (event) => {

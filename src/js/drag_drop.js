@@ -72,9 +72,9 @@ export function init_drag_drop() {
           prohibited_format_text.classList.add("mb-4", "text-[#ffae00]");
           prohibited_format_text.id = "prohibited_format_text";
           if (STATE.host.length > 1) {
-            prohibited_format_text.innerHTML = `<strong><i class="mr-1 fa-sharp-duotone fa-solid fa-ban"></i> Prohibited file format (${prohibited_hosts.join(", ")})</strong>`;
+            prohibited_format_text.innerHTML = `<strong><i class="mr-1 ph-duotone ph-prohibit"></i> Prohibited file format (${prohibited_hosts.join(", ")})</strong>`;
           } else {
-            prohibited_format_text.innerHTML = `<strong><i class="mr-1 fa-sharp-duotone fa-solid fa-ban"></i> Prohibited file format</strong>`;
+            prohibited_format_text.innerHTML = `<strong><i class="mr-1 ph-duotone ph-prohibit"></i> Prohibited file format</strong>`;
           };
           ELEMENT_DISPLAYS.final_upload_url.prepend(prohibited_format_text);
         }

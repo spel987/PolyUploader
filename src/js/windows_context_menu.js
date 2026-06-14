@@ -22,7 +22,7 @@ export function init_windows_context_menu() {
           await invoke('register_polyuploader_context_menu', { action: "add" })
           localStorage.setItem("add_to_context_menu", "true");
         } catch (error) {
-          ELEMENT_DISPLAYS.add_to_context_menu.innerHTML = `Add PolyUploader to the Windows context menu<br><p class="text-[#ff2828]"><i class="fa-sharp fa-solid fa-circle-exclamation" style="color: #ff2828;"></i> ${error}</p>`;
+          ELEMENT_DISPLAYS.add_to_context_menu.innerHTML = `Add PolyUploader to the Windows context menu<br><p class="text-[#ff2828]"><i class="ph-bold ph-warning-circle" style="color: #ff2828;"></i> ${error}</p>`;
           SELECTS.select_box_shell.checked = false;
         };
       } else {
@@ -30,7 +30,7 @@ export function init_windows_context_menu() {
           await invoke('register_polyuploader_context_menu', { action: "remove" })
           localStorage.setItem("add_to_context_menu", "false");
         } catch (error) {
-          ELEMENT_DISPLAYS.add_to_context_menu.innerHTML = `Add PolyUploader to the Windows context menu<br><p class="text-[#ff2828]"><i class="fa-sharpfa-solid fa-circle-exclamation" style="color: #ff2828;"></i> ${error}</p>`;
+          ELEMENT_DISPLAYS.add_to_context_menu.innerHTML = `Add PolyUploader to the Windows context menu<br><p class="text-[#ff2828]"><i class="ph-bold ph-warning-circle" style="color: #ff2828;"></i> ${error}</p>`;
           SELECTS.select_box_shell.checked = true;
         };
       };

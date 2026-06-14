@@ -61,7 +61,7 @@ export async function init_history() {
     BUTTONS.upload_history.addEventListener("click", async function () {
       POPUPS.uploaded_files_history.classList.remove("hidden");
       HISTORY_STATE.sort_states[1] = "asc";
-      document.getElementById("upload_date_header").innerHTML = `<i class="mr-1 fa-sharp-duotone fa-solid fa-calendar"></i> Upload date <i class="fa-sharp-duotone fa-solid fa-arrow-down-wide-short"></i>`;
+      document.getElementById("upload_date_header").innerHTML = `<i class="mr-1 ph-duotone ph-calendar"></i> Upload date <i class="ph-duotone ph-sort-descending"></i>`;
 
       while (ELEMENT_DISPLAYS.history_table_body.firstChild) {
         ELEMENT_DISPLAYS.history_table_body.removeChild(ELEMENT_DISPLAYS.history_table_body.firstChild);
@@ -90,15 +90,15 @@ export async function init_history() {
         link_text.className = "flex items-center justify-center text-center"
         link_text.innerHTML = `<div class="flex items-center justify-between w-full">
           <button id="delete_element_history" class="text-xl text-white cursor-pointer mr-4" target=${link}>
-            <i class="text-base text-slate-300 opacity-70 fa-sharp fa-regular fa-xmark"></i>
+            <i class="text-base text-slate-300 opacity-70 ph-bold ph-x"></i>
           </button>
           <div class="flex flex-col flex-1 truncate">
             <a href=${link} target="_blank" class="truncate text-sky-400 hover:underline">` + link + `</a>
-            <p id="upload_filename" class="truncate text-xs text-slate-300"><i class="mr-1 fa-sharp-duotone fa-solid fa-file"></i> ${data[link].filename}</p>
+            <p id="upload_filename" class="truncate text-xs text-slate-300"><i class="mr-1 ph-duotone ph-file"></i> ${data[link].filename}</p>
           </div>
 
           <button id="copy_button" class="ml-4 transition active:scale-125" alt="Copy link" link_to_copy="${link}">
-            <i class="fa-sharp-duotone fa-solid fa-copy"></i>
+            <i class="ph-duotone ph-copy"></i>
           </button>
         </div>`;
 
@@ -125,9 +125,9 @@ export async function init_history() {
         
         if (current_date > expiry_date ) {
           localStorage.setItem(`${link}_file_status`, "expired")
-          time_to_expiration = `<p style="color: #ff2828;"><i class="fa-sharp fa-solid fa-circle-exclamation" style="color: #ff2828;"></i> <strong>Expired file</strong></p>`;
+          time_to_expiration = `<p style="color: #ff2828;"><i class="ph-bold ph-warning-circle" style="color: #ff2828;"></i> <strong>Expired file</strong></p>`;
         } else if (localStorage.getItem(`${link}_alive`) == "deleted") {
-          time_to_expiration = `<p style="color: #ff2828;"><i class="fa-sharp fa-solid fa-circle-exclamation" style="color: #ff2828;"></i> <strong>File deleted</strong></p>`;
+          time_to_expiration = `<p style="color: #ff2828;"><i class="ph-bold ph-warning-circle" style="color: #ff2828;"></i> <strong>File deleted</strong></p>`;
         } else if (data[link].date_expires == "Depends on the file size") {
           time_to_expiration = "depends on the file size";
         } else if (data[link].date_expires == "Infinite") {
@@ -150,10 +150,10 @@ export async function init_history() {
 
         if (data[link].manage[0] && file_status != "delete" && file_status != "expired") {
           let delete_name = data[link].manage[0].startsWith(API_URL) ? "link" : "file";
-          delete_link_button.innerHTML = `<button class="bg-gradient-to-t from-rose-600 to-red-500 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-[1.03] hover:from-rose-500 hover:to-red-500 hover:shadow-[0_0px_30px_rgba(225,_29,_72,_0.2)] active:scale-[1.05]" id="delete_file" value=${link}>Delete ${delete_name} <i class="fa-sharp-duotone fa-solid fa-trash"></i></button>`;
+          delete_link_button.innerHTML = `<button class="bg-gradient-to-t from-rose-600 to-red-500 text-white px-4 py-2 rounded-lg transition duration-200 hover:scale-[1.03] hover:from-rose-500 hover:to-red-500 hover:shadow-[0_0px_30px_rgba(225,_29,_72,_0.2)] active:scale-[1.05]" id="delete_file" value=${link}>Delete ${delete_name} <i class="ph-duotone ph-trash"></i></button>`;
         } else {
           delete_link_button.innerHTML = `<div class="inline-block relative group">
-          <button class="bg-gradient-to-t from-rose-600 to-red-500 text-white px-4 py-2 rounded-lg transition duration-200 opacity-50 cursor-not-allowed" id="delete_file" disabled>Delete file <i class="fa-sharp-duotone fa-solid fa-trash-slash"></i></button>
+          <button class="bg-gradient-to-t from-rose-600 to-red-500 text-white px-4 py-2 rounded-lg transition duration-200 opacity-50 cursor-not-allowed" id="delete_file" disabled>Delete file <i class="ph-duotone ph-trash"></i></button>
       
             <div class="absolute bottom-full mb-1 group-hover:block w-48 hidden">
                 <div class="bg-slate-900 text-white text-xs rounded-lg py-1 px-2 shadow-[0_5px_15px_rgba(0,_0,_0,_0.4)]">
@@ -195,7 +195,7 @@ export async function init_history() {
           const delete_request_format = data[button.value].manage[4];
           let delete_request_config = "";
           let delete_data_formatted = "";
-          button.innerHTML = `Delete file <i class="fas fa-spinner fa-spin"></i>`;
+          button.innerHTML = `Delete file <i class="ph-bold ph-circle-notch ph-spin"></i>`;
 
           if (delete_request_format == "formatted") {
             delete_data_formatted = Object.keys(delete_data).map(key => {
@@ -225,11 +225,11 @@ export async function init_history() {
 
           disable_button(button);
           const time_to_expiration = button.parentNode.parentNode.parentNode.children[2];                  
-          button.innerHTML = `Delete file <i class="fa-sharp fa-solid fa-check"></i>`;
+          button.innerHTML = `Delete file <i class="ph-bold ph-check"></i>`;
           setTimeout(function() {
-            button.innerHTML = 'Delete file <i class="fa-sharp-duotone fa-solid fa-trash-slash"></i>';
+            button.innerHTML = 'Delete file <i class="ph-duotone ph-trash"></i>';
           }, 1500);
-          time_to_expiration.innerHTML = `<p style="color: #ff2828;"><i class="fa-sharp fa-solid fa-circle-exclamation" style="color: #ff2828;"></i> <strong>File deleted</strong></p>`;
+          time_to_expiration.innerHTML = `<p style="color: #ff2828;"><i class="ph-bold ph-warning-circle" style="color: #ff2828;"></i> <strong>File deleted</strong></p>`;
           localStorage.setItem(`${button.value}_file_status`, 'delete');
           localStorage.setItem(`${button.value}_alive`, 'deleted');
 
@@ -367,9 +367,9 @@ export async function init_history() {
       const current_order = HISTORY_STATE.sort_states[1];
 
       if (current_order === "asc") {
-        document.getElementById("upload_date_header").innerHTML = `<i class="mr-1 fa-sharp-duotone fa-solid fa-calendar"></i> Upload date <i class="fa-sharp-duotone fa-solid fa-arrow-down-wide-short"></i>`;
+        document.getElementById("upload_date_header").innerHTML = `<i class="mr-1 ph-duotone ph-calendar"></i> Upload date <i class="ph-duotone ph-sort-descending"></i>`;
       } else {
-        document.getElementById("upload_date_header").innerHTML = `<i class="mr-1 fa-sharp-duotone fa-solid fa-calendar"></i> Upload date <i class="fa-sharp-duotone fa-solid fa-arrow-down-short-wide"></i>`;
+        document.getElementById("upload_date_header").innerHTML = `<i class="mr-1 ph-duotone ph-calendar"></i> Upload date <i class="ph-duotone ph-sort-ascending"></i>`;
       };
     });
 };

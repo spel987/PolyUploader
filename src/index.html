@@ -4,11 +4,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PolyUploader</title>
   <link rel="stylesheet" href="./styles.css">
-  <link rel="stylesheet" href="./font-awesome-css/all.css">
-  <link rel="stylesheet" href="./font-awesome-css/sharp-duotone-solid.css">
-  <link rel="stylesheet" href="./font-awesome-css/sharp-duotone-regular.css">
-  <link rel="stylesheet" href="./font-awesome-css/sharp-solid.css">
-  <link rel="stylesheet" href="./font-awesome-css/sharp-regular.css">
+  <link rel="stylesheet" href="./phosphor/bold/style.css">
+  <link rel="stylesheet" href="./phosphor/duotone/style.css">
+  <link rel="stylesheet" href="./phosphor/phosphor-extra.css">
 </head>
 </html>
 <style>
@@ -73,7 +71,7 @@
       <p class="inline-block text-4xl font-bold text-center text-transparent bg-gradient-to-b from-white to-slate-400 bg-clip-text mb-7">Welcome to PolyUploader</p>
       <p></p>
       <div id="start_tour_button" class="mb-4 hover:scale-[1.01] active:scale-[1.03] transition-all duration-200 ease-in-out transform translate-y-2 cursor-pointer backdrop-blur-lg bg-gradient-to-t from-indigo-700 to-indigo-500 rounded-2xl p-1 text-center hover:from-indigo-600 hover:to-[#7072ee] hover:shadow-[0_0px_20px_rgba(99,_102,_241,_0.2)]">
-        <p class="p-2 text-lg text-center"><i class="mr-2 fa-sharp-duotone fa-solid fa-arrow-right"></i>Start a short tour</p>
+        <p class="p-2 text-lg text-center"><i class="mr-2 ph-duotone ph-arrow-right"></i>Start a short tour</p>
       </div>
       <div id="ignore_onboarding_button" class="hover:scale-[1.01] active:scale-[1.03] transition-all duration-200 ease-in-out transform translate-y-2 cursor-pointer backdrop-blur-lg bg-white/7 rounded-2xl p-1 text-center border border-[#4c5666] hover:bg-white/9 hover:border-[#616e83]">
         <p class="p-2 text-lg text-center">Ignore onboarding</p>
@@ -89,14 +87,14 @@
 
   <div id="scroll_top_button_container" class="fixed left-0 right-0 z-10 flex justify-center pointer-events-none">
     <div id="scroll_top_button"  class="hover:scale-[1.02] active:scale-[1.03] transition-all duration-200 ease-in-out transform translate-y-2 opacity-0 cursor-pointer pointer-events-none backdrop-blur-lg bg-white/7 rounded-2xl p-1 shadow-[0_0_30px_rgba(0,_0,_0,_0.4)] text-center border border-[#4c5666] hover:bg-white/9 hover:border-[#616e83]">
-      <p class="p-2 text-center"><i class="mr-2 fa-sharp fa-solid fa-arrow-up"></i>Scroll to the top</p>
+      <p class="p-2 text-center"><i class="mr-2 ph-bold ph-arrow-up"></i>Scroll to the top</p>
     </div>
   </div>
 
   <div id="settings_popup" class="fixed inset-0 z-50 flex items-center justify-center hidden bg-opacity-60 bg-slate-950">
     <div class="relative backdrop-blur-lg bg-white/7 p-6 rounded-2xl shadow-md w-[800px] max-h-[550px] overflow-y-auto border border-[#4c5666] text-center hover:bg-white/9 hover:border-[#616e83] transition duration-200">
       <button id="close_popup_button" class="absolute text-xl text-white cursor-pointer top-2 right-4" target="settings_popup">
-        <i class="text-base text-slate-300 opacity-70 fa-sharp fa-regular fa-xmark"></i>
+        <i class="text-base text-slate-300 opacity-70 ph-bold ph-x"></i>
       </button>
 
       <div id="select_box_container_popups" class="flex items-center justify-center mb-2">
@@ -120,7 +118,7 @@
         </label>
         <p id="add_to_context_menu_text">Add PolyUploader to the Windows context menu</p>
         <div class="relative inline-block ml-2 group">
-          <i class="text-lg fa-sharp-duotone fa-solid fa-circle-question" style="color: #ffffff91;"></i>
+          <i class="text-lg ph-duotone ph-question" style="color: #ffffff91;"></i>
       
           <div class="absolute hidden w-[150px] bottom-full group-hover:block">
               <div class="bg-slate-900 text-white text-xs rounded-lg py-1 px-2 shadow-[0_5px_15px_rgba(0,_0,_0,_0.4)]">
@@ -135,28 +133,28 @@
       <hr class="my-6 border-t border-indigo-400/70">
 
       <div class="flex justify-center">
-        <p id="import_button_popup" class="mr-5 transition duration-200 cursor-pointer hover:text-slate-400">Import data <i class="ml-1 fa-sharp-duotone fa-solid fa-file-arrow-up"></i></p>
-        <p id="export_button_popup" class="ml-5 transition duration-200 cursor-pointer hover:text-slate-400">Export data <i class="ml-1 fa-sharp-duotone fa-solid fa-file-arrow-down"></i></p>
+        <p id="import_button_popup" class="mr-5 transition duration-200 cursor-pointer hover:text-slate-400">Import data <i class="ml-1 ph-duotone ph-file-arrow-up"></i></p>
+        <p id="export_button_popup" class="ml-5 transition duration-200 cursor-pointer hover:text-slate-400">Export data <i class="ml-1 ph-duotone ph-file-arrow-down"></i></p>
       </div>
 
       <div id="import_export_container">
         <div id="export_popup" class="hidden mt-8">
-          <p><i class="mr-1 fa-sharp-duotone fa-solid fa-file-arrow-down"></i> <strong>Export</strong> your history, API keys and profiles.<br>
+          <p><i class="mr-1 ph-duotone ph-file-arrow-down"></i> <strong>Export</strong> your history, API keys and profiles.<br>
             This option is useful if an update is available and you wish to preserve your configuration.<br>
             <div class="mt-2">
               <a class="text-sky-400 hover:underline" href="https://polyuploader.vercel.app/installation-and-user-guide/import-export-data#export-data" target="_blank">Help and information</a>
             </div>
           </p>
-          <button class="bg-gradient-to-t from-indigo-700 to-indigo-500 text-white mt-5 px-4 py-2 rounded-lg transition duration-200 hover:scale-[1.02] hover:from-indigo-600 hover:to-[#7072ee] hover:shadow-[0_0px_20px_rgba(99,_102,_241,_0.2)] active:scale-[1.03]" id="export_button">Export data <i class="ml-1 fa-sharp-duotone fa-solid fa-file-arrow-down"></i></button>
+          <button class="bg-gradient-to-t from-indigo-700 to-indigo-500 text-white mt-5 px-4 py-2 rounded-lg transition duration-200 hover:scale-[1.02] hover:from-indigo-600 hover:to-[#7072ee] hover:shadow-[0_0px_20px_rgba(99,_102,_241,_0.2)] active:scale-[1.03]" id="export_button">Export data <i class="ml-1 ph-duotone ph-file-arrow-down"></i></button>
         </div>
         <div id="import_popup" class="hidden mt-8">
-          <p><i class="mr-1 fa-sharp-duotone fa-solid fa-file-arrow-up"></i> <strong>Import</strong> your history, API keys and profiles.<br>
-            <i class="fa-sharp fa-solid fa-circle-exclamation" style="color: #ffae00;"></i> <span style="color: #ffae00;"> <strong>Note:</strong></span> Your data <strong style="color: #ffae00;">will be replaced</strong>, this option is useful if an update is available and you wish to preserve your configuration.<br>
+          <p><i class="mr-1 ph-duotone ph-file-arrow-up"></i> <strong>Import</strong> your history, API keys and profiles.<br>
+            <i class="ph-bold ph-warning-circle" style="color: #ffae00;"></i> <span style="color: #ffae00;"> <strong>Note:</strong></span> Your data <strong style="color: #ffae00;">will be replaced</strong>, this option is useful if an update is available and you wish to preserve your configuration.<br>
             <div class="mt-2">
               <a class="mt-2 text-sky-400 hover:underline" href="https://polyuploader.vercel.app/installation-and-user-guide/import-export-data#import-data" target="_blank">Help and information</a>
             </div>
           </p>
-          <button class="bg-gradient-to-t from-indigo-700 to-indigo-500 text-white mt-5 px-4 py-2 rounded-lg transition duration-200 hover:scale-[1.02] hover:from-indigo-600 hover:to-[#7072ee] hover:shadow-[0_0px_20px_rgba(99,_102,_241,_0.2)] active:scale-[1.03]" id="import_button">Import data <i class="ml-1 fa-sharp-duotone fa-solid fa-file-arrow-up"></i></button>
+          <button class="bg-gradient-to-t from-indigo-700 to-indigo-500 text-white mt-5 px-4 py-2 rounded-lg transition duration-200 hover:scale-[1.02] hover:from-indigo-600 hover:to-[#7072ee] hover:shadow-[0_0px_20px_rgba(99,_102,_241,_0.2)] active:scale-[1.03]" id="import_button">Import data <i class="ml-1 ph-duotone ph-file-arrow-up"></i></button>
         </div>
       </div>
 
@@ -166,7 +164,7 @@
   <div id="about_popup" class="fixed inset-0 z-50 flex items-center justify-center hidden bg-opacity-60 bg-slate-950">
     <div class="relative w-[505px] max-w-3xl">
       <button id="close_popup_button" class="absolute z-10 text-xl text-white cursor-pointer top-2 right-4" target="about_popup">
-        <i class="text-base text-slate-300 opacity-70 fa-sharp fa-regular fa-xmark"></i>
+        <i class="text-base text-slate-300 opacity-70 ph-bold ph-x"></i>
       </button>
 
       <div class="backdrop-blur-lg bg-white/7 p-8 rounded-2xl shadow-md max-h-[550px] overflow-y-auto border border-[#4c5666] text-center hover:bg-white/9 hover:border-[#616e83] transition durection-200">
@@ -180,25 +178,25 @@
           <p class=""><strong>spel987</strong></p>
         </div>
 
-        <p class="mt-5"><a class="transition duration-200 text-slate-300 hover:text-slate-400" href="https://github.com/spel987" target="_blank"><i class="fa-brands fa-github"></i> GitHub</a><a class="ml-3 transition duration-200 text-slate-300 hover:text-slate-400" href="mailto:spel987@pm.me" target="_blank"><i class="fa-sharp-duotone fa-solid fa-envelope"></i> Mail</a></p>
+        <p class="mt-5"><a class="transition duration-200 text-slate-300 hover:text-slate-400" href="https://github.com/spel987" target="_blank"><i class="ph-bold ph-github-logo"></i> GitHub</a><a class="ml-3 transition duration-200 text-slate-300 hover:text-slate-400" href="mailto:spel987@pm.me" target="_blank"><i class="ph-duotone ph-envelope"></i> Mail</a></p>
 
         <hr class="my-6 border-t border-indigo-400/70">
 
         <p class="mb-5 underline"><strong>Technologies used</strong></p>
-        <p><strong><i class="mr-2 fa-sharp-duotone fa-solid fa-gear-code"></i>Backend:</strong></p>
+        <p><strong><i class="mr-2 ph-duotone ph-code"></i>Backend:</strong></p>
         <div class="items-center justify-center mt-2">
           <p class="">Rust: <a class="transition duration-200 text-sky-400 hover:underline" href="https://www.rust-lang.org/" target="_blank">https://www.rust-lang.org/</a></p>
           <p class="">Tauri: <a class="transition duration-200 text-sky-400 hover:underline" href="https://tauri.app/" target="_blank">https://tauri.app/</a></p>
           <p class="">warp-cors: <a class="transition duration-200 text-sky-400 hover:underline" href="https://github.com/Bassetts/warp-cors/" target="_blank">https://github.com/Bassetts/warp-cors/</a></p>
         </div>
 
-        <p class="mt-5"><i class="mr-2 fa-sharp-duotone fa-solid fa-file-code"></i><strong>Frontend:</strong></p>
+        <p class="mt-5"><i class="mr-2 ph-duotone ph-file-code"></i><strong>Frontend:</strong></p>
         <div class="items-center justify-center mt-2">
           <p class="">Tailwind CSS: <a class="transition duration-200 text-sky-400 hover:underline" href="https://tailwindcss.com/" target="_blank">https://tailwindcss.com/</a></p>
-          <p class="">Font Awesome: <a class="transition duration-200 text-sky-400 hover:underline" href="https://fontawesome.com/" target="_blank">https://fontawesome.com/</a></p>
+          <p class="">Phosphor Icons: <a class="transition duration-200 text-sky-400 hover:underline" href="https://phosphoricons.com/" target="_blank">https://phosphoricons.com/</a></p>
         </div>
 
-        <p class="mt-5"><i class="mr-2 fa-sharp-duotone fa-solid fa-globe-pointer"></i><strong>The sites used:</strong></p>
+        <p class="mt-5"><i class="mr-2 ph-duotone ph-globe"></i><strong>The sites used:</strong></p>
         <div class="items-center justify-center mt-2">
           <p class="">All hosts supported by the software</p>
         </div>
@@ -209,31 +207,31 @@
           <a href="https://polyuploader.vercel.app/" target="_blank"
             class="w-full block text-center px-3 py-1.5 font-normal text-base bg-indigo-500/40 border border-indigo-300/10 hover:bg-indigo-500/60 transition text-indigo-300 duration-300 rounded-lg hover:shadow-[0_0px_20px_rgba(99,_102,_241,_0.1)] active:scale-[1.02]">
             Documentation website
-            <i class="ml-1 fa-sharp-duotone fa-arrow-up-right-from-square"></i>
+            <i class="ml-1 ph-duotone ph-arrow-square-out"></i>
           </a>
 
           <a href="https://github.com/spel987/PolyUploader/" target="_blank"
             class="w-full block text-center px-3 py-1.5 font-normal text-base bg-indigo-500/40 border border-indigo-300/10 hover:bg-indigo-500/60 transition text-indigo-300 duration-300 rounded-lg hover:shadow-[0_0px_20px_rgba(99,_102,_241,_0.1)] active:scale-[1.02]">
             GitHub repository
-            <i class="ml-1 fa-sharp-duotone fa-arrow-up-right-from-square"></i>
+            <i class="ml-1 ph-duotone ph-arrow-square-out"></i>
           </a>
 
           <a href="https://p-u.vercel.app/terms/" target="_blank"
             class="w-full block text-center px-3 py-1.5 font-normal text-base bg-indigo-500/40 border border-indigo-300/10 hover:bg-indigo-500/60 transition text-indigo-300 duration-300 rounded-lg hover:shadow-[0_0px_20px_rgba(99,_102,_241,_0.1)] active:scale-[1.02]">
             Terms
-            <i class="ml-1 fa-sharp-duotone fa-arrow-up-right-from-square"></i>
+            <i class="ml-1 ph-duotone ph-arrow-square-out"></i>
           </a>
 
           <a href="https://p-u.vercel.app/statistics/" target="_blank"
             class="w-full block text-center px-3 py-1.5 font-normal text-base bg-indigo-500/40 border border-indigo-300/10 hover:bg-indigo-500/60 transition text-indigo-300 duration-300 rounded-lg hover:shadow-[0_0px_20px_rgba(99,_102,_241,_0.1)] active:scale-[1.02]">
             Statistics
-            <i class="ml-1 fa-sharp-duotone fa-arrow-up-right-from-square"></i>
+            <i class="ml-1 ph-duotone ph-arrow-square-out"></i>
           </a>
 
           <a href="https://ko-fi.com/spel987/" target="_blank"
             class="w-full block text-center px-3 py-1.5 font-normal text-base bg-indigo-500/40 border border-indigo-300/10 hover:bg-indigo-500/60 transition text-indigo-300 duration-300 rounded-lg hover:shadow-[0_0px_20px_rgba(99,_102,_241,_0.1)] active:scale-[1.02]">
             Support me on Ko-Fi
-            <i class="ml-1 fa-sharp-duotone fa-arrow-up-right-from-square"></i>
+            <i class="ml-1 ph-duotone ph-arrow-square-out"></i>
           </a>
         </div>
       </div>
@@ -243,7 +241,7 @@
   <div id="update_popup" class="fixed inset-0 z-50 flex items-center justify-center hidden bg-opacity-60 bg-slate-950">
     <div class="relative backdrop-blur-lg bg-white/7 p-8 rounded-2xl shadow-md text-center max-w-3xl max-h-96 border border-[#4c5666] hover:bg-white/9 hover:border-[#616e83] transition duration-200">
       <button id="close_popup_button" class="absolute text-xl text-white cursor-pointer top-2 right-4" target="update_popup">
-        <i class="text-base text-slate-300 opacity-70 fa-sharp fa-regular fa-xmark"></i>
+        <i class="text-base text-slate-300 opacity-70 ph-bold ph-x"></i>
       </button>
 
       <p id="new_version_text" class="mb-1 text-center text-white-950"></p>
@@ -255,27 +253,27 @@
   <div id="profile_maker_popup" class="fixed inset-0 z-50 flex items-center justify-center hidden bg-opacity-60 bg-slate-950">
     <div class="relative backdrop-blur-lg bg-white/7 p-8 rounded-2xl shadow-md text-center max-w-3xl max-h-96 flex flex-col border border-[#4c5666] hover:bg-white/9 hover:border-[#616e83] transition duration-200">
       <button id="close_popup_button" class="absolute text-xl text-white cursor-pointer top-2 right-4" target="profile_maker_popup">
-        <i class="text-base text-slate-300 opacity-70 fa-sharp fa-regular fa-xmark"></i>
+        <i class="text-base text-slate-300 opacity-70 ph-bold ph-x"></i>
       </button>
       
-      <label id="profile_name_text" for="profile_name" class="mb-2"><i class="mr-1 fa-sharp-duotone fa-solid fa-pen-to-square"></i> Profile name:</label>
+      <label id="profile_name_text" for="profile_name" class="mb-2"><i class="mr-1 ph-duotone ph-note-pencil"></i> Profile name:</label>
       <input type="text" id="profile_name" class="mb-5 pt-0.5 pb-0.5 pl-2 bg-gradient-to-t from-slate-900 to-slate-800 rounded-lg transition duration-200 border-2 border-slate-300 hover:border-rose-500 focus:outline-none hover:shadow-[0_0px_30px_rgba(244,_63,_94,_0.2)] active:scale-[1.05]" required>
-      <button id="rename_profiles_button" class="hidden px-5 py-2 text-white transition duration-200 rounded-lg opacity-50 cursor-not-allowed bg-gradient-to-t from-indigo-700 to-indigo-500" disabled><i class="mr-1 fa-sharp-duotone fa-solid fa-pen"></i> Rename</button>
-      <button id="select_host_button" class="px-5 py-2 mt-4 text-white transition duration-200 rounded-lg opacity-50 cursor-not-allowed bg-gradient-to-t from-indigo-700 to-indigo-500" disabled><i class="mr-1 fa-sharp-duotone fa-solid fa-database"></i> Select host</button>
-      <button id="delete_profiles_button" class="hidden bg-gradient-to-t mt-4 from-rose-600 to-red-500 text-white transition duration-200 px-5 py-2 rounded-lg hover:scale-[1.01] hover:from-red-500 hover:to-rose-500 hover:shadow-[0_0px_30px_rgba(225,_29,_72,_0.2)] active:scale-[1.03]"><i class="mr-1 fa-sharp-duotone fa-solid fa-trash"></i> Delete</button>
+      <button id="rename_profiles_button" class="hidden px-5 py-2 text-white transition duration-200 rounded-lg opacity-50 cursor-not-allowed bg-gradient-to-t from-indigo-700 to-indigo-500" disabled><i class="mr-1 ph-duotone ph-pencil-simple"></i> Rename</button>
+      <button id="select_host_button" class="px-5 py-2 mt-4 text-white transition duration-200 rounded-lg opacity-50 cursor-not-allowed bg-gradient-to-t from-indigo-700 to-indigo-500" disabled><i class="mr-1 ph-duotone ph-database"></i> Select host</button>
+      <button id="delete_profiles_button" class="hidden bg-gradient-to-t mt-4 from-rose-600 to-red-500 text-white transition duration-200 px-5 py-2 rounded-lg hover:scale-[1.01] hover:from-red-500 hover:to-rose-500 hover:shadow-[0_0px_30px_rgba(225,_29,_72,_0.2)] active:scale-[1.03]"><i class="mr-1 ph-duotone ph-trash"></i> Delete</button>
     </div>
   </div>
 
   <div id="uploaded_files_history_popup" class="fixed inset-0 z-50 flex items-center justify-center hidden bg-opacity-60 bg-slate-950">
     <div class="relative max-w-[1300px]">
       <button id="close_popup_button" class="absolute z-10 text-xl text-white cursor-pointer top-1.5 right-3" target="history_popup">
-        <i class="text-base text-slate-300 opacity-70 fa-sharp fa-solid fa-xmark"></i>
+        <i class="text-base text-slate-300 opacity-70 ph-bold ph-x"></i>
       </button>
 
       <div class="backdrop-blur-lg bg-white/7 px-8 py-8 rounded-2xl shadow-md text-center max-h-[600px] flex flex-col overflow-auto border border-[#4c5666] hover:bg-white/9 hover:border-[#616e83] transition duration-200">
         <div class="justify-center text-center">
-          <button id="clear_history_button" class="px-4 py-2 mb-6 mr-2 text-white transition duration-200 rounded-lg opacity-50 cursor-not-allowed bg-gradient-to-t from-rose-600 to-red-500" disabled>Clear history<i class="ml-2 fa-sharp-duotone fa-solid fa-trash"></i></button>
-          <button id="delete_all_deletable_button" class="px-4 py-2 mb-6 ml-2 text-white transition duration-200 rounded-lg opacity-50 cursor-not-allowed bg-gradient-to-t from-rose-600 to-red-500" disabled>Delete all deletable files<i class="ml-2 fa-sharp-duotone fa-solid fa-trash-list"></i></button>
+          <button id="clear_history_button" class="px-4 py-2 mb-6 mr-2 text-white transition duration-200 rounded-lg opacity-50 cursor-not-allowed bg-gradient-to-t from-rose-600 to-red-500" disabled>Clear history<i class="ml-2 ph-duotone ph-trash"></i></button>
+          <button id="delete_all_deletable_button" class="px-4 py-2 mb-6 ml-2 text-white transition duration-200 rounded-lg opacity-50 cursor-not-allowed bg-gradient-to-t from-rose-600 to-red-500" disabled>Delete all deletable files<i class="ml-2 ph-duotone ph-trash"></i></button>
         </div>
 
         <div id="select_boxes_params" class="flex items-center justify-center mt-1 mb-2 text-slate-300">
@@ -295,10 +293,10 @@
         <table class="bg-gradient-to-r from-indigo-800 via-indigo-600 to-indigo-800 w-full table-auto rounded-lg border-separate border-indigo-600 border-2 shadow-[0_5px_30px_rgba(99,_102,_241,_0.3)]">
           <thead>
             <tr>
-              <th class="px-4 py-3"><i class="mr-1 fa-sharp-duotone fa-solid fa-link-horizontal"></i> Link</th>
-              <th class="px-4 py-3 cursor-pointer transition duration-200 hover:text-slate-300 active:scale-[1.03]" id="upload_date_header"><i class="mr-1 fa-sharp-duotone fa-solid fa-calendar"></i> Upload date <i class="fa-sharp-duotone fa-solid fa-arrow-down-wide-short"></i></th>
-              <th class="px-4 py-3 max-w-[180px]"><i class="mr-1 fa-sharp-duotone fa-solid fa-clock"></i> Time remaining before expiration</th>
-              <th class="px-4 py-3 max-w-[170px]"><i class="mr-1 fa-sharp-duotone fa-solid fa-eraser"></i> Delete the file if proposed</th>
+              <th class="px-4 py-3"><i class="mr-1 ph-duotone ph-link-simple-horizontal"></i> Link</th>
+              <th class="px-4 py-3 cursor-pointer transition duration-200 hover:text-slate-300 active:scale-[1.03]" id="upload_date_header"><i class="mr-1 ph-duotone ph-calendar"></i> Upload date <i class="ph-duotone ph-sort-descending"></i></th>
+              <th class="px-4 py-3 max-w-[180px]"><i class="mr-1 ph-duotone ph-clock"></i> Time remaining before expiration</th>
+              <th class="px-4 py-3 max-w-[170px]"><i class="mr-1 ph-duotone ph-eraser"></i> Delete the file if proposed</th>
             </tr>
           </thead>
           <tbody id="history_table_body">
@@ -311,7 +309,7 @@
   <div id="manage_api_keys_popup" class="fixed inset-0 z-50 flex items-center justify-center hidden bg-opacity-60 bg-slate-950">
     <div class="relative max-w-5xl">
       <button id="close_popup_button" class="absolute z-10 text-xl text-white cursor-pointer top-2 right-4" target="manage_api_keys_popup">
-        <i class="text-base text-slate-300 opacity-70 fa-sharp fa-regular fa-xmark"></i>
+        <i class="text-base text-slate-300 opacity-70 ph-bold ph-x"></i>
       </button>
 
       <div class="backdrop-blur-lg bg-white/7 py-5 px-10 rounded-2xl shadow-md text-center max-h-[640px] flex flex-col overflow-auto border border-[#4c5666] hover:bg-white/9 hover:border-[#616e83] transition duration-200">
@@ -319,15 +317,15 @@
 
         <div id="api_keys_table" class="hidden">
           <div class="flex items-center justify-center mb-3 text-slate-300">
-              <p class="text-sm cursor-pointer transition duration-200 active:scale-[1.03]" id="hide_show_api_keys_text"><i class="mr-1 fa-sharp-duotone fa-solid fa-eye-slash"></i>Hide API keys</p>
+              <p class="text-sm cursor-pointer transition duration-200 active:scale-[1.03]" id="hide_show_api_keys_text"><i class="mr-1 ph-duotone ph-eye-slash"></i>Hide API keys</p>
           </div>
           
           <div class="flex items-center justify-between">
             <table class="bg-gradient-to-r from-indigo-800 via-indigo-600 to-indigo-800 w-full table-auto rounded-lg border-separate border-indigo-600 border-2 shadow-[0_5px_30px_rgba(99,_102,_241,_0.3)]">
               <thead>
                 <tr>
-                  <th class="px-4 py-2 max-w-150"><i class="mr-1 fa-sharp-duotone fa-solid fa-database"></i> Host</th>
-                  <th class="px-4 py-2"><i class="mr-1 fa-sharp fa-solid fa-key"></i> API key</th>
+                  <th class="px-4 py-2 max-w-150"><i class="mr-1 ph-duotone ph-database"></i> Host</th>
+                  <th class="px-4 py-2"><i class="mr-1 ph-bold ph-key"></i> API key</th>
                 </tr>
               </thead>
               <tbody id="manage_api_keys_body">
@@ -337,7 +335,7 @@
         </div>
 
         <button id="toggle_api_keys_required" class="inline-flex items-center mx-auto mt-8 underline text-slate-300 w-fit">
-          <i class="mr-1 fa-sharp fa-solid fa-triangle fa-rotate-90 fa-2xs"></i>
+          <i class="mr-1 ph-bold ph-triangle ph-rotate-90 ph-2xs"></i>
           <span>Hosts requiring an API key</span>
         </button>
 
@@ -350,7 +348,7 @@
         </div>
 
         <button id="toggle_api_keys_optional" class="inline-flex items-center mx-auto mt-5 underline text-slate-300 w-fit">
-          <i class="mr-1 fa-sharp fa-solid fa-triangle fa-rotate-90 fa-2xs"></i>
+          <i class="mr-1 ph-bold ph-triangle ph-rotate-90 ph-2xs"></i>
           <span>Hosts using an optional API key</span>
         </button>
 
@@ -375,9 +373,9 @@
         <a id="window_title" href="https://polyuploader.vercel.app/" target="_blank">PolyUploader</a>
     </div>
     <div class="mr-2 space-x-2" style="-webkit-app-region: no-drag">
-        <button class="text-white transition hover:text-slate-400 scale-[0.9]" id="minimize_button"><i class="fa-sharp fas fa-window-minimize"></i></button>
-        <button class="text-white mr-1 transition hover:text-slate-400 scale-[0.9]" id="maximize_button"><i class="fa-sharp fa-regular fa-window-restore"></i></button>
-        <button class="text-white transition hover:text-red-600" id="close_button"><i class="fa fa-solid fa-xmark"></i></button>
+        <button class="text-white transition hover:text-slate-400 scale-[0.9]" id="minimize_button"><i class="ph-bold ph-minus"></i></button>
+        <button class="text-white mr-1 transition hover:text-slate-400 scale-[0.9]" id="maximize_button"><i class="ph-bold ph-cards-three"></i></button>
+        <button class="text-white transition hover:text-red-600" id="close_button"><i class="ph-bold ph-x"></i></button>
     </div>
   </div>  
 
@@ -405,25 +403,25 @@
     <div class="flex items-center justify-center">
       <div class="transition duration-200 active:scale-[1.01]" id="search_container">
         <button id="delete_search_input" class="hidden absolute text-xl text-white cursor-pointer top-[1.1px] right-3">
-          <i class="text-base text-slate-300 opacity-70 fa-sharp fa-regular fa-xmark"></i>
+          <i class="text-base text-slate-300 opacity-70 ph-bold ph-x"></i>
         </button>
-        <i class="text-gray-400 fa-sharp fa-solid fa-magnifying-glass" id="search_icon"></i>
+        <i class="text-gray-400 ph-bold ph-magnifying-glass" id="search_icon"></i>
         <input type="text" class="text-center mb-5 pt-0.5 pb-0.5 bg-gradient-to-t from-gray-900 to-slate-800 rounded-lg transition duration-200 border-2 border-slate-300 hover:border-rose-500 hover:shadow-[0_0px_30px_rgba(244,_63,_94,_0.2)] focus:outline-none active:border-rose-400" id="search_input" placeholder="Search for a host in the list" autocomplete="off" style="width:870px" spellcheck="false">
       </div>
     </div> 
 
     <div class="flex justify-center">
-        <button class="bg-gradient-to-t from-indigo-700 to-indigo-500 text-white mb-5 mt-3 mr-2 px-4 py-2 rounded-lg transition duration-200 hover:scale-[1.02] hover:from-indigo-600 hover:to-[#7072ee] hover:shadow-[0_0px_20px_rgba(99,_102,_241,_0.2)] active:scale-[1.03]" id="toggle_upload_mode"><i class="mr-1 fa-sharp-duotone fa-solid fa-arrows-turn-right"></i> Switch to multiple upload mode</button>
-        <button class="bg-gradient-to-t from-indigo-700 to-indigo-500 text-white mb-5 mt-3 ml-2 mr-2 px-4 py-2 rounded-lg transition duration-200 hover:scale-[1.02] hover:from-indigo-600 hover:to-[#7072ee] hover:shadow-[0_0px_20px_rgba(99,_102,_241,_0.2)] active:scale-[1.05]" id="button_upload_profile"><i class="mr-1 fa-sharp fa-solid fa-bars"></i> Upload profiles</button>
-        <button class="bg-gradient-to-t from-indigo-700 to-indigo-500 text-white mb-5 mt-3 ml-2 mr-2 px-4 py-2 rounded-lg transition duration-200 hover:scale-[1.02] hover:from-indigo-600 hover:to-[#7072ee] hover:shadow-[0_0px_20px_rgba(99,_102,_241,_0.2)] active:scale-[1.05] opacity-50 cursor-not-allowed pointer-events-none hidden" id="upload_history_button"><i class="mr-1 fa-sharp-duotone fa-solid fa-clock-rotate-left fa-swap-opacity"></i> Upload history</button>
-        <button class="bg-gradient-to-t from-indigo-700 to-indigo-500 text-white mb-5 mt-3 ml-2 px-4 py-2 rounded-lg transition duration-200 hover:scale-[1.02] hover:from-indigo-600 hover:to-[#7072ee] hover:shadow-[0_0px_20px_rgba(99,_102,_241,_0.2)] active:scale-[1.05]" id="manage_api_keys_button"><i class="mr-1 fa-sharp fa-solid fa-key"></i> Manage API keys</button>
+        <button class="bg-gradient-to-t from-indigo-700 to-indigo-500 text-white mb-5 mt-3 mr-2 px-4 py-2 rounded-lg transition duration-200 hover:scale-[1.02] hover:from-indigo-600 hover:to-[#7072ee] hover:shadow-[0_0px_20px_rgba(99,_102,_241,_0.2)] active:scale-[1.03]" id="toggle_upload_mode"><i class="mr-1 ph-duotone ph-arrows-split"></i> Switch to multiple upload mode</button>
+        <button class="bg-gradient-to-t from-indigo-700 to-indigo-500 text-white mb-5 mt-3 ml-2 mr-2 px-4 py-2 rounded-lg transition duration-200 hover:scale-[1.02] hover:from-indigo-600 hover:to-[#7072ee] hover:shadow-[0_0px_20px_rgba(99,_102,_241,_0.2)] active:scale-[1.05]" id="button_upload_profile"><i class="mr-1 ph-bold ph-list"></i> Upload profiles</button>
+        <button class="bg-gradient-to-t from-indigo-700 to-indigo-500 text-white mb-5 mt-3 ml-2 mr-2 px-4 py-2 rounded-lg transition duration-200 hover:scale-[1.02] hover:from-indigo-600 hover:to-[#7072ee] hover:shadow-[0_0px_20px_rgba(99,_102,_241,_0.2)] active:scale-[1.05] opacity-50 cursor-not-allowed pointer-events-none hidden" id="upload_history_button"><i class="mr-1 ph-duotone ph-clock-counter-clockwise "></i> Upload history</button>
+        <button class="bg-gradient-to-t from-indigo-700 to-indigo-500 text-white mb-5 mt-3 ml-2 px-4 py-2 rounded-lg transition duration-200 hover:scale-[1.02] hover:from-indigo-600 hover:to-[#7072ee] hover:shadow-[0_0px_20px_rgba(99,_102,_241,_0.2)] active:scale-[1.05]" id="manage_api_keys_button"><i class="mr-1 ph-bold ph-key"></i> Manage API keys</button>
     </div>
 
     <button class="sticky z-10 hidden w-full py-2 mt-1 mb-1 text-white transition duration-200 rounded-lg opacity-50 cursor-not-allowed bg-gradient-to-t from-rose-600 to-red-500 top-14" disabled id="button_multiple_host_popup">Upload</button>
 
     <div class="sticky z-10 flex justify-end top-14">
-      <button class="hidden bg-gradient-to-t from-indigo-700 to-indigo-500 text-white mt-1 mb-1 mr-2 w-full py-2 rounded-lg transition duration-200 hover:scale-[1.01] hover:from-indigo-600 hover:to-[#7072ee] hover:shadow-[0_0px_20px_rgba(99,_102,_241,_0.2)] active:scale-[1.03]" id="button_save_selected_host">Save <i class="ml-1 fa-sharp-duotone fa-solid fa-floppy-disk"></i></button>
-      <button class="hidden bg-gradient-to-t from-rose-600 to-red-500 text-white mt-1 mb-1 ml-2 w-full py-2 rounded-lg transition duration-200 hover:scale-[1.01] hover:from-rose-500 hover:to-red-500 active:scale-[1.03]" id="button_cancel_selected_host">Cancel <i class="ml-1 fa-sharp-duotone fa-solid fa-ban"></i></button>
+      <button class="hidden bg-gradient-to-t from-indigo-700 to-indigo-500 text-white mt-1 mb-1 mr-2 w-full py-2 rounded-lg transition duration-200 hover:scale-[1.01] hover:from-indigo-600 hover:to-[#7072ee] hover:shadow-[0_0px_20px_rgba(99,_102,_241,_0.2)] active:scale-[1.03]" id="button_save_selected_host">Save <i class="ml-1 ph-duotone ph-floppy-disk"></i></button>
+      <button class="hidden bg-gradient-to-t from-rose-600 to-red-500 text-white mt-1 mb-1 ml-2 w-full py-2 rounded-lg transition duration-200 hover:scale-[1.01] hover:from-rose-500 hover:to-red-500 active:scale-[1.03]" id="button_cancel_selected_host">Cancel <i class="ml-1 ph-duotone ph-prohibit"></i></button>
     </div>
 
     <div id="select_boxes_params" class="flex items-center justify-center mt-2 mb-2 text-slate-300">
@@ -439,7 +437,7 @@
         <p class="text-sm" id="unstable_hosts_text">Show unstable hosts</p>
 
         <div class="relative inline-block ml-2 group">
-          <i class="text-sm fa-sharp-duotone fa-solid fa-circle-question" style="color: #ffffff91;"></i>
+          <i class="text-sm ph-duotone ph-question" style="color: #ffffff91;"></i>
       
           <div class="absolute hidden w-48 bottom-full group-hover:block">
               <div class="bg-slate-900 text-white text-xs rounded-lg py-1 px-2 shadow-[0_5px_15px_rgba(0,_0,_0,_0.4)]">
@@ -452,9 +450,9 @@
 
     <table value="host" class="bg-gradient-to-r from-indigo-800 via-indigo-600 to-indigo-800 w-full table-auto rounded-lg border-separate border-indigo-500 border-2 shadow-[0_5px_30px_rgba(99,_102,_241,_0.3)]">
         <thead>
-            <th class="py-2 text-center cursor-pointer transition duration-200 hover:text-slate-300 active:scale-[1.03] group" id="name_header">Name <i class="fa-sharp-duotone fa-solid fa-arrow-down-a-z"></i></th>
-            <th class="pr-4 py-2 text-center cursor-pointer transition duration-200 hover:text-slate-300 active:scale-[1.03]" id="max_file_size_header">Max file size <i class="fa-sharp-duotone fa-solid fa-arrow-down-wide-short"></i></th>
-            <th class="py-2 text-center cursor-pointer transition duration-200 hover:text-slate-300 active:scale-[1.03]" id="expire_header">Expire in <i class="fa-sharp-duotone fa-solid fa-arrow-down-wide-short"></i></th>
+            <th class="py-2 text-center cursor-pointer transition duration-200 hover:text-slate-300 active:scale-[1.03] group" id="name_header">Name <i class="ph-duotone ph-sort-ascending"></i></th>
+            <th class="pr-4 py-2 text-center cursor-pointer transition duration-200 hover:text-slate-300 active:scale-[1.03]" id="max_file_size_header">Max file size <i class="ph-duotone ph-sort-descending"></i></th>
+            <th class="py-2 text-center cursor-pointer transition duration-200 hover:text-slate-300 active:scale-[1.03]" id="expire_header">Expire in <i class="ph-duotone ph-sort-descending"></i></th>
             <th id="upload_name" class="py-2 pr-1 text-center">Upload</th>
         </thead>
 
@@ -464,33 +462,33 @@
 
     <div class="flex flex-col items-center mt-2 space-y-3">
       <p class="text-sm text-slate-300" id="stats_text"></p>
-      <button id="check_status_button" class="bg-gradient-to-t from-indigo-700 to-indigo-500 text-white transition duration-200 px-5 py-2 rounded-lg hover:scale-[1.02] hover:from-indigo-500 hover:to-[#7072ee] hover:shadow-[0_0px_20px_rgba(99,_102,_241,_0.2)] active:scale-[1.05]">Check host status <i class="fa-sharp-duotone fa-solid fa-arrows-rotate-reverse"></i></button>
+      <button id="check_status_button" class="bg-gradient-to-t from-indigo-700 to-indigo-500 text-white transition duration-200 px-5 py-2 rounded-lg hover:scale-[1.02] hover:from-indigo-500 hover:to-[#7072ee] hover:shadow-[0_0px_20px_rgba(99,_102,_241,_0.2)] active:scale-[1.05]">Check host status <i class="ph-duotone ph-arrows-counter-clockwise"></i></button>
     </div>
 
     <hr class="my-6 border-t border-indigo-400/30">
 
     <div class="mt-8 mb-8 text-base text-center text-slate-300">
-      <p id="settings_button" class="inline-block mr-4 transition duration-200 cursor-pointer hover:text-slate-400"><i class="mr-2 fa-sharp-duotone fa-solid fa-gear"></i>Settings</p>
-      <p id="about_button" class="inline-block ml-4 transition duration-200 cursor-pointer hover:text-slate-400"><i class="mr-2 fa-sharp-duotone fa-solid fa-circle-info"></i>About PolyUploader</p>
+      <p id="settings_button" class="inline-block mr-4 transition duration-200 cursor-pointer hover:text-slate-400"><i class="mr-2 ph-duotone ph-gear"></i>Settings</p>
+      <p id="about_button" class="inline-block ml-4 transition duration-200 cursor-pointer hover:text-slate-400"><i class="mr-2 ph-duotone ph-info"></i>About PolyUploader</p>
     </div>
   </div>
 
   <div id="upload_popup" class="fixed inset-0 z-30 flex items-center justify-center hidden bg-opacity-60 bg-slate-950">
     <div class="relative max-w-4xl ">
       <button id="close_popup_button" class="absolute z-10 text-xl text-white cursor-pointer top-2 right-4" target="upload_popup">
-        <i class="text-base text-slate-300 opacity-70 fa-sharp fa-regular fa-xmark"></i>
+        <i class="text-base text-slate-300 opacity-70 ph-bold ph-x"></i>
       </button>
 
       <div id="popup_container" class="relative backdrop-blur-lg bg-white/7 p-8 rounded-2xl shadow-md text-center max-h-[453px] overflow-auto transform transition-all duration-200 border border-[#4c5666] hover:bg-white/9 hover:border-[#616e83]">
         <div class="flex items-center justify-center">
-          <p id="upload_local_file_button" class="mr-4 text-sm px-3 py-2 cursor-pointer bg-indigo-500/60 border border-indigo-300/30 transition duration-3.5 rounded-lg cursor-not-allowed pointer-events-none text-white"><i class="mr-1 fa-sharp-duotone fa-solid fa-folder-open"></i> Upload local file</p>
-          <p id="upload_from_url_button" class="ml-4 text-sm px-3 py-2 cursor-pointer bg-indigo-500/20 border border-indigo-300/20 hover:bg-indigo-500/50 transition text-indigo-100 duration-3.5 rounded-lg hover:shadow-[0_0px_20px_rgba(99,_102,_241,_0.15)] active:scale-[1.02]"><i class="mr-1 fa-sharp-duotone fa-solid fa-link"></i> Upload from URL</p>
+          <p id="upload_local_file_button" class="mr-4 text-sm px-3 py-2 cursor-pointer bg-indigo-500/60 border border-indigo-300/30 transition duration-3.5 rounded-lg cursor-not-allowed pointer-events-none text-white"><i class="mr-1 ph-duotone ph-folder-open"></i> Upload local file</p>
+          <p id="upload_from_url_button" class="ml-4 text-sm px-3 py-2 cursor-pointer bg-indigo-500/20 border border-indigo-300/20 hover:bg-indigo-500/50 transition text-indigo-100 duration-3.5 rounded-lg hover:shadow-[0_0px_20px_rgba(99,_102,_241,_0.15)] active:scale-[1.02]"><i class="mr-1 ph-duotone ph-link"></i> Upload from URL</p>
         </div>
 
         <hr id="hr-separator" class="my-6 border-t border-indigo-400/70">
 
         <div id="connected_info_text" class="flex items-center justify-center hidden">
-          <p class="mb-3 text-sm font-bold text-emerald-500"><i class="mr-0.5 fa-sharp-duotone fa-solid fa-circle-user"></i> Connected account (API)</p>
+          <p class="mb-3 text-sm font-bold text-emerald-500"><i class="mr-0.5 ph-duotone ph-user-circle"></i> Connected account (API)</p>
         </div>
 
         <div class="hidden" id="profile_selector">
@@ -502,15 +500,15 @@
             </select>
 
             <button id="popup_new_profile_button" class="p-2 transition duration-200 rounded-lg hover:text-indigo-400">
-              <i class="fa-sharp fa-solid fa-plus"></i>
+              <i class="ph-bold ph-plus"></i>
             </button>
           </div>
         </div>
         
         <div id="local_upload_file" class="">
           <input type="file" id="popup_file_input" class="hidden mb-4">
-          <button id="delete_file_input_button" class="hidden mr-2 transition active:scale-125" alt="Delete file input"><i class="fa-sharp-duotone fa-solid fa-trash"></i></button>
-          <button id="popup_browse_button" class="bg-gradient-to-t mr-3 from-indigo-600 to-indigo-500 text-white px-5 py-2 rounded-lg transition duration-200 hover:scale-[1.01] hover:from-indigo-500 hover:to-[#7072ee] hover:shadow-[0_0px_20px_rgba(99,_102,_241,_0.3)] active:scale-[1.03]"><i class="mr-2 fa-sharp-duotone fa-solid fa-file-medical"></i>Add a file</button>
+          <button id="delete_file_input_button" class="hidden mr-2 transition active:scale-125" alt="Delete file input"><i class="ph-duotone ph-trash"></i></button>
+          <button id="popup_browse_button" class="bg-gradient-to-t mr-3 from-indigo-600 to-indigo-500 text-white px-5 py-2 rounded-lg transition duration-200 hover:scale-[1.01] hover:from-indigo-500 hover:to-[#7072ee] hover:shadow-[0_0px_20px_rgba(99,_102,_241,_0.3)] active:scale-[1.03]"><i class="mr-2 ph-duotone ph-file-plus"></i>Add a file</button>
           <button id="popup_upload_button_local" class="px-5 py-2 ml-3 text-white transition duration-200 rounded-lg opacity-50 cursor-not-allowed bg-gradient-to-t from-rose-600 to-red-500 active:scale-105">Upload</button>
         </div>
 
@@ -521,13 +519,13 @@
         </div>
 
         <div id="set_api_key" class="hidden">
-          <p class="mb-5"><i class="fa-solid fa-circle-exclamation" style="color: #ffae00;"></i> <span style="color: #ffae00;"> <strong>Important information:</strong></span> Note that your API key will not be tested for authenticity. Please enter a valid API key to avoid upload errors.</p>
+          <p class="mb-5"><i class="ph-bold ph-warning-circle" style="color: #ffae00;"></i> <span style="color: #ffae00;"> <strong>Important information:</strong></span> Note that your API key will not be tested for authenticity. Please enter a valid API key to avoid upload errors.</p>
           <input type="text" class="text-center bg-gradient-to-t from-slate-900 to-slate-800 pt-0.5 pb-0.5 pl-2 rounded-lg transition duration-200 border-2 border-slate-300 hover:border-rose-500 hover:shadow-[0_0px_30px_rgba(244,_63,_94,_0.2)] focus:outline-none active:scale-[1.05]" id="api_key_input" placeholder="Enter your API key" autocomplete="off" style="width:400px" spellcheck="false">
-          <button id="set_api_key_button" class="px-5 py-2 ml-1 text-white transition duration-200 rounded-lg opacity-50 cursor-not-allowed pointer-events-none bg-gradient-to-t from-rose-600 to-red-500 active:scale-105">Set API key <div class="relative inline-block text-left group"><i class="ml-1 fa-sharp-duotone fa-solid fa-circle-question" style="color: #ffffff;"></i><div class="absolute hidden w-24 bottom-full group-hover:block" style="margin-left: -80px;"><div class="bg-slate-900 text-white text-xs rounded-lg py-1 px-2 shadow-[0_5px_15px_rgba(0,_0,_0,_0.4)]">To use this host, enter your personal API key.</div></div></div></button>
+          <button id="set_api_key_button" class="px-5 py-2 ml-1 text-white transition duration-200 rounded-lg opacity-50 cursor-not-allowed pointer-events-none bg-gradient-to-t from-rose-600 to-red-500 active:scale-105">Set API key <div class="relative inline-block text-left group"><i class="ml-1 ph-duotone ph-question" style="color: #ffffff;"></i><div class="absolute hidden w-24 bottom-full group-hover:block" style="margin-left: -80px;"><div class="bg-slate-900 text-white text-xs rounded-lg py-1 px-2 shadow-[0_5px_15px_rgba(0,_0,_0,_0.4)]">To use this host, enter your personal API key.</div></div></div></button>
         </div>
 
         <div class="mt-6 text-white-950" id="final_upload_url">
-          <button id="copy_button" class="hidden ml-2 transition active:scale-125" alt="Copy link"><i class="far fa-copy"></i></button>
+          <button id="copy_button" class="hidden ml-2 transition active:scale-125" alt="Copy link"><i class="ph-bold ph-copy"></i></button>
         </div>
         
         <div id="conditions_of_use" class="mt-5">
