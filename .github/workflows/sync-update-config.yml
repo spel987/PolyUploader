@@ -1,0 +1,63 @@
+name: Sync update-config
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Release tag to sync"
+        required: true
+
+permissions:
+  contents: read
+
+concurrency:
+  group: sync-update-config
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Resolve release tag
+        id: tag
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "tag=${{ github.event.inputs.tag }}" >> "$GITHUB_OUTPUT"
+          else
+            echo "tag=${{ github.event.release.tag_name }}" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Download latest.json from the release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release download "${{ steps.tag.outputs.tag }}" \
+            --repo "${{ github.repository }}" \
+            --pattern latest.json \
+            --dir ./_release \
+            --clobber
+
+      - name: Checkout the API repo
+        uses: actions/checkout@v4
+        with:
+          repository: spel987/PolyUploader-API
+          token: ${{ secrets.WEBSITE_REPO_PAT }}
+          path: api-repo
+
+      - name: Update public/update-config.json
+        run: cp ./_release/latest.json api-repo/public/update-config.json
+
+      - name: Commit and push if changed
+        working-directory: api-repo
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add public/update-config.json
+          if git diff --cached --quiet; then
+            echo "update-config.json already up to date"
+          else
+            git commit -m "chore: sync update-config to ${{ steps.tag.outputs.tag }}"
+            git push
+          fi
