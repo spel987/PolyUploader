@@ -95,9 +95,9 @@ npm i
 npm run tailwind
 ```
 
-## - 🖥️ Or simply download and run the [release](https://github.com/spel987/PolyUploader/releases/latest) (Windows only).
+## - 🖥️ Or simply download and run the latest [release](https://github.com/spel987/PolyUploader/releases/latest) (Windows, Linux and macOS).
 
-> 1) For the moment, the application is only available on Windows. I tried to build the application for Linux but I kept getting webkit errors and on top of that Linux doesn't handle certain CSS effects in the same way. The application wouldn't look very good and would be full of bugs. However, why not work to solve this problem in future versions.
+> 1) PolyUploader is available on Windows (installer), Linux (AppImage, `.deb`, `.rpm`) and macOS (`.dmg`). The macOS build is unsigned, so on first launch you may need to right-click the app and select "Open" to bypass Gatekeeper.
 > 2) I'm not providing a portable version at the moment. In fact, Tauri creates a `C:\Users\<User>\AppData\Local\PolyUploader` folder containing the data required by the Webview.
 
 # Supported hosts
@@ -365,7 +365,7 @@ fn main() {
           .enable_all()
           .build()
           .unwrap();
-      let cfg = Config { host: "0.0.0.0".into(), port: 61337 };
+      let cfg = Config { host: "127.0.0.1".into(), port: 61337 };
       rt.block_on(run(cfg));
   });
 }
