@@ -4,11 +4,12 @@
   "version": "1.7.2",
   "type": "module",
   "scripts": {
+    "tauri": "tauri",
     "tailwind": "tailwindcss -i ./src/input_tailwind.css -o ./src/styles.css --watch",
     "build:css": "tailwindcss -i ./src/input_tailwind.css -o ./src/styles.css"
   },
   "devDependencies": {
-    "@tauri-apps/cli": "^1.6.0"
+    "@tauri-apps/cli": "^2"
   },
   "dependencies": {
     "tailwindcss": "^3.4.10"
