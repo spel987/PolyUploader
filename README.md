@@ -415,11 +415,11 @@ If you’d like to learn more, feel free to explore the repositories:
 
 ## ⭐ Star history
 
-<a href="https://www.star-history.com/#spel987/PolyUploader&Timeline">
+<a href="https://www.star-history.com/?repos=spel987%2FPolyUploader&type=timeline&legend=top-left">
  <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=spel987/PolyUploader&type=Timeline&theme=dark" />
-   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=spel987/PolyUploader&type=Timeline" />
-   <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=spel987/PolyUploader&type=Timeline" />
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=spel987/PolyUploader&type=timeline&theme=dark&legend=top-left&sealed_token=xk798AH5VDWCepRORbJ02WmL7zwukp7QU2oj6ck0-jz6WsWvtFpEQQ_NDSXXb5UCUig1p183V3DX7Iz-i7s3IZ2UT_quwewd4pZFGZxzUC0EF_XAqIyDrW_4LFlm2yIu5s668UZkZxuhLR8oAnv5jEgWobAHulN7CDHG22R4ODD1Ydd9BjJlDxMKvS5l" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=spel987/PolyUploader&type=timeline&legend=top-left&sealed_token=xk798AH5VDWCepRORbJ02WmL7zwukp7QU2oj6ck0-jz6WsWvtFpEQQ_NDSXXb5UCUig1p183V3DX7Iz-i7s3IZ2UT_quwewd4pZFGZxzUC0EF_XAqIyDrW_4LFlm2yIu5s668UZkZxuhLR8oAnv5jEgWobAHulN7CDHG22R4ODD1Ydd9BjJlDxMKvS5l" />
+   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=spel987/PolyUploader&type=timeline&legend=top-left&sealed_token=xk798AH5VDWCepRORbJ02WmL7zwukp7QU2oj6ck0-jz6WsWvtFpEQQ_NDSXXb5UCUig1p183V3DX7Iz-i7s3IZ2UT_quwewd4pZFGZxzUC0EF_XAqIyDrW_4LFlm2yIu5s668UZkZxuhLR8oAnv5jEgWobAHulN7CDHG22R4ODD1Ydd9BjJlDxMKvS5l" />
  </picture>
 </a>
 
